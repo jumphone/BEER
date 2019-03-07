@@ -21,7 +21,7 @@ Date: Mar. 7, 2019
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
     #Load Demo Data (subset of MGH53 & MGH54 from GSE70630)
-    #https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
+    #Download: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
     
     D1 <- read.table(unz("demodata.zip","DATA1_MAT.txt"), sep='\t', row.names=1, header=T)
     D2 <- read.table(unz("demodata.zip","DATA2_MAT.txt"), sep='\t', row.names=1, header=T)
