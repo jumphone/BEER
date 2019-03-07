@@ -31,9 +31,10 @@ Date: Mar. 7, 2019
     
 ### Step2. Visualization 
     
-#### *With batch effect:
+#### *Keep batch effect:
 
     ALLPC=1:length(mybeer$cor)
+    
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
     DimPlot(pbmc,reduction.use='umap',group.by='batch',pt.size=0.1)
@@ -44,9 +45,10 @@ Date: Mar. 7, 2019
     DimPlot(pbmc,reduction.use='umap',group.by='batch',pt.size=0.1)
     DimPlot(pbmc,reduction.use='umap',group.by='map',pt.size=0.1)
 
-#### After removing batch effect:
+#### *After removing batch effect:
 
     PCUSE=which(mybeer$cor>0.7 & mybeer$fdr<0.05)
+    
     # UMAP (after removing batch effect):
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
     DimPlot(pbmc,reduction.use='umap',group.by='batch',pt.size=0.1)
