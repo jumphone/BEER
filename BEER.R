@@ -5,8 +5,6 @@
 #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
 #library(Seurat)
-#library(dtw)
-#library(MALDIquant)
 #library(pcaPP)
 #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
 
