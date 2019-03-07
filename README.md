@@ -42,7 +42,7 @@ Date: Mar. 7, 2019
     
 ### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="200">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="500">
     
     ALLPC <- 1:length(mybeer$cor)
     
