@@ -34,11 +34,11 @@ Date: Mar. 7, 2019
     
 ### Step3. Visualization 
     
-#### Keep batch effect:
-
-    ALLPC <- 1:length(mybeer$cor)
-    
     pbmc <- mybeer$seurat
+    
+#### Keep batch effect:
+    
+    ALLPC <- 1:length(mybeer$cor)
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
@@ -54,14 +54,12 @@ Date: Mar. 7, 2019
 
     PCUSE <- which(mybeer$cor>0.7 & mybeer$fdr<0.05)
     
-    pbmc <- mybeer$seurat
-    
-    # UMAP (after removing batch effect):
+    # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
-    # tSNE (after removing batch effect):
+    # tSNE:
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = PCUSE, do.fast = TRUE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
