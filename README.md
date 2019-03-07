@@ -13,23 +13,26 @@ Date: Mar. 7, 2019
 
 # Usage:
 
-### Step1. Detect batch effect
+### Step1. Load Data
 
     library(Seurat)
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
-    # Rownames of "D1" & "D2" are gene names (in the same naming system)
-    # Colnames of "D1" & "D2" are cell names (should not have duplicates)
     D1=read.table('DATA1_MAT.txt',sep='\t',row.names=1,header=T)
     D2=read.table('DATA2_MAT.txt',sep='\t',row.names=1,header=T)
-    
+
+    # Rownames of "D1" & "D2" are gene names (in the same naming system)
+    # Colnames of "D1" & "D2" are cell names (should not have duplicates)
+
+### Step2. Detect Batch Effect
+
     mybeer=BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
     
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab='PCC', pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
     
-### Step2. Visualization 
+### Step3. Visualization 
     
 #### Keep batch effect:
 
