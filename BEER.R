@@ -1,4 +1,4 @@
-# Batch EffEct Remover of single-cell data (BEER)
+# Batch EffEct Remover for single-cell data (BEER)
 # Author: Feng Zhang
 # Date: Mar. 7, 2019
 
