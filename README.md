@@ -20,8 +20,8 @@ Date: Mar. 7, 2019
     
     #Load Demo Data (subset of MGH53 & MGH54 from GSE70630)
     
-    D1_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA1_MAT.txt.zip'
-    D2_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA2_MAT.txt.zip'
+    D1_address='https://github.com/jumphone/BEER/raw/master/DATA/DATA1_MAT.txt.zip'
+    D2_address='https://github.com/jumphone/BEER/raw/master/DATA/DATA2_MAT.txt.zip'
     
     #D1 <- read.table(D1_address, sep='\t', row.names=1, header=T)
     #D2 <- read.table(D2_address, sep='\t', row.names=1, header=T)
