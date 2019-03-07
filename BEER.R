@@ -106,8 +106,8 @@
         maplst1=c()
         maplst2=c()
 
-        lst1_mean=c()
-        lst2_mean=c()
+        lst1_quantile=c()
+        lst2_quantile=c()
         i=1
         while(i<=nrow(VALID_PAIR)){
             this_pair=VALID_PAIR[i,]
@@ -119,7 +119,7 @@
                        
             i=i+1}
                 
-        this_test=cor.test(lst1_mean,lst2_mean)
+        this_test=cor.test(lst1_quantile,lst2_quantile)
                 
         this_cor=this_test$estimate
         this_pv=this_test$p.value
@@ -198,7 +198,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     DR=pbmc@dr$pca@cell.embeddings 
     B1index=which(CONDITION=='D1')
     B2index=which(CONDITION=='D2')
-    OUT=.dr2adr(DR, B1index, B2index, GROUP, VP, 0.05)
+    OUT=.evaluateBatcheffect(DR, B1index, B2index, GROUP, VP, 0.05)
     
     ########################## 
     RESULT$seurat=pbmc
