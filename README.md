@@ -8,7 +8,7 @@ Date: Mar. 7, 2019
 # Requirement:
 
     #R >=3.5
-    install.packages('Suerat')
+    install.packages('Seurat')
     install.packages('pcaPP')
 
 # Usage:
