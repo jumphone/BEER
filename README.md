@@ -1,4 +1,4 @@
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/BEER_LOGO.png" width="150">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/BEER_LOGO.png" width="200">
 
 ### BEER: Batch EffEct Remover for single-cell data
 
