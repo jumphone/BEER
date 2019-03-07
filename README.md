@@ -18,8 +18,8 @@ Date: Mar. 7, 2019
     library(Seurat)
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
-    D1_address=https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA1_MAT.txt
-    D2_address=https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA2_MAT.txt
+    D1_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA1_MAT.txt'
+    D2_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA2_MAT.txt'
     
     D1 <- read.table(D1_address, sep='\t', row.names=1, header=T)
     D2 <- read.table(D2_address, sep='\t', row.names=1, header=T)
