@@ -38,6 +38,8 @@ Date: Mar. 7, 2019
 
     ALLPC <- 1:length(mybeer$cor)
     
+    pbmc <- mybeer$seurat
+    
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
@@ -51,6 +53,8 @@ Date: Mar. 7, 2019
 #### After removing batch effect:
 
     PCUSE <- which(mybeer$cor>0.7 & mybeer$fdr<0.05)
+    
+    pbmc <- mybeer$seurat
     
     # UMAP (after removing batch effect):
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
