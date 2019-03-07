@@ -21,8 +21,8 @@ Date: Mar. 7, 2019
     #Load Demo Data (subset of MGH53 & MGH54 from GSE70630)
     #https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
     
-    D1 <- read.table(unz("demodata.zio","DATA1_MAT.txt"), sep='\t', row.names=1, header=T)
-    D2 <- read.table(unz("demodata.zio","DATA2_MAT.txt"), sep='\t', row.names=1, header=T)
+    D1 <- read.table(unz("demodata.zip","DATA1_MAT.txt"), sep='\t', row.names=1, header=T)
+    D2 <- read.table(unz("demodata.zip","DATA2_MAT.txt"), sep='\t', row.names=1, header=T)
 
     # "D1" & "D2" are UMI matrix (or FPKM, RPKM, TPM, PKM ...; Should not be gene-centric scaled data)
     # Rownames of "D1" & "D2" are gene names
