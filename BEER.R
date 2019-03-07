@@ -119,7 +119,7 @@
                        
             i=i+1}
                 
-        this_test=cor.test(lst1_quantile,lst2_quantile)
+        this_test=cor.test(lst1_quantile, lst2_quantile, method='kendall')
                 
         this_cor=this_test$estimate
         this_pv=this_test$p.value
