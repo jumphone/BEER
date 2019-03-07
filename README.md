@@ -58,6 +58,8 @@ Date: Mar. 7, 2019
 
 #### Remove batch effect:
 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect.png" width="500">
+  
     PCUSE <- which(mybeer$cor>0.7 & mybeer$fdr<0.05)
     
     # UMAP:
