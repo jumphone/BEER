@@ -50,7 +50,7 @@ Date: Mar. 7, 2019
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
 
-#### After removing batch effect:
+#### Remove batch effect:
 
     PCUSE <- which(mybeer$cor>0.7 & mybeer$fdr<0.05)
     
