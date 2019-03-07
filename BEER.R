@@ -1,6 +1,6 @@
 # Batch EffEct Remover of single-cell data (BEER)
 # Author: Feng Zhang
-# Date: Mar. 6, 2019
+# Date: Mar. 7, 2019
 
 #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
