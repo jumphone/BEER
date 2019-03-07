@@ -21,6 +21,7 @@ Date: Mar. 7, 2019
     D1 <- read.table('DATA1_MAT.txt', sep='\t', row.names=1, header=T)
     D2 <- read.table('DATA2_MAT.txt', sep='\t', row.names=1, header=T)
 
+    # "D1" & "D2" are UMI matrix (or FPKM, RPKM, TPM, PKM ...; Should not be gene-centric scaled data)
     # Rownames of "D1" & "D2" are gene names
     # Colnames of "D1" & "D2" are cell names 
 
