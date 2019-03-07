@@ -18,6 +18,7 @@ Date: Mar. 7, 2019
     library(Seurat)
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
+    #Load Demo Data (GSE70630, MGH53 & MGH54)
     D1_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA1_MAT.txt'
     D2_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA2_MAT.txt'
     
