@@ -131,8 +131,6 @@
         THIS_DR=THIS_DR+1}
     
     
-    OUT$coef=ALL_COEF
-    OUT$coefpv=ALL_COEFPV
     OUT$cor=ALL_COR
     OUT$pv=ALL_PV
     OUT$fdr=p.adjust(ALL_PV,method='fdr')
