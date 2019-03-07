@@ -40,19 +40,21 @@ Date: Mar. 7, 2019
     
     pbmc <- mybeer$seurat
     
-#### Keep batch effect:
+### Keep batch effect:
+  
+    <img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="200">
     
     ALLPC <- 1:length(mybeer$cor)
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
     # tSNE:
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = ALLPC, do.fast = TRUE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
 
 #### Remove batch effect:
 
@@ -61,12 +63,12 @@ Date: Mar. 7, 2019
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
     # tSNE:
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = PCUSE, do.fast = TRUE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
   
   
   
