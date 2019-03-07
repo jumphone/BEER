@@ -1,5 +1,7 @@
 # BEER: Batch EffEct Remover of single-cell data
 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/BEER_LOGO.png" width="200">
+
 Author: Feng Zhang
 
 Date: Mar. 7, 2019
