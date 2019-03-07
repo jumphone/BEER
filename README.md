@@ -20,11 +20,13 @@ Date: Mar. 7, 2019
     
     #Load Demo Data (subset of MGH53 & MGH54 from GSE70630)
     
-    D1_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA1_MAT.txt'
-    D2_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA2_MAT.txt'
+    D1_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA1_MAT.txt.zip'
+    D2_address='https://raw.githubusercontent.com/jumphone/BEER/master/DATA/DATA2_MAT.txt.zip'
     
-    D1 <- read.table(D1_address, sep='\t', row.names=1, header=T)
-    D2 <- read.table(D2_address, sep='\t', row.names=1, header=T)
+    #D1 <- read.table(D1_address, sep='\t', row.names=1, header=T)
+    #D2 <- read.table(D2_address, sep='\t', row.names=1, header=T)
+    D1 <- read.table(unz(D1_address, "DATA1_MAT.txt"), sep='\t', row.names=1, header=T)
+    D2 <- read.table(unz(D2_address, "DATA2_MAT.txt"), sep='\t', row.names=1, header=T)
 
     # "D1" & "D2" are UMI matrix (or FPKM, RPKM, TPM, PKM ...; Should not be gene-centric scaled data)
     # Rownames of "D1" & "D2" are gene names
