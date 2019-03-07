@@ -196,8 +196,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     print('MainStep5.Detect subspaces with batch effect...')
     print('############################################################################')
     DR=pbmc@dr$pca@cell.embeddings 
-    B1index=which(CONDITION=='D1')
-    B2index=which(CONDITION=='D2')
+    B1index=which(BATCH=='D1')
+    B2index=which(BATCH=='D2')
     OUT=.evaluateBatcheffect(DR, B1index, B2index, GROUP, VP, 0.05)
     
     ########################## 
