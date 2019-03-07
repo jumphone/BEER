@@ -21,8 +21,8 @@ Date: Mar. 7, 2019
     D1 <- read.table('DATA1_MAT.txt', sep='\t', row.names=1, header=T)
     D2 <- read.table('DATA2_MAT.txt', sep='\t', row.names=1, header=T)
 
-    # Rownames of "D1" & "D2" are gene names (in the same naming system)
-    # Colnames of "D1" & "D2" are cell names (should not have duplicates)
+    # Rownames of "D1" & "D2" are gene names
+    # Colnames of "D1" & "D2" are cell names 
 
 ### Step2. Detect Batch Effect
 
