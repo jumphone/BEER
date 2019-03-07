@@ -175,9 +175,9 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     G1=.getGroup(D1X,'D1',CNUM)
     G2=.getGroup(D2X,'D2',CNUM)
     GROUP=c(G1,G2)
-    CONDITION=c(rep('D1',ncol(D1)),rep('D2',ncol(D2)))
+    BATCH=c(rep('D1',ncol(D1)),rep('D2',ncol(D2)))
     pbmc@meta.data$group=GROUP
-    pbmc@meta.data$condition=CONDITION
+    pbmc@meta.data$batch=BATCH
     
     
     print('############################################################################')
