@@ -158,3 +158,11 @@ points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],c
 
 plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
 points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+
+
+
+
+
+
+
