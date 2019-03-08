@@ -144,6 +144,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     library(Seurat)
     source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('BEER start!')
+    print(Sys.time())
     D1=D1
     D2=D2
     CNUM=CNUM
@@ -214,6 +215,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     print('############################################################################')
     print('BEER cheers !!! All main steps finished.')
     print('############################################################################')
+    print(Sys.time())
     return(RESULT)
     }
 
