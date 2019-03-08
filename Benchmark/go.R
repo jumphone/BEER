@@ -99,8 +99,8 @@ library(scran)
 
 EXP=.simple_combine(D1,D2)
 
-#CD1=EXP$exp_sc_mat1#[which(rownames(CD1) %in% pbmc@var.genes),]
-#CD2=EXP$exp_sc_mat2#[which(rownames(CD2) %in% pbmc@var.genes),]
+#CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
+#CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
 CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
 CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
 
