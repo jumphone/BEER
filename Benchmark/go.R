@@ -59,18 +59,6 @@ NONE_DR=pbmc@dr$pca@cell.embeddings
 NONE_UMAP=pbmc@dr$umap@cell.embeddings
 
 
-CEX=0.4
-par(mfrow=c(2,2))
-plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='Original')
-points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
-
-plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
-points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
-
-plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
-points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
-
-
 
 
 
@@ -123,8 +111,8 @@ library(scran)
 
 EXP=.simple_combine(D1,D2)
 
-CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
-CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
+CD1=EXP$exp_sc_mat1#[which(rownames(CD1) %in% pbmc@var.genes),]
+CD2=EXP$exp_sc_mat2#[which(rownames(CD2) %in% pbmc@var.genes),]
 
 gene.counts1=CD1
 sce1 <- SingleCellExperiment(list(counts=gene.counts1))
@@ -140,7 +128,33 @@ b2 <- sce2
 out <- fastMNN(b1, b2)
 dim(out$corrected)
 
+pbmc_mnn=pbmc
+pbmc_mnn@dr$pca@cell.embeddings=as.matrix(out$corrected)
+
+rownames(pbmc_mnn@dr$pca@cell.embeddings)=rownames(pbmc@dr$pca@cell.embeddings)
+colnames(pbmc_mnn@dr$pca@cell.embeddings)=colnames(pbmc@dr$pca@cell.embeddings)
+
+ALLPC <- 1:length(mybeer$cor)
+pbmc_mnn <- RunUMAP(object = pbmc_mnn, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+DimPlot(pbmc_mnn, reduction.use='umap', group.by='batch', pt.size=0.1)
+MNN_DR=pbmc_mnn@dr$pca@cell.embeddings
+MNN_UMAP=pbmc_mnn@dr$umap@cell.embeddings
 
 
 
+##############
 
+
+CEX=0.4
+par(mfrow=c(2,2))
+plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='Original')
+points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
+points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
+points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
+points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
