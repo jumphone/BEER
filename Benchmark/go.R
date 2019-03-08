@@ -37,6 +37,18 @@ LABEL[which(LABEL %in% c('NFOL1','NFOL2'))]='Newly-formed Oligodendrocytes'
 LABEL[which(LABEL %in% c('COP'))]='Differentiation-committed oligodendrocyte precursors'
 pbmc@meta.data$label=LABEL
 
+TARGET_LABEL=rep('NA',length(LABEL))
+TARGET_LABEL[which(LABEL=='oligodendrocytes')]='D1'
+TARGET_LABEL[which(LABEL %in% c('Myelin-forming Oligodendrocytes','Newly-formed Oligodendrocytes','Mature Oligodendrocytes'))]='D2'
+
+
+PCH=rep(20,length(TARGET_LABEL))
+PCH[which(TARGET_LABEL=='D1')]=3
+PCH[which(TARGET_LABEL=='D2')]=4
+
+COL=rep('grey90',length(TARGET_LABEL))
+COL[which(TARGET_LABEL=='D1')]='red'
+COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 #NONE
@@ -45,6 +57,22 @@ pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_dupli
 DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
 NONE_DR=pbmc@dr$pca@cell.embeddings
 NONE_UMAP=pbmc@dr$umap@cell.embeddings
+
+
+CEX=0.4
+par(mfrow=c(2,2))
+plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='Original')
+points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
+points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
+points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+
+
+
 
 #BEER
 PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
@@ -94,8 +122,9 @@ library(scran)
 
 
 EXP=.simple_combine(D1,D2)
-CD1=EXP$exp_sc_mat1
-CD2=EXP$exp_sc_mat2
+
+CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
+CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
 
 gene.counts1=CD1
 sce1 <- SingleCellExperiment(list(counts=gene.counts1))
