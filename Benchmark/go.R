@@ -23,7 +23,8 @@ EXP=readRDS('GSE75330.RDS')
 D2=as.matrix(EXP@raw.data)
 dim(D2)
 #23556  5069
-#############
+
+################################################################################################
 Sys.time()
 mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
 Sys.time()
@@ -61,6 +62,8 @@ DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
 BEER_DR=pbmc@dr$pca@cell.embeddings[,PCUSE]
 BEER_UMAP=pbmc@dr$umap@cell.embeddings
 
+
+################################################################################################
 
 #CCA
 Sys.time()
@@ -100,6 +103,7 @@ CCA_UMAP=immune.combined@dr$umap@cell.embeddings
 
 
 
+################################################################################################
 #MNN
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
@@ -131,9 +135,6 @@ Sys.time()
 #MNN End Time: 
 #MNN Time: 
 
-
-
-
 dim(out$corrected)
 
 pbmc_mnn=pbmc
@@ -153,7 +154,7 @@ MNN_UMAP=pbmc_mnn@dr$umap@cell.embeddings
 DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 
 ##############
-
+################################################################################################
 
 
 TARGET_LABEL=rep('NA',length(LABEL))
