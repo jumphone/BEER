@@ -24,8 +24,14 @@ D2=as.matrix(EXP@raw.data)
 dim(D2)
 #23556  5069
 #############
-
+Sys.time()
 mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
+Sys.time()
+
+#BEER Start Time: 2019-03-08 13:56:14 EST
+#BEER End Time: 2019-03-08 14:01:39 EST
+#BEER Time: 5 min 24 s
+
 
 pbmc=mybeer$seurat
 
@@ -48,17 +54,16 @@ NONE_UMAP=pbmc@dr$umap@cell.embeddings
 
 
 
-
-
 #BEER
 PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
 pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
 DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
 BEER_DR=pbmc@dr$pca@cell.embeddings[,PCUSE]
 BEER_UMAP=pbmc@dr$umap@cell.embeddings
-saveRDS(pbmc,file='BEER.RDS')
+
 
 #CCA
+Sys.time()
 ctrl <- CreateSeuratObject(raw.data = D1, project = "D1", min.cells = 0)
 ctrl@meta.data$stim <- "D1"
 ctrl <- FilterCells(ctrl, subset.names = "nGene", low.thresholds = 0, high.thresholds = Inf)
@@ -78,12 +83,17 @@ genes.use <- intersect(genes.use, rownames(ctrl@scale.data))
 genes.use <- intersect(genes.use, rownames(stim@scale.data))
 immune.combined <- RunCCA(ctrl, stim, genes.use = genes.use, num.cc = 30)
 immune.combined <- AlignSubspace(immune.combined, reduction.type = "cca", grouping.var = "stim",  dims.align = 1:20)
+Sys.time()
+
+#CCA Start Time: 2019-03-08 14:05:30 EST
+#CCA End Time: 2019-03-08 14:09:30 EST
+#CCA Time: 4 min 0 s
 immune.combined <- RunUMAP(immune.combined, reduction.use = "cca.aligned", dims.use = 1:20, do.fast = T)
 
 immune.combined@meta.data$label=LABEL
 DimPlot(immune.combined, reduction.use='umap', group.by='stim', pt.size=0.1)
 DimPlot(immune.combined, reduction.use='umap', group.by='label', pt.size=0.1)
-saveRDS(immune.combined,file='CCA.RDS')
+#saveRDS(immune.combined,file='CCA.RDS')
 
 CCA_DR=immune.combined@dr$cca.aligned@cell.embeddings
 CCA_UMAP=immune.combined@dr$umap@cell.embeddings
@@ -114,6 +124,7 @@ sce2 <- normalize(sce2)
 
 b1 <- sce1
 b2 <- sce2
+
 Sys.time()
 out <- fastMNN(b1, b2)
 Sys.time()
@@ -158,23 +169,32 @@ COL[which(TARGET_LABEL=='D2')]='blue'
 TOTAL=length(which(PCH==3))
 
 CEX=0.4
-par(mfrow=c(2,2))
+par(mfrow=c(2,3))
 
 plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='Original')
 points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
 
+
+plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
+points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
 plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
 points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
 
 
 plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
 points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
+NCOL=rep()
+
+
 plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
 points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
-
+plot(BEER_UMAP, col=NCOL,pch=NPCH,cex=CEX, main='BEER')
+points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
 
 
