@@ -427,7 +427,7 @@ CEX=0.05
 par(mfrow=c(2,3))
 ###############
 plot(COM_UMAP, col=COL,pch=PCH,cex=CEX, main='Combat')
-points(COM,_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+points(COM_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 ###############
 XL=-3;XR=3;YB=3;YU=7
 rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
