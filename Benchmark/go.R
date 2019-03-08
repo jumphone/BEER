@@ -244,8 +244,8 @@ LWD=1.2
 CEX=0.05
 par(mfrow=c(2,3))
 ###############
-plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='None')
-points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+plot(COM_UMAP, col=COL,pch=PCH,cex=CEX, main='Combat')
+points(CO,_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 ###############
 XL=0;XR=5;YB=0;YU=5
 rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
@@ -364,12 +364,134 @@ plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 
 
 
+######Combat-sva############
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("sva", version = "3.8")
+
+library(sva)
+library(bladderbatch)
+data(bladderdata)
+library(pamr)
+library(limma)
+
+
+Sys.time()
+pheno = data.frame(batch=as.matrix(pbmc@meta.data$batch))
+edata = EXP$combine
+batch = pheno$batch
+modcombat = model.matrix(~1, data=pheno)
+combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
+
+pbmc_com=CreateSeuratObject(raw.data = combat_edata, project = "combat", min.cells = 0)
+pbmc_com <- NormalizeData(object = pbmc_com, normalization.method = "LogNormalize", scale.factor = 10000)
+pbmc_com <- FindVariableGenes(object = pbmc_com, mean.function = ExpMean, dispersion.function = LogVMR,do.plot=F, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
+pbmc_com <- ScaleData(object = pbmc_com)
+PCNUM=50
+pbmc_com <- RunPCA(object = pbmc_com, pc.genes = pbmc@var.genes, pcs.compute=PCNUM,do.print = TRUE, pcs.print = 1:5, genes.print = 5)
+Sys.time()
+
+#Combat start: 2019-03-08 17:46:21 EST
+#Combat End: 2019-03-08 17:48:25 EST
+#Combat time:2
+
+ALLPC=1:50
+pbmc_com <- RunUMAP(object = pbmc_com, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+
+COM_DR=pbmc_com@dr$pca@cell.embeddings
+COM_UMAP=pbmc_com@dr$umap@cell.embeddings
+
+
+###############
+
+
+
+TOTAL=length(which(PCH==3)) #820
+#length(which(PCH==4) #4543
+LWD=1.2
+CEX=0.05
+par(mfrow=c(2,3))
+###############
+plot(COM_UMAP, col=COL,pch=PCH,cex=CEX, main='Combat')
+points(COM,_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+###############
+XL=-3;XR=3;YB=3;YU=7
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(COM_UMAP[which(PCH==3),1]>XL & COM_UMAP[which(PCH==3),1]<XR & COM_UMAP[which(PCH==3),2]>YB & COM_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.7682927
+
+
+
+###############
+plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
+points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+###############
+XL=-5;XR=0;YB=-8;YU=-2
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(MNN_UMAP[which(PCH==3),1]>XL & MNN_UMAP[which(PCH==3),1]<XR & MNN_UMAP[which(PCH==3),2]>YB & MNN_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.4902439
+
+
+###############
+NCOL=rep('grey90',nrow(BEER_DR))
+NCOL[which(LABEL=='astrocytes_ependymal_batch1')]='red'
+NCOL[which(LABEL=='OPC_batch2')]='blue'
+NCOL[which(LABEL=='microglia_batch1')]='darkgreen'
+
+NCEX=0.1
+plot(MNN_UMAP, col=NCOL,pch=19,cex=NCEX, main='fastMNN')
+#points(MNN_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
+#points(MNN_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
+
+
+
+###############
+plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
+points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+###############
+XL=0;XR=7;YB=1;YU=5
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(CCA_UMAP[which(PCH==3),1]>XL & CCA_UMAP[which(PCH==3),1]<XR & CCA_UMAP[which(PCH==3),2]>YB & CCA_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.3195122
+
+
+###############
+plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
+points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+XL=-8;XR=0;YB=-9;YU=0
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(BEER_UMAP[which(PCH==3),1]>XL & BEER_UMAP[which(PCH==3),1]<XR & BEER_UMAP[which(PCH==3),2]>YB & BEER_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.5341463
+
+plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
+#points(BEER_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
+#points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###############
 
 
 
