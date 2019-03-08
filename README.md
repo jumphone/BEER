@@ -55,8 +55,8 @@ Date: Mar. 7, 2019
     
     # tSNE:
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = ALLPC, do.fast = TRUE, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
+    #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
 
 #### Remove batch effect:
 
@@ -71,8 +71,8 @@ Date: Mar. 7, 2019
     
     # tSNE:
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = PCUSE, do.fast = TRUE, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
+    #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
   
 
 # License
