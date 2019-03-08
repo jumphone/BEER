@@ -82,7 +82,7 @@
 
 
 
-.evaluateBatcheffect <- function(DR, B1index, B2index, GROUP, VP, CUTOFF=0.05){
+.evaluateBatcheffect <- function(DR, B1index, B2index, GROUP, VP){
     
     #library(dtw)
     OUT=list()
@@ -196,7 +196,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     DR=pbmc@dr$pca@cell.embeddings 
     B1index=which(BATCH=='D1')
     B2index=which(BATCH=='D2')
-    OUT=.evaluateBatcheffect(DR, B1index, B2index, GROUP, VP, 0.05)
+    OUT=.evaluateBatcheffect(DR, B1index, B2index, GROUP, VP)
     
     ########################## 
     RESULT$seurat=pbmc
