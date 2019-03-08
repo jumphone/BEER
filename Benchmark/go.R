@@ -99,8 +99,10 @@ library(scran)
 
 EXP=.simple_combine(D1,D2)
 
-CD1=EXP$exp_sc_mat1#[which(rownames(CD1) %in% pbmc@var.genes),]
-CD2=EXP$exp_sc_mat2#[which(rownames(CD2) %in% pbmc@var.genes),]
+#CD1=EXP$exp_sc_mat1#[which(rownames(CD1) %in% pbmc@var.genes),]
+#CD2=EXP$exp_sc_mat2#[which(rownames(CD2) %in% pbmc@var.genes),]
+CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
+CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
 
 gene.counts1=CD1
 sce1 <- SingleCellExperiment(list(counts=gene.counts1))
@@ -171,6 +173,10 @@ points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],c
 
 plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
 points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+
+
+
 
 
 
