@@ -109,10 +109,8 @@ library(scran)
 
 EXP=.simple_combine(D1,D2)
 
-#CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
-#CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
-CD1=EXP$exp_sc_mat1[which(rownames(CD1) %in% pbmc@var.genes),]
-CD2=EXP$exp_sc_mat2[which(rownames(CD2) %in% pbmc@var.genes),]
+CD1=EXP$exp_sc_mat1 #[which(rownames(EXP$exp_sc_mat1) %in% pbmc@var.genes),]
+CD2=EXP$exp_sc_mat2 #[which(rownames(EXP$exp_sc_mat2) %in% pbmc@var.genes),]
 
 gene.counts1=CD1
 sce1 <- SingleCellExperiment(list(counts=gene.counts1))
@@ -128,6 +126,12 @@ b2 <- sce2
 Sys.time()
 out <- fastMNN(b1, b2)
 Sys.time()
+
+#MNN Start Time: 2019-03-08 14:18:02 EST
+#MNN End Time: 
+#MNN Time: 
+
+
 
 
 dim(out$corrected)
