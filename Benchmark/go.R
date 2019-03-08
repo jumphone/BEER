@@ -1,8 +1,6 @@
 
-
 library('Seurat')
-
-
+source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
 #####Load Zeisel#######
 load('TSNE.RData')
