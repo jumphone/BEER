@@ -86,6 +86,31 @@ CCA_UMAP=immune.combined@dr$umap@cell.embeddings
 
 
 
+#MNN
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("scran", version = "3.8")
+library(scran)
+
+
+EXP=.simple_combine(D1,D2)
+CD1=EXP$exp_sc_mat1
+CD2=EXP$exp_sc_mat2
+
+gene.counts1=CD1
+sce1 <- SingleCellExperiment(list(counts=gene.counts1))
+sce1 <- normalize(sce1)
+
+gene.counts2=CD2
+sce2 <- SingleCellExperiment(list(counts=gene.counts2))
+sce2 <- normalize(sce2)
+
+b1 <- sce1
+b2 <- sce2
+
+out <- fastMNN(b1, b2)
+dim(out$corrected)
+
 
 
 
