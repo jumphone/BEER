@@ -30,25 +30,13 @@ mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
 pbmc=mybeer$seurat
 
 
-LABEL=c(as.character(ori_label[,2]), EXP@meta.data$label )
-LABEL[which(LABEL %in% c('MOL1','MOL2','MOL3','MOL4','MOL5','MOL6'))]='Mature Oligodendrocytes'
-LABEL[which(LABEL %in% c('MFOL1','MFOL2'))]='Myelin-forming Oligodendrocytes'
-LABEL[which(LABEL %in% c('NFOL1','NFOL2'))]='Newly-formed Oligodendrocytes'
-LABEL[which(LABEL %in% c('COP'))]='Differentiation-committed oligodendrocyte precursors'
+LABEL=c(paste0(as.character(ori_label[,2]),'_batch1'), paste0(EXP@meta.data$label,'_batch2') )
+LABEL[which(LABEL %in% c('MOL1_batch2','MOL2_batch2','MOL3_batch2','MOL4_batch2','MOL5_batch2','MOL6_batch2'))]='Mature Oligodendrocytes_batch2'
+LABEL[which(LABEL %in% c('MFOL1_batch2','MFOL2_batch2'))]='Myelin-forming Oligodendrocytes_batch2'
+LABEL[which(LABEL %in% c('NFOL1_batch2','NFOL2_batch2'))]='Newly-formed Oligodendrocytes_batch2'
+LABEL[which(LABEL %in% c('COP_batch2'))]='Differentiation-committed oligodendrocyte precursors_batch2'
 pbmc@meta.data$label=LABEL
 
-TARGET_LABEL=rep('NA',length(LABEL))
-TARGET_LABEL[which(LABEL=='oligodendrocytes')]='D1'
-TARGET_LABEL[which(LABEL %in% c('Myelin-forming Oligodendrocytes','Newly-formed Oligodendrocytes','Mature Oligodendrocytes'))]='D2'
-
-
-PCH=rep(20,length(TARGET_LABEL))
-PCH[which(TARGET_LABEL=='D1')]=3
-PCH[which(TARGET_LABEL=='D2')]=4
-
-COL=rep('grey90',length(TARGET_LABEL))
-COL[which(TARGET_LABEL=='D1')]='red'
-COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 #NONE
@@ -124,8 +112,11 @@ sce2 <- normalize(sce2)
 
 b1 <- sce1
 b2 <- sce2
-
+Sys.time()
 out <- fastMNN(b1, b2)
+Sys.time()
+
+
 dim(out$corrected)
 
 pbmc_mnn=pbmc
@@ -136,22 +127,44 @@ colnames(pbmc_mnn@dr$pca@cell.embeddings)=colnames(pbmc@dr$pca@cell.embeddings)
 
 ALLPC <- 1:length(mybeer$cor)
 pbmc_mnn <- RunUMAP(object = pbmc_mnn, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+pbmc_mnn@meta.data$label=LABEL
 DimPlot(pbmc_mnn, reduction.use='umap', group.by='batch', pt.size=0.1)
+DimPlot(pbmc_mnn, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 MNN_DR=pbmc_mnn@dr$pca@cell.embeddings
 MNN_UMAP=pbmc_mnn@dr$umap@cell.embeddings
 
-
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 
 ##############
 
 
+
+TARGET_LABEL=rep('NA',length(LABEL))
+TARGET_LABEL[which(LABEL=='oligodendrocytes')]='D1'
+TARGET_LABEL[which(LABEL %in% c('Myelin-forming Oligodendrocytes','Newly-formed Oligodendrocytes','Mature Oligodendrocytes'))]='D2'
+
+
+PCH=rep(20,length(TARGET_LABEL))
+PCH[which(TARGET_LABEL=='D1')]=3
+PCH[which(TARGET_LABEL=='D2')]=4
+
+COL=rep('grey90',length(TARGET_LABEL))
+COL[which(TARGET_LABEL=='D1')]='red'
+COL[which(TARGET_LABEL=='D2')]='blue'
+
+
+TOTAL=length(which(PCH==3))
+
 CEX=0.4
 par(mfrow=c(2,2))
+
 plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='Original')
 points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
+
 plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
 points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
 
 plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
 points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
@@ -163,6 +176,39 @@ points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],c
 
 
 
+XL=0;XR=5;YB=0;YU=5
+rect(XL,YB,XR,YU)
+RNUM=length(which(NONE_UMAP[which(PCH==3),1]>XL & NONE_UMAP[which(PCH==3),1]<XR & NONE_UMAP[which(PCH==3),2]>YB & NONE_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL
+
+
+
+par(mfrow=c(4,2))
+plot(density(NONE_UMAP[which(PCH==3),1]),ylim=c(0,0.5),col='red')
+lines(density(NONE_UMAP[which(PCH==4),1]),col='blue')
+plot(density(NONE_UMAP[which(PCH==3),2]),ylim=c(0,0.5),col='red')
+lines(density(NONE_UMAP[which(PCH==4),2]),col='blue')
+
+plot(density(BEER_UMAP[which(PCH==3),1]),ylim=c(0,0.5),col='red')
+lines(density(BEER_UMAP[which(PCH==4),1]),col='blue')
+plot(density(BEER_UMAP[which(PCH==3),2]),ylim=c(0,0.5),col='red')
+lines(density(BEER_UMAP[which(PCH==4),2]),col='blue')
+
+
+plot(density(CCA_UMAP[which(PCH==3),1]),ylim=c(0,0.5),col='red')
+lines(density(CCA_UMAP[which(PCH==4),1]),col='blue')
+plot(density(CCA_UMAP[which(PCH==3),2]),ylim=c(0,0.5),col='red')
+lines(density(CCA_UMAP[which(PCH==4),2]),col='blue')
+
+
+plot(density(MNN_UMAP[which(PCH==3),1]),ylim=c(0,0.5),col='red')
+lines(density(MNN_UMAP[which(PCH==4),1]),col='blue')
+plot(density(MNN_UMAP[which(PCH==3),2]),ylim=c(0,0.5),col='red')
+lines(density(MNN_UMAP[which(PCH==4),2]),col='blue')
+
+
+
+#ks.test(MNN_UMAP[which(PCH==3),1],MNN_UMAP[which(PCH==4),1])
 
 
 
