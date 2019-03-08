@@ -217,16 +217,16 @@ RNUM/TOTAL #0.5341463
 #save.image('SAVE.RData')
 
 saveRDS(NONE_DR,'NONE_DR.RDS')
-saveRDS(NONE_UMAP,'NONE_UMAP')
+saveRDS(NONE_UMAP,'NONE_UMAP.RDS')
 
-saveRDS(MNN_DR,'MNN_DR')
-saveRDS(MNN_UMAP,'MNN_UMAP')
+saveRDS(MNN_DR,'MNN_DR.RDS')
+saveRDS(MNN_UMAP,'MNN_UMAP.RDS')
 
-saveRDS(BEER_DR,'BEER_DR')
-saveRDS(BEER_UMAP,'BEER_UMAP')
+saveRDS(BEER_DR,'BEER_DR.RDS')
+saveRDS(BEER_UMAP,'BEER_UMAP.RDS')
 
-saveRDS(CCA_DR,'CCA_DR')
-saveRDS(CCA_UMAP,'CA_UMAP')
+saveRDS(CCA_DR,'CCA_DR.RDS')
+saveRDS(CCA_UMAP,'CCA_UMAP.RDS')
 
 
 
@@ -401,6 +401,20 @@ pbmc_com <- RunUMAP(object = pbmc_com, reduction.use='pca',dims.use = ALLPC, che
 COM_DR=pbmc_com@dr$pca@cell.embeddings
 COM_UMAP=pbmc_com@dr$umap@cell.embeddings
 
+saveRDS(COM_DR,'COM_DR.RDS')
+saveRDS(COM_UMAP,'COM_UMAP.RDS')
+
+saveRDS(NONE_DR,'NONE_DR.RDS')
+saveRDS(NONE_UMAP,'NONE_UMAP.RDS')
+
+saveRDS(MNN_DR,'MNN_DR.RDS')
+saveRDS(MNN_UMAP,'MNN_UMAP.RDS')
+
+saveRDS(BEER_DR,'BEER_DR.RDS')
+saveRDS(BEER_UMAP,'BEER_UMAP.RDS')
+
+saveRDS(CCA_DR,'CCA_DR.RDS')
+saveRDS(CCA_UMAP,'CCA_UMAP.RDS')
 
 ###############
 
