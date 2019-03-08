@@ -63,6 +63,8 @@ Date: Mar. 7, 2019
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect.png" width="500">
   
     PCUSE <- which(mybeer$cor>0.7 & mybeer$fdr<0.05)
+    # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
+    # Sometimes, 0.7 is too stringent, users can try to use "quantile(mybeer$cor, 0.5)" or "quantile(mybeer$cor, 0.25)".
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
