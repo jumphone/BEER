@@ -298,7 +298,69 @@ plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 #points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
 
-######
+###############@@@@@@@@@@@@@@@@@@@
+
+
+TOTAL=length(which(PCH==3)) #820
+#length(which(PCH==4) #4543
+LWD=1.2
+CEX=0.05
+par(mfrow=c(2,3))
+###############
+plot(NONE_UMAP, col=COL,pch=PCH,cex=CEX, main='None')
+points(NONE_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+###############
+XL=0;XR=5;YB=0;YU=5
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(NONE_UMAP[which(PCH==3),1]>XL & NONE_UMAP[which(PCH==3),1]<XR & NONE_UMAP[which(PCH==3),2]>YB & NONE_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.4073171
+
+###############
+plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
+points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+###############
+XL=-5;XR=0;YB=-8;YU=-2
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(MNN_UMAP[which(PCH==3),1]>XL & MNN_UMAP[which(PCH==3),1]<XR & MNN_UMAP[which(PCH==3),2]>YB & MNN_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.4902439
+
+
+
+NCOL=rep('grey90',nrow(BEER_DR))
+NCOL[which(LABEL=='astrocytes_ependymal_batch1')]='red'
+NCOL[which(LABEL=='OPC_batch2')]='blue'
+NCOL[which(LABEL=='microglia_batch1')]='darkgreen'
+
+NCEX=0.1
+plot(MNN_UMAP, col=NCOL,pch=19,cex=NCEX, main='fastMNN')
+#points(MNN_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
+#points(MNN_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
+
+
+
+###############
+plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
+points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+###############
+XL=0;XR=7;YB=1;YU=5
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(CCA_UMAP[which(PCH==3),1]>XL & CCA_UMAP[which(PCH==3),1]<XR & CCA_UMAP[which(PCH==3),2]>YB & CCA_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.3195122
+
+
+###############
+plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
+points(BEER_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+XL=-8;XR=0;YB=-9;YU=0
+rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+RNUM=length(which(BEER_UMAP[which(PCH==3),1]>XL & BEER_UMAP[which(PCH==3),1]<XR & BEER_UMAP[which(PCH==3),2]>YB & BEER_UMAP[which(PCH==3),2]<YU))
+RNUM/TOTAL #0.5341463
+
+plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
+#points(BEER_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
+#points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
+
+
 
 
 
