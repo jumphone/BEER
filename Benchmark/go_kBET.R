@@ -42,26 +42,33 @@ TARGET_LABEL[which(LABEL %in% c('Myelin-forming Oligodendrocytes_batch2','Newly-
 #install_github('theislab/kBET')
 library(kBET)
 
-COM_UMAP=readRDS('COM_UMAP.RDS')
-MNN_UMAP=readRDS('MNN_UMAP.RDS')
-BEER_UMAP=readRDS('BEER_UMAP.RDS')
-CCA_UMAP=readRDS('CCA_UMAP.RDS')
-BBK_UMAP=readRDS('BBK_UMAP.RDS')
+COM_D=readRDS('COM_DR.RDS')
+MNN_D=readRDS('MNN_DR.RDS')
+BEER_D=readRDS('BEER_DR.RDS')
+CCA_D=readRDS('CCA_DR.RDS')
+
 
 USE=which(TARGET_LABEL %in% c("D1","D2"))
 BATCH=TARGET_LABEL[USE]
+SIZE=length(BATCH)
 
-COM_KBET=COM_UMAP[USE,]
-MNN_KBET=MNN_UMAP[USE,]
-BEER_KBET=BEER_UMAP[USE,]
-CCA_KBET=CCA_UMAP[USE,]
-BBK_KBET=BBK_UMAP[USE,]
+COM_KBET=COM_D[USE,]
+MNN_KBET=MNN_D[USE,]
+BEER_KBET=BEER_D[USE,]
+CCA_KBET=CCA_D[USE,]
 
-COMV <- kBET(COM_KBET, BATCH)
-MNNV <- kBET(MNN_KBET, BATCH)
-BEERV <- kBET(BEER_KBET, BATCH)
-CCAV <- kBET(CCA_KBET, BATCH)
-BBKV <- kBET(BBK_KBET, BATCH)
+
+pca.data=a
+pca.data$rotation=COM_KBET
+pca.data$x=pca.data$rotation
+pca.data$sdev=c(ncol(pca.data$rotation):1)
+
+COMP <- batch.silhouette <- batch_sil(pca.data, BATCH, do.PCA=FALSE)
+
+COMV <- kBET(COM_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9925326
+MNNV <- kBET(MNN_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.8685661
+BEERV <- kBET(BEER_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9159032
+CCAV <- kBET(CCA_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9290317
 
 
 
