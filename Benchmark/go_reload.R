@@ -27,6 +27,25 @@ dim(D2)
 #####################################
 
 
+COM_DR=readRDS('COM_DR.RDS')
+COM_UMAP=readRDS('COM_UMAP.RDS')
+
+NONE_DR=readRDS('NONE_DR.RDS')
+NONE_UMAP=readRDS('NONE_UMAP.RDS')
+
+MNN_DR=readRDS('MNN_DR.RDS')
+MNN_UMAP=readRDS('MNN_UMAP.RDS')
+
+BEER_DR=readRDS('BEER_DR.RDS')
+BEER_UMAP=readRDS('BEER_UMAP.RDS')
+
+CCA_DR=readRDS('CCA_DR.RDS')
+CCA_UMAP=readRDS('CCA_UMAP.RDS')
+
+
+
+
+
 
 
 
