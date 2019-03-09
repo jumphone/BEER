@@ -56,7 +56,6 @@ CCA_UMAP=readRDS('CCA_UMAP.RDS')
 ########################################################
 
 
-
 TARGET_LABEL=rep('NA',length(LABEL))
 TARGET_LABEL[which(LABEL=='oligodendrocytes_batch1')]='D1'
 TARGET_LABEL[which(LABEL %in% c('Myelin-forming Oligodendrocytes_batch2','Newly-formed Oligodendrocytes_batch2','Mature Oligodendrocytes_batch2'))]='D2'
@@ -73,10 +72,14 @@ COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 
+
+
+tiff("COMPARE.tif", width = 8, height = 6, units = 'in',res = 500)
+
 TOTAL=length(which(PCH==3)) #820
 #length(which(PCH==4) #4543
 LWD=1.2
-CEX=0.05
+CEX=0.3
 par(mfrow=c(2,3))
 ###############
 plot(COM_UMAP, col=COL,pch=PCH,cex=CEX, main='Combat')
@@ -105,7 +108,7 @@ NCOL[which(LABEL=='astrocytes_ependymal_batch1')]='red'
 NCOL[which(LABEL=='OPC_batch2')]='blue'
 NCOL[which(LABEL=='microglia_batch1')]='darkgreen'
 
-NCEX=0.1
+NCEX=0.3
 plot(MNN_UMAP, col=NCOL,pch=19,cex=NCEX, main='fastMNN')
 #points(MNN_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
 #points(MNN_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
@@ -136,7 +139,7 @@ plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 #points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
 
-
+dev.off()
 
 
 
