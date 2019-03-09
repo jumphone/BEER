@@ -65,10 +65,9 @@ pca.data$sdev=c(ncol(pca.data$rotation):1)
 
 COMP <- batch.silhouette <- batch_sil(pca.data, BATCH, do.PCA=FALSE)
 
-COMV <- kBET(COM_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9925326
-MNNV <- kBET(MNN_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.8685661
-BEERV <- kBET(BEER_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9159032
-CCAV <- kBET(CCA_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9290317
-
+COMV <- kBET(COM_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9932873
+MNNV <- kBET(MNN_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.8719001
+BEERV <- kBET(BEER_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate: 0.9168376
+CCAV <- kBET(CCA_KBET, BATCH, do.pca=FALSE,testSize=SIZE) #mean kBET rejection rate:0.9285847
 
 
