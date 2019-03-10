@@ -189,7 +189,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     NROW_VP=nrow(VP)
     print('n(Validpair):')
     print(NROW_VP)
-    if(NROW_VP<=1 | is.null(NROW_VP) ){print('Please set a smaller CNUM !!!')}
+    #if(NROW_VP<=1 | is.null(NROW_VP) ){print('Please set a smaller CNUM !!!')}
+    if(NROW_VP<=1 | is.null(NROW_VP) ){return(message("Please set a smaller CNUM !!!"))}
     ##########################
     VP=VP[which(VP_OUT$cor>=VPCOR),]
     MAP=rep('NA',length(GROUP))
