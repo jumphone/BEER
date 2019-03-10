@@ -98,7 +98,7 @@ COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 
-tiff("COMPARE.tif", width = 8, height= 9, units = 'in',res = 1000)
+tiff("COMPARE.tif", width = 8, height= 9, units = 'in',res = 400)
 
 TOTAL=length(which(PCH==3)) #820
 #length(which(PCH==4) #4543
