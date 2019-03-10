@@ -183,12 +183,14 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     print('MainStep4.Get Valid Pairs...')
     print('############################################################################')
     VP_OUT=.getValidpair(D1, G1, D2, G2, CPU, method='kendall', print_step)
-    NROW_VP=nrow(VP_OUT)
+    #VP_OUT=.getValidpair(D1, G1, D2, G2, 4, 'kendall', 10)
+    VP=VP_OUT$vp
+    ##########################
+    NROW_VP=nrow(VP)
     print('n(Validpair):')
     print(NROW_VP)
     if(NROW_VP<=1){print('Please set a smaller CNUM !!!')}
-    #VP_OUT=.getValidpair(D1, G1, D2, G2, 4, 'kendall', 10)
-    VP=VP_OUT$vp
+    ##########################
     VP=VP[which(VP_OUT$cor>=VPCOR),]
     MAP=rep('NA',length(GROUP))
     MAP[which(GROUP %in% VP[,1])]='D1'
