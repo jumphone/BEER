@@ -168,16 +168,14 @@ points(BBK_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],c
 
 
 NNCOL=rep('grey90',nrow(BEER_DR))
-NNCOL[which(LABEL=='interneurons_batch1')]='darkgreen'
+NNCOL[which(LABEL=='interneurons_batch1')]='red'
+NNCOL[which(LABEL=='pyramidal SS_batch1')]='darkgreen'
 NNCOL[which(TARGET_LABEL=='D1')]='blue'
 NNCOL[which(TARGET_LABEL=='D2')]='blue'
 
 
-
 plot(BBK_UMAP, col=NNCOL,pch=19,cex=0.3, main='BBKNN')
 points(BBK_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
-
-
 
 plot(BEER_UMAP, col=NNCOL,pch=19,cex=0.3, main='BEER')
 points(BEER_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
