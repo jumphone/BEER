@@ -35,6 +35,10 @@ LABEL[which(LABEL %in% c('COP_batch2'))]='Differentiation-committed oligodendroc
 
 
 
+#mybeer <- BEER(D1, D2, CNUM=100, PCNUM=50, CPU=2)
+pbmc=mybeer$seurat
+
+
 ####################################
 
 
@@ -52,6 +56,26 @@ BEER_UMAP=readRDS('BEER_UMAP.RDS')
 
 CCA_DR=readRDS('CCA_DR.RDS')
 CCA_UMAP=readRDS('CCA_UMAP.RDS')
+
+BBK_UMAP=readRDS('BBK_UMAP.RDS')
+
+
+pbmc@dr$umap=pbmc@dr$pca
+
+
+ALLPC <- 1:10
+pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+
+pbmc@meta.data$label=LABEL
+
+BBK_UMAP=as.matrix(BBK_UMAP)
+rownames(BBK_UMAP)=rownames(pbmc@dr$umap@cell.embeddings)
+colnames(BBK_UMAP)=colnames(pbmc@dr$umap@cell.embeddings)
+BBK_UMAP[which(BBK_UMAP[,1] < -8),1]= -8
+
+pbmc@dr$umap@cell.embeddings=BBK_UMAP
+
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 
 ########################################################
 
@@ -74,21 +98,21 @@ COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 
-tiff("COMPARE.tif", width = 8, height = 6, units = 'in',res = 500)
+tiff("COMPARE.tif", width = 8, height = 8, units = 'in',res = 500)
 
 TOTAL=length(which(PCH==3)) #820
 #length(which(PCH==4) #4543
 LWD=1.2
 CEX=0.3
-par(mfrow=c(2,3))
+par(mfrow=c(3,3))
 ###############
 plot(COM_UMAP, col=COL,pch=PCH,cex=CEX, main='Combat')
 points(COM_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 ###############
-XL=-3;XR=3;YB=3;YU=7
-rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
-RNUM=length(which(COM_UMAP[which(PCH==3),1]>XL & COM_UMAP[which(PCH==3),1]<XR & COM_UMAP[which(PCH==3),2]>YB & COM_UMAP[which(PCH==3),2]<YU))
-RNUM/TOTAL #0.7682927
+#XL=-3;XR=3;YB=3;YU=7
+#rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+#RNUM=length(which(COM_UMAP[which(PCH==3),1]>XL & COM_UMAP[which(PCH==3),1]<XR & COM_UMAP[which(PCH==3),2]>YB & COM_UMAP[which(PCH==3),2]<YU))
+#RNUM/TOTAL #0.7682927
 
 
 
@@ -96,10 +120,10 @@ RNUM/TOTAL #0.7682927
 plot(MNN_UMAP, col=COL,pch=PCH,cex=CEX, main='fastMNN')
 points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 ###############
-XL=-5;XR=0;YB=-8;YU=-2
-rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
-RNUM=length(which(MNN_UMAP[which(PCH==3),1]>XL & MNN_UMAP[which(PCH==3),1]<XR & MNN_UMAP[which(PCH==3),2]>YB & MNN_UMAP[which(PCH==3),2]<YU))
-RNUM/TOTAL #0.4902439
+#XL=-5;XR=0;YB=-8;YU=-2
+#rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+#RNUM=length(which(MNN_UMAP[which(PCH==3),1]>XL & MNN_UMAP[which(PCH==3),1]<XR & MNN_UMAP[which(PCH==3),2]>YB & MNN_UMAP[which(PCH==3),2]<YU))
+#RNUM/TOTAL #0.4902439
 
 
 ###############
@@ -120,23 +144,43 @@ plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
 points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 ###############
 XL=0;XR=7;YB=1;YU=5
-rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
-RNUM=length(which(CCA_UMAP[which(PCH==3),1]>XL & CCA_UMAP[which(PCH==3),1]<XR & CCA_UMAP[which(PCH==3),2]>YB & CCA_UMAP[which(PCH==3),2]<YU))
-RNUM/TOTAL #0.3195122
+#rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+#RNUM=length(which(CCA_UMAP[which(PCH==3),1]>XL & CCA_UMAP[which(PCH==3),1]<XR & CCA_UMAP[which(PCH==3),2]>YB & CCA_UMAP[which(PCH==3),2]<YU))
+#RNUM/TOTAL #0.3195122
 
 
 ###############
 plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
 used=which(PCH==3 & BEER_UMAP[,1]> -8 & BEER_UMAP[,1]< 0 & BEER_UMAP[,2]< 0 & BEER_UMAP[,2] > -9)
 points(BEER_UMAP[used,], col=COL[used],pch=PCH[used],cex=CEX)
-XL=-8;XR=0;YB=-9;YU=0
-rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
-RNUM=length(which(BEER_UMAP[which(PCH==3),1]>XL & BEER_UMAP[which(PCH==3),1]<XR & BEER_UMAP[which(PCH==3),2]>YB & BEER_UMAP[which(PCH==3),2]<YU))
-RNUM/TOTAL #0.5341463
+#XL=-8;XR=0;YB=-9;YU=0
+#rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
+#RNUM=length(which(BEER_UMAP[which(PCH==3),1]>XL & BEER_UMAP[which(PCH==3),1]<XR & BEER_UMAP[which(PCH==3),2]>YB & BEER_UMAP[which(PCH==3),2]<YU))
+#RNUM/TOTAL #0.5341463
 
 plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 #points(BEER_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
 #points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
+
+
+plot(BBK_UMAP, col=COL,pch=PCH,cex=CEX, main='BBKNN')
+points(BBK_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
+
+
+NNCOL=rep('grey90',nrow(BEER_DR))
+NNCOL[which(LABEL=='interneurons_batch1')]='darkgreen'
+NNCOL[which(TARGET_LABEL=='D1')]='blue'
+NNCOL[which(TARGET_LABEL=='D2')]='blue'
+
+
+
+plot(BBK_UMAP, col=NNCOL,pch=19,cex=0.3, main='BBKNN')
+points(BBK_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
+
+
+
+plot(BEER_UMAP, col=NNCOL,pch=19,cex=0.3, main='BEER')
+points(BEER_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
 
 
 dev.off()
