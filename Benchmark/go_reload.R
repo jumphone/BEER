@@ -98,7 +98,7 @@ COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 
-tiff("COMPARE.tif", width = 8, height = 8, units = 'in',res = 500)
+tiff("COMPARE.tif", width = 8, height= 9, units = 'in',res = 1000)
 
 TOTAL=length(which(PCH==3)) #820
 #length(which(PCH==4) #4543
@@ -163,7 +163,7 @@ plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 #points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
 
-plot(BBK_UMAP, col=COL,pch=PCH,cex=CEX, main='BBKNN')
+plot(BBK_UMAP, col=COL,pch=PCH,cex=CEX, main='BBKNN',ylim=c(-12,16))
 points(BBK_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
 
@@ -174,11 +174,14 @@ NNCOL[which(TARGET_LABEL=='D1')]='blue'
 NNCOL[which(TARGET_LABEL=='D2')]='blue'
 
 
-plot(BBK_UMAP, col=NNCOL,pch=19,cex=0.3, main='BBKNN')
+plot(BBK_UMAP, col=NNCOL,pch=19,cex=0.3, main='BBKNN',ylim=c(-12,16))
 points(BBK_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
+points(BBK_UMAP[which(NNCOL=='darkgreen'),], col=NNCOL[which(NNCOL=='darkgreen')],pch=19,cex=0.3)
 
-plot(BEER_UMAP, col=NNCOL,pch=19,cex=0.3, main='BEER')
+
+plot(BEER_UMAP, col=NNCOL,pch=19,cex=0.3, main='BEER',ylim=c(-12,16))
 points(BEER_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
+points(BEER_UMAP[which(NNCOL=='darkgreen'),], col=NNCOL[which(NNCOL=='darkgreen')],pch=19,cex=0.3)
 
 
 dev.off()
