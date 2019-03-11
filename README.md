@@ -83,6 +83,12 @@ Date: Mar. 7, 2019
 This function is an iteration of "Analyze Two Batches".
 
 BEER compares each batch with the batch having the largest cell number.
+
+The assumption is that the batch having the largest cell number has all cell types within all batches.
+
+If you want to define a batch having all cell types, please set "MAXBATCH" to the label of that batch.
+
+
    
 ### Step1. Load Data
     
@@ -121,7 +127,7 @@ BEER compares each batch with the batch having the largest cell number.
     
 ### Step2. Detect Batch Effect
 
-    mybeer=MBEER(DATA, BATCH, CNUM=10, PCNUM=20,CPU=4)
+    mybeer=MBEER(DATA, BATCH, CNUM=10, PCNUM=20,CPU=4, MAXBATCH=NULL)
 
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
