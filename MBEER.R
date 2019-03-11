@@ -48,7 +48,7 @@ rm(D123456)
 
 
 
-mybeer=MBEER(DATA, BATCH, CNUM=10, PCNUM=20,CPU=4)
+mybeer=MBEER(DATA, BATCH, CNUM=10, PCNUM=50,CPU=4)
 
 pbmc=mybeer$seurat
 
@@ -57,7 +57,7 @@ pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_dupli
 DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
 
 
-PCUSE <- which(mybeer$cor > min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05  )
+PCUSE <- which(mybeer$cor > min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05 & c(1:50)<=20  )
 pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
 DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
 
