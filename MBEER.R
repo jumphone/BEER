@@ -23,6 +23,7 @@ D1234=.simple_combine(D12,D34)$combine
 D123456=.simple_combine(D1234,D56)$combine
 
 DATA=D123456
+
 dim(DATA) #23686  4347
 rm(D1)
 rm(D2)
