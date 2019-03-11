@@ -50,7 +50,7 @@ Date: Mar. 7, 2019
     
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="500">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="400">
     
     ALLPC <- 1:length(mybeer$cor)
     
@@ -66,7 +66,7 @@ Date: Mar. 7, 2019
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect.png" width="500">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect.png" width="400">
   
     PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
@@ -143,7 +143,7 @@ If you want to define a batch having almost all cell-types, please set "MAXBATCH
     
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="500">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="400">
     
     ALLPC <- 1:length(mybeer$cor)
     
