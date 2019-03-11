@@ -15,7 +15,7 @@ Date: Mar. 7, 2019
 
 # Usage:
 
-## 1. Combine Two Batches
+## 1. Analyze Two Batches
 
 ### Step1. Load Data
 
@@ -78,8 +78,12 @@ Date: Mar. 7, 2019
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
     
-## 2. Combine Multiple Batches
+## 2. Analyze Multiple Batches
 
+This function is just an iteration of "Analyze Two Batches".
+
+We compare each batch with the batch having the largest cell number.
+   
 ### Step1. Load Data
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
