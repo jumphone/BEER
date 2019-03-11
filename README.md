@@ -23,6 +23,8 @@ Date: Mar. 7, 2019
 
 Please use the function named "BEER" to combine two batches.
 
+Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
+
 ### Step1. Load Data
 
     library(Seurat)
@@ -96,7 +98,7 @@ The assumption is that the batch having the largest cell number has almost all c
 
 If you want to define a batch having almost all cell-types, please set "MAXBATCH" to the label of that batch.
 
-
+Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 ### Step1. Load Data
     
