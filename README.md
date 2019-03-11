@@ -37,7 +37,7 @@ Date: Mar. 7, 2019
     mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
     
     par(mfrow=c(1,2))
-    plot(mybeer$cor, xlab='PCs', ylab='PCC', pch=16)
+    plot(mybeer$cor, xlab='PCs', ylab="COR", pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
     
 ### Step3. Visualization 
@@ -124,7 +124,7 @@ BEER compares each batch with the batch having the largest cell number.
     mybeer=MBEER(DATA, BATCH, CNUM=10, PCNUM=20,CPU=4)
 
     par(mfrow=c(1,2))
-    plot(mybeer$cor, xlab='PCs', ylab='PCC', pch=16)
+    plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
     
 ### Step3. Visualization 
