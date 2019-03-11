@@ -435,7 +435,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     this_NROW_VP=nrow(this_VP)
     print('n(Validpair):')
     print(this_NROW_VP)
-    if(this_NROW_VP<=1 | is.null(this_NROW_VP) ){return(message("Please set a smaller CNUM !!!"))}     
+    if(is.null(this_NROW_VP) | this_NROW_VP<=1  ){return(message("Please set a smaller CNUM !!!"))}     
     ##########################
     this_DR=DR[c(which(BATCH %in% this_pair[1]), which(BATCH %in% this_pair[2])),]
     this_B1index=which(this_BATCH=='D1')
