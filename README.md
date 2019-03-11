@@ -101,7 +101,6 @@ If you want to define a batch having almost all cell-types, please set "MAXBATCH
 ### Step1. Load Data
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
