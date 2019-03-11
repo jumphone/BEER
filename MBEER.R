@@ -147,3 +147,6 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10)
     print(Sys.time())
     return(RESULT)
     }
+
+
+OUT=MBEER(DATA, BATCH, CNUM=10, PCNUM=50,CPU=4)
