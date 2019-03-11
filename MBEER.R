@@ -72,7 +72,8 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10)
     #length(x = pbmc@var.genes)
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
     pbmc <- RunPCA(object = pbmc, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
-    
+    pbmc@meta.data$batch=BATCH
+      
     PAIR=c()
     for(one in rownames(TABLE)){
         if(one != MAXBATCH){
@@ -81,61 +82,62 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10)
         }
     PAIR=t(PAIR)
       
+    print('############################################################################')
+    print('MainStep2. Analyze Each Pair of Batches...')
+    print('############################################################################')
+    print('Total Number of Batch Pairs:')
+    print(nrow(PAIR))
+    COR=c()
+    PV=c()
+    FDR=c()
       
       
-    
-    print('############################################################################')
-    print('MainStep3.Convert to one-dimension...')
-    print('############################################################################')
-    D1X=.data2one(D1, pbmc@var.genes, CPU, PCNUM)
-    D2X=.data2one(D2, pbmc@var.genes, CPU, PCNUM)
-    G1=.getGroup(D1X,'D1',CNUM)
-    G2=.getGroup(D2X,'D2',CNUM)
-    GROUP=c(G1,G2)
-    BATCH=c(rep('D1',ncol(D1)),rep('D2',ncol(D2)))
-    pbmc@meta.data$group=GROUP
-    pbmc@meta.data$batch=BATCH
-    
-    
-    print('############################################################################')
-    print('MainStep4.Get Valid Pairs...')
-    print('############################################################################')
-    VP_OUT=.getValidpair(D1, G1, D2, G2, CPU, method='kendall', print_step)
-    #VP_OUT=.getValidpair(D1, G1, D2, G2, 4, 'kendall', 10)
-    VP=VP_OUT$vp
-    ##########################
-    NROW_VP=nrow(VP)
-    print('n(Validpair):')
-    print(NROW_VP)
-    #if(NROW_VP<=1 | is.null(NROW_VP) ){print('Please set a smaller CNUM !!!')}
-    if(NROW_VP<=1 | is.null(NROW_VP) ){return(message("Please set a smaller CNUM !!!"))}
-    ##########################
-    VP=VP[which(VP_OUT$cor>=VPCOR),]
-    MAP=rep('NA',length(GROUP))
-    MAP[which(GROUP %in% VP[,1])]='D1'
-    MAP[which(GROUP %in% VP[,2])]='D2'
-    pbmc@meta.data$map=MAP
-    
-    print('############################################################################')
-    print('MainStep5.Detect subspaces with batch effect...')
-    print('############################################################################')
+    MAX_D1=EXP[,which(BATCH == MAXBATCH)]
+    MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM)  
+    MAX_G1=.getGroup(MAX_D1X,'D1',CNUM)
     DR=pbmc@dr$pca@cell.embeddings 
-    B1index=which(BATCH=='D1')
-    B2index=which(BATCH=='D2')
-    OUT=.evaluateBatcheffect(DR, B1index, B2index, GROUP, VP)
+      
+    i=1
+    while(i<=nrow(PAIR)){
+    this_pair=PAIR[i,]
+    print(this_pair)
+    this_D2=EXP[,which(BATCH == this_pair[2])]
+    this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM)         
+    this_G2=.getGroup(this_D2X,'D2',CNUM)
+    this_GROUP=c(MAX_G1, this_G2)
+    this_BATCH=c(rep('D1',ncol(MAX_D1)),rep('D2',ncol(this_D2))) 
+    this_VP_OUT=.getValidpair(MAX_D1, MAX_G1, this_D2, this_G2, CPU, method='kendall', print_step)  
+    #this_VP_OUT=.getValidpair(MAX_D1, MAX_G1, this_D2, this_G2, CPU, method='kendall', 10)
+    this_VP=this_VP_OUT$vp
+    this_NROW_VP=nrow(this_VP)
+    print('n(Validpair):')
+    print(this_NROW_VP)
+    if(this_NROW_VP<=1 | is.null(this_NROW_VP) ){return(message("Please set a smaller CNUM !!!"))}     
+    ##########################
+    this_DR=DR[c(which(BATCH %in% this_pair[1]), which(BATCH %in% this_pair[2])),]
+    this_B1index=which(this_BATCH=='D1')
+    this_B2index=which(this_BATCH=='D2')
+    this_OUT=.evaluateBatcheffect(this_DR, this_B1index, this_B2index, this_GROUP, this_VP)      
+    #################
+    COR=cbind(COR,this_OUT$cor)
+    PV=cbind(PV,this_OUT$pv)
+    FDR=cbind(FDR, this_OUT$fdr)
+    print('Solved Number:')
+    print(i)
+    i=i+1}
+    
+    print('############################################################################')
+    print('MainStep3. Output')
+    print('############################################################################')
     
     ########################## 
     RESULT$seurat=pbmc
-    RESULT$vp=VP
-    RESULT$vpcor=VP_OUT$cor
-    RESULT$d1x=D1X
-    RESULT$d2x=D2X
-    RESULT$g1=G1
-    RESULT$g2=G2
-    RESULT$cor=OUT$cor
-    RESULT$pv=OUT$pv
-    RESULT$fdr=OUT$fdr
-    
+    RESULT$COR=COR
+    RESULT$PV=PV
+    RESULT$FDR=OUT$FDR
+    RESULT$cor=apply(COR, 1, mean)
+    RESULT$pv=apply(PV, 1, mean)
+    RESULT$fdr=apply(FDR, 1, mean)
     #RESULT$pcuse=PCUSE
     print('############################################################################')
     print('BEER cheers !!! All main steps finished.')
