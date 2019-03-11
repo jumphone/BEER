@@ -142,7 +142,7 @@
 
 
 
-.data2one <- function(DATA, GENE, CPU=4, PCNUM=100, SEED=123){
+.data2one <- function(DATA, GENE, CPU=4, PCNUM=100, SEED=1){
     PCUSE=1:PCNUM
     print('Start')
     library(Seurat)
