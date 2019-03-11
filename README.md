@@ -21,6 +21,8 @@ Date: Mar. 7, 2019
 
 ## 1. Combine Two Batches
 
+Please use the function named "BEER" to combine two batches.
+
 ### Step1. Load Data
 
     library(Seurat)
@@ -83,6 +85,8 @@ Date: Mar. 7, 2019
     
     
 ## 2. Combine Multiple Batches
+
+Please use the function named "MBEER" to combine multiple batches (n>=3).
 
 This function implements the iteration of "Combine Two Batches".
 
