@@ -84,7 +84,7 @@ Date: Mar. 7, 2019
     
 ## 2. Combine Multiple Batches
 
-This function is an iteration of "Combine Two Batches".
+This function implements the iteration of "Combine Two Batches".
 
 BEER compares each batch with the batch having the largest cell number.
 
