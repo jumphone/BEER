@@ -82,7 +82,7 @@ Date: Mar. 7, 2019
 
 This function is an iteration of "Analyze Two Batches".
 
-We compare each batch with the batch having the largest cell number.
+BEER compares each batch with the batch having the largest cell number.
    
 ### Step1. Load Data
     
