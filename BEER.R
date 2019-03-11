@@ -198,6 +198,9 @@
         if(tag2[which(tag2[,1]==t2),2]==t1){V=c(V,i)}           
         i=i+1}
     VP=tag1[V,]
+    ##############################
+    if(length(V)<=1){return(message("Please set a smaller CNUM !!!"))}
+    ##############################
     C=c()
     t=1
     while(t<=nrow(VP)){
