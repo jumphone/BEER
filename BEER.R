@@ -311,6 +311,10 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, CPU=4, print_step=10){
           
     i=i+1}
     
+    colnames(COR)=PAIR[,2]
+    colnames(PV)=PAIR[,2]
+    colnames(FDR)=PAIR[,2]
+       
     print('############################################################################')
     print('MainStep3. Output')
     print('############################################################################')
@@ -320,6 +324,7 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, CPU=4, print_step=10){
     RESULT$COR=COR
     RESULT$PV=PV
     RESULT$FDR=FDR
+    RESULT$MAXBATCH=MAXBATCH
     RESULT$cor=apply(COR, 1, mean)
     RESULT$pv=apply(PV, 1, mean)
     RESULT$fdr=apply(FDR, 1, mean)
