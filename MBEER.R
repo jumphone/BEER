@@ -73,6 +73,17 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10)
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
     pbmc <- RunPCA(object = pbmc, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
     
+    PAIR=c()
+    for(one in rownames(TABLE)){
+        if(one != MAXBATCH){
+            PAIR=cbind(PAIR, c(MAXBATCH, one))
+            }
+        }
+    PAIR=t(PAIR)
+      
+      
+      
+    
     print('############################################################################')
     print('MainStep3.Convert to one-dimension...')
     print('############################################################################')
