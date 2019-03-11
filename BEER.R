@@ -6,7 +6,143 @@
 
 #library(Seurat)
 #library(pcaPP)
-#source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+
+
+############################################################################################
+############################################################################################
+
+.get_cor  <- function(exp_sc_mat, exp_ref_mat, method='kendall',CPU=4, print_step=10, gene_check=FALSE){
+    #method = "pearson", "kendall", "spearman"
+    ##################
+    print('Gene number of exp_sc_mat1:')
+    print(nrow(exp_sc_mat))
+    print('Gene number of exp_sc_mat2:')
+    print(nrow(exp_ref_mat))
+    #################
+    library(parallel)
+    #Step 1. get overlapped genes
+    exp_sc_mat=exp_sc_mat[order(rownames(exp_sc_mat)),]
+    exp_ref_mat=exp_ref_mat[order(rownames(exp_ref_mat)),]
+    gene_sc=rownames(exp_sc_mat)
+    gene_ref=rownames(exp_ref_mat)
+    gene_over= gene_sc[which(gene_sc %in% gene_ref)]
+    exp_sc_mat=exp_sc_mat[which(gene_sc %in% gene_over),]
+    exp_ref_mat=exp_ref_mat[which(gene_ref %in% gene_over),]
+    colname_sc=colnames(exp_sc_mat)
+    colname_ref=colnames(exp_ref_mat)
+    ###############
+    print('Number of overlapped genes:')
+    print(nrow(exp_sc_mat))
+    if(gene_check==TRUE){
+    print('Press RETURN to continue:')
+    scan();}
+    ###################
+    #Step 2. calculate prob
+    SINGLE <- function(i){
+        library('pcaPP')
+        exp_sc = as.array(exp_sc_mat[,i])
+        #log_p_sc_given_ref_list=c()
+        log_p_sc_given_ref_list=rep(0,length(colname_ref))
+        j=1
+        while(j<=length(colname_ref)){
+            exp_ref = as.array(exp_ref_mat[,j])
+            #####
+            #exp_ref[which(exp_ref==0)]=min(exp_ref[which(exp_ref>0)])
+            #####
+            #if(method=='rococo'){log_p_sc_given_ref=rococo(exp_sc,exp_ref)} else
+            if(method=='kendall'){log_p_sc_given_ref=cor.fk(exp_sc,exp_ref)}
+            else{
+            log_p_sc_given_ref=cor(exp_sc,exp_ref, method=method)}
+            #log_p_sc_given_ref_list=c(log_p_sc_given_ref_list, log_p_sc_given_ref)
+            log_p_sc_given_ref_list[j]=log_p_sc_given_ref
+            j=j+1}
+        ################################
+        if(i%%print_step==1){print(i)}
+        return(log_p_sc_given_ref_list)
+        }
+    #######################################
+    cl= makeCluster(CPU,outfile='')
+    RUN = parLapply(cl=cl,1:length(exp_sc_mat[1,]), SINGLE)
+    stopCluster(cl)
+    #RUN = mclapply(1:length(colname_sc), SINGLE, mc.cores=CPU)
+    LOG_P_SC_GIVEN_REF = c()
+    for(log_p_sc_given_ref_list in RUN){
+        LOG_P_SC_GIVEN_REF=cbind(LOG_P_SC_GIVEN_REF, log_p_sc_given_ref_list)}
+    #######################################
+    rownames(LOG_P_SC_GIVEN_REF)=colname_ref
+    colnames(LOG_P_SC_GIVEN_REF)=colname_sc
+    return(LOG_P_SC_GIVEN_REF)
+    }
+
+
+.get_tag_max <- function(P_REF_GIVEN_SC){
+    RN=rownames(P_REF_GIVEN_SC)
+    CN=colnames(P_REF_GIVEN_SC)
+    TAG=cbind(CN,rep('NA',length(CN)))
+    i=1
+    while(i<=length(CN)){
+        this_rn_index=which(P_REF_GIVEN_SC[,i] == max(P_REF_GIVEN_SC[,i]))[1]
+        TAG[i,2]=RN[this_rn_index]
+        i=i+1
+        }
+    colnames(TAG)=c('cell_id','tag')
+    return(TAG)
+    }
+
+.simple_combine <- function(exp_sc_mat1, exp_sc_mat2){    
+    exp_sc_mat=exp_sc_mat1
+    exp_ref_mat=exp_sc_mat2
+    exp_sc_mat=exp_sc_mat[order(rownames(exp_sc_mat)),]
+    exp_ref_mat=exp_ref_mat[order(rownames(exp_ref_mat)),]
+    gene_sc=rownames(exp_sc_mat)
+    gene_ref=rownames(exp_ref_mat)
+    gene_over= gene_sc[which(gene_sc %in% gene_ref)]
+    exp_sc_mat=exp_sc_mat[which(gene_sc %in% gene_over),]
+    exp_ref_mat=exp_ref_mat[which(gene_ref %in% gene_over),]
+    colname_sc=colnames(exp_sc_mat)
+    colname_ref=colnames(exp_ref_mat)
+    OUT=list()
+    OUT$exp_sc_mat1=exp_sc_mat
+    OUT$exp_sc_mat2=exp_ref_mat
+    OUT$combine=cbind(exp_sc_mat,exp_ref_mat)
+    return(OUT)
+    }
+    
+
+
+.generate_ref <- function(exp_sc_mat, TAG, min_cell=1, refnames=FALSE){
+    NewRef=c()
+    TAG[,2]=as.character(TAG[,2])
+    if(refnames==FALSE){
+        refnames=names(table(TAG[,2]))}
+        else{refnames=refnames}
+    outnames=c()
+    for(one in refnames){
+        this_col=which(TAG[,2]==one)
+        if(length(this_col)>= min_cell){
+            outnames=c(outnames,one)
+            if(length(this_col) >1){
+                this_new_ref=apply(exp_sc_mat[,this_col],1,sum)
+                }
+                else{this_new_ref = exp_sc_mat[,this_col]}
+            NewRef=cbind(NewRef,this_new_ref)
+            }
+        }
+    rownames(NewRef)=rownames(exp_sc_mat)
+    colnames(NewRef)=outnames
+    if(length(NewRef[1,])==1){
+        NewRef=cbind(NewRef[,1], NewRef[,1])
+        rownames(NewRef)=rownames(exp_sc_mat)
+        colnames(NewRef)=c(outnames,outnames)
+        }
+    return(NewRef)
+    }
+
+
+
+############################################################################################
+############################################################################################
+
 
 
 .data2one <- function(DATA, GENE, CPU=4, PCNUM=100){
@@ -47,7 +183,7 @@
 
 
 .getValidpair <- function(DATA1, GROUP1, DATA2, GROUP2, CPU=4, method='kendall', print_step=10){
-    source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('Start')
     print('Step1.Generate Reference...')
     REF1=.generate_ref(DATA1, cbind(GROUP1, GROUP1), min_cell=1) 
@@ -140,32 +276,11 @@
 
 
 
-.simple_combine <- function(exp_sc_mat1, exp_sc_mat2){    
-    exp_sc_mat=exp_sc_mat1
-    exp_ref_mat=exp_sc_mat2
-    exp_sc_mat=exp_sc_mat[order(rownames(exp_sc_mat)),]
-    exp_ref_mat=exp_ref_mat[order(rownames(exp_ref_mat)),]
-    gene_sc=rownames(exp_sc_mat)
-    gene_ref=rownames(exp_ref_mat)
-    gene_over= gene_sc[which(gene_sc %in% gene_ref)]
-    exp_sc_mat=exp_sc_mat[which(gene_sc %in% gene_over),]
-    exp_ref_mat=exp_ref_mat[which(gene_ref %in% gene_over),]
-    colname_sc=colnames(exp_sc_mat)
-    colname_ref=colnames(exp_ref_mat)
-    OUT=list()
-    OUT$exp_sc_mat1=exp_sc_mat
-    OUT$exp_sc_mat2=exp_ref_mat
-    OUT$combine=cbind(exp_sc_mat,exp_ref_mat)
-    return(OUT)
-}
-    
-
-
 
 BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     RESULT=list()
     library(Seurat)
-    source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('BEER start!')
     print(Sys.time())
     D1=D1
@@ -255,7 +370,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH=NULL, CNUM=10, PCNUM=50, CPU=4, print_st
   
     RESULT=list()
     library(Seurat)
-    source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('BEER start!')
     print(Sys.time())
     DATA=DATA
