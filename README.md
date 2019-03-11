@@ -152,7 +152,7 @@ If you want to define a batch having all cell types, please set "MAXBATCH" to th
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER2.png" width="500">
   
-    PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
+    PCUSE <- which(mybeer$cor> 0.7  & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
     
     # UMAP:
