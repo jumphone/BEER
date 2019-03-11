@@ -43,7 +43,7 @@ rm(D123456)
 
 
 
-BEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
+MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
   
   
     
@@ -52,21 +52,21 @@ BEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('BEER start!')
     print(Sys.time())
-    D1=D1
-    D2=D2
+    DATA=DATA
+    BATCH=BATCH
     CNUM=CNUM
     PCNUM=PCNUM
     print_step=print_step
     
     print('############################################################################')
-    print('MainStep1.Combine Data...')
+    print('MainStep1.Preprocess...')
     print('############################################################################')
-    EXP=.simple_combine(D1,D2)$combine
+    TABLE=table(BATCH)  
+    MAXBATCH=rownames(TABLE)[which(TABLE==max(TABLE))[1]]
+    ############################################################################
+    ############################################################################
+    EXP = DATA
     pbmc=CreateSeuratObject(raw.data = EXP, min.cells = 0, min.genes = 0, project = "ALL") 
-    
-    print('############################################################################')
-    print('MainStep2.Preprocess Data...')
-    print('############################################################################')
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
     #length(x = pbmc@var.genes)
