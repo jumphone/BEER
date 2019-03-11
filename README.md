@@ -15,6 +15,8 @@ Date: Mar. 7, 2019
 
 # Usage:
 
+## Combine Two Batches
+
 ### Step1. Load Data
 
     library(Seurat)
