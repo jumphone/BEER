@@ -127,7 +127,7 @@ If you want to define a batch having all cell types, please set "MAXBATCH" to th
     
 ### Step2. Detect Batch Effect
 
-    mybeer=MBEER(DATA, BATCH, CNUM=10, PCNUM=20,CPU=4, MAXBATCH=NULL)
+    mybeer=MBEER(DATA, BATCH, MAXBATCH=NULL, CNUM=10, PCNUM=20,CPU=4)
 
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
