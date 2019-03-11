@@ -90,7 +90,7 @@ Please use the function named "MBEER" to combine multiple batches (n>=3).
 
 This function implements the iteration of "Combine Two Batches".
 
-BEER compares each batch with the batch having the largest cell number.
+MBEER compares each batch with the batch having the largest cell number.
 
 The assumption is that the batch having the largest cell number has almost all cell-types within all batches.
 
