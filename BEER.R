@@ -363,7 +363,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
 
 
 # BEER with Multiple Samples
-MBEER <- function(DATA, BATCH, MAXBATCH=NULL, CNUM=10, PCNUM=50, CPU=4, print_step=10){
+MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10){
   
     RESULT=list()
     library(Seurat)
