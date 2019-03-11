@@ -80,7 +80,7 @@ Date: Mar. 7, 2019
     
 ## 2. Analyze Multiple Batches
 
-This function is just an iteration of "Analyze Two Batches".
+This function is an iteration of "Analyze Two Batches".
 
 We compare each batch with the batch having the largest cell number.
    
