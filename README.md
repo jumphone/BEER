@@ -89,6 +89,9 @@ We compare each batch with the batch having the largest cell number.
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     
+    #Load Demo Data (Oligodendroglioma, GSE70630)
+    #Download: https://sourceforge.net/projects/beergithub/files/
+    
     D1=readRDS('MGH36.RDS')
     D2=readRDS('MGH53.RDS')
     D3=readRDS('MGH54.RDS')
