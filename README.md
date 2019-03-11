@@ -98,7 +98,6 @@ BEER compares each batch with the batch having the largest cell number.
     D4=readRDS('MGH60.RDS')
     D5=readRDS('MGH93.RDS')
     D6=readRDS('MGH97.RDS')
-
     
     BATCH=c(rep('D1',ncol(D1)),
             rep('D2',ncol(D2)),
@@ -114,6 +113,11 @@ BEER compares each batch with the batch having the largest cell number.
     D123456=.simple_combine(D1234,D56)$combine
     
     DATA=D123456   
+   
+    rm(D1);rm(D2);rm(D3);rm(D4);rm(D5);rm(D6)
+    rm(D12);rm(D34);rm(D56);rm(D1234);rm(D123456)
+    
+    
     
 ### Step2. Detect Batch Effect
 
