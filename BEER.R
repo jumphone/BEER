@@ -142,7 +142,7 @@
 
 
 
-.data2one <- function(DATA, GENE, CPU=4, PCNUM=100){
+.data2one <- function(DATA, GENE, CPU=4, PCNUM=100, SEED=123){
     PCUSE=1:PCNUM
     print('Start')
     library(Seurat)
@@ -155,7 +155,7 @@
     print('Step4.PCA...')
     DATA <- RunPCA(object = DATA, pcs.compute=PCNUM, pc.genes =GENE, do.print = FALSE)
     print('Step5.One-dimention...')
-    DATA <- RunTSNE(object = DATA, dims.use = PCUSE, do.fast=TRUE,dim.embed = 1)
+    DATA <- RunTSNE(object = DATA, seed.use=SEED, dims.use = PCUSE, do.fast=TRUE,dim.embed = 1)
     DR=DATA@dr$tsne@cell.embeddings
     print('Finished!!!')
     return(DR)
