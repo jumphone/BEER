@@ -99,6 +99,7 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10)
       
     i=1
     while(i<=nrow(PAIR)){
+          
     this_pair=PAIR[i,]
     print(this_pair)
     this_D2=EXP[,which(BATCH == this_pair[2])]
@@ -124,6 +125,7 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10)
     FDR=cbind(FDR, this_OUT$fdr)
     print('Solved Number:')
     print(i)
+          
     i=i+1}
     
     print('############################################################################')
