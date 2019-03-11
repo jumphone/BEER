@@ -134,7 +134,7 @@ MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, CPU=4, print_step=10){
     RESULT$seurat=pbmc
     RESULT$COR=COR
     RESULT$PV=PV
-    RESULT$FDR=OUT$FDR
+    RESULT$FDR=FDR
     RESULT$cor=apply(COR, 1, mean)
     RESULT$pv=apply(PV, 1, mean)
     RESULT$fdr=apply(FDR, 1, mean)
