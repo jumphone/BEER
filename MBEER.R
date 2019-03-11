@@ -8,6 +8,15 @@ D4=read.table('MGH60_mat.txt',header=T,row.names=1,sep='\t')
 D5=read.table('MGH93_mat.txt',header=T,row.names=1,sep='\t')
 D6=read.table('MGH97_mat.txt',header=T,row.names=1,sep='\t')
 
+saveRDS(D1,file='MGH36.RDS')
+saveRDS(D2,file='MGH53.RDS')
+saveRDS(D3,file='MGH54.RDS')
+saveRDS(D4,file='MGH60.RDS')
+saveRDS(D5,file='MGH93.RDS')
+saveRDS(D6,file='MGH97.RDS')
+
+
+
 BATCH=c(rep('D1',ncol(D1)),
       rep('D2',ncol(D2)),
       rep('D3',ncol(D3)),
