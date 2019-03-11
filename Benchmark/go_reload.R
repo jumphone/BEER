@@ -60,7 +60,6 @@ CCA_UMAP=readRDS('CCA_UMAP.RDS')
 BBK_UMAP=readRDS('BBK_UMAP.RDS')
 
 
-pbmc@dr$umap=pbmc@dr$pca
 
 
 ALLPC <- 1:10
@@ -187,14 +186,31 @@ points(BEER_UMAP[which(NNCOL=='darkgreen'),], col=NNCOL[which(NNCOL=='darkgreen'
 dev.off()
 
 
+#############################################
 
 
 
+ALLPC <- 1:10
+pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+pbmc@meta.data$label=LABEL
+
+pbmc@dr$umap@cell.embeddings=BEER_UMAP
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 
 
+pbmc@dr$umap@cell.embeddings=COM_UMAP
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
+
+pbmc@dr$umap@cell.embeddings=CCA_UMAP
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
+
+pbmc@dr$umap@cell.embeddings=MNN_UMAP
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 
 
-
-
-
-
+BBK_UMAP=as.matrix(BBK_UMAP)
+rownames(BBK_UMAP)=rownames(pbmc@dr$umap@cell.embeddings)
+colnames(BBK_UMAP)=colnames(pbmc@dr$umap@cell.embeddings)
+BBK_UMAP[which(BBK_UMAP[,1] < -8),1]= -8
+pbmc@dr$umap@cell.embeddings=BBK_UMAP
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
