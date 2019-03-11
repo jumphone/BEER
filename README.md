@@ -15,11 +15,11 @@ Date: Mar. 7, 2019
 
 # Usage:
 
-* [1. Analyze Two Batches](#1-Analyze-Two-Batches)
-* [2. Analyze Multiple Batches](#2-Analyze-Multiple-Batches)
+* [1. Combine Two Batches](#1-Combine-Two-Batches)
+* [2. Combine Multiple Batches](#2-Combine-Multiple-Batches)
 
 
-## 1. Analyze Two Batches
+## 1. Combine Two Batches
 
 ### Step1. Load Data
 
@@ -82,15 +82,15 @@ Date: Mar. 7, 2019
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
     
-## 2. Analyze Multiple Batches
+## 2. Combine Multiple Batches
 
-This function is an iteration of "Analyze Two Batches".
+This function is an iteration of "Combine Two Batches".
 
 BEER compares each batch with the batch having the largest cell number.
 
-The assumption is that the batch having the largest cell number has all cell types within all batches.
+The assumption is that the batch having the largest cell number has almost all cell-types within all batches.
 
-If you want to define a batch having all cell types, please set "MAXBATCH" to the label of that batch.
+If you want to define a batch having almost all cell-types, please set "MAXBATCH" to the label of that batch.
 
 
    
