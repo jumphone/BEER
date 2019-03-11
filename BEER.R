@@ -41,47 +41,44 @@
     SINGLE <- function(i){
         library('pcaPP')
         exp_sc = as.array(exp_sc_mat[,i])
-        #log_p_sc_given_ref_list=c()
-        log_p_sc_given_ref_list=rep(0,length(colname_ref))
+        
+        cor_list=rep(0,length(colname_ref))
         j=1
         while(j<=length(colname_ref)){
             exp_ref = as.array(exp_ref_mat[,j])
-            #####
-            #exp_ref[which(exp_ref==0)]=min(exp_ref[which(exp_ref>0)])
-            #####
-            #if(method=='rococo'){log_p_sc_given_ref=rococo(exp_sc,exp_ref)} else
-            if(method=='kendall'){log_p_sc_given_ref=cor.fk(exp_sc,exp_ref)}
+            
+            if(method=='kendall'){this_cor=cor.fk(exp_sc,exp_ref)}
             else{
-            log_p_sc_given_ref=cor(exp_sc,exp_ref, method=method)}
-            #log_p_sc_given_ref_list=c(log_p_sc_given_ref_list, log_p_sc_given_ref)
-            log_p_sc_given_ref_list[j]=log_p_sc_given_ref
+            this_cor=cor(exp_sc,exp_ref, method=method)}
+            
+            cor_list[j]=this_cor
             j=j+1}
         ################################
         if(i%%print_step==1){print(i)}
-        return(log_p_sc_given_ref_list)
+        return(cor_list)
         }
     #######################################
     cl= makeCluster(CPU,outfile='')
     RUN = parLapply(cl=cl,1:length(exp_sc_mat[1,]), SINGLE)
     stopCluster(cl)
     #RUN = mclapply(1:length(colname_sc), SINGLE, mc.cores=CPU)
-    LOG_P_SC_GIVEN_REF = c()
-    for(log_p_sc_given_ref_list in RUN){
-        LOG_P_SC_GIVEN_REF=cbind(LOG_P_SC_GIVEN_REF, log_p_sc_given_ref_list)}
+    COR = c()
+    for(cor_list in RUN){
+        COR=cbind(COR, cor_list)}
     #######################################
-    rownames(LOG_P_SC_GIVEN_REF)=colname_ref
-    colnames(LOG_P_SC_GIVEN_REF)=colname_sc
-    return(LOG_P_SC_GIVEN_REF)
+    rownames(COR)=colname_ref
+    colnames(COR)=colname_sc
+    return(COR)
     }
 
 
-.get_tag_max <- function(P_REF_GIVEN_SC){
-    RN=rownames(P_REF_GIVEN_SC)
-    CN=colnames(P_REF_GIVEN_SC)
+.get_tag_max <- function(COR){
+    RN=rownames(COR)
+    CN=colnames(COR)
     TAG=cbind(CN,rep('NA',length(CN)))
     i=1
     while(i<=length(CN)){
-        this_rn_index=which(P_REF_GIVEN_SC[,i] == max(P_REF_GIVEN_SC[,i]))[1]
+        this_rn_index=which(COR[,i] == max(COR[,i]))[1]
         TAG[i,2]=RN[this_rn_index]
         i=i+1
         }
