@@ -15,6 +15,10 @@ Date: Mar. 7, 2019
 
 # Usage:
 
+* [1. Analyze Two Batches](#1-Analyze-Two-Batches)
+* [2. Analyze Multiple Batches](#2-Analyze-Multiple-Batches)
+
+
 ## 1. Analyze Two Batches
 
 ### Step1. Load Data
@@ -44,7 +48,7 @@ Date: Mar. 7, 2019
     
     pbmc <- mybeer$seurat
     
-### Keep batch effect:
+#### Keep batch effect:
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="500">
     
@@ -137,7 +141,7 @@ If you want to define a batch having all cell types, please set "MAXBATCH" to th
     
     pbmc <- mybeer$seurat
     
-### Keep batch effect:
+#### Keep batch effect:
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="500">
     
