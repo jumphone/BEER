@@ -43,10 +43,8 @@ rm(D123456)
 
 
 
-MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
+MBEER <- function(DATA, BATCH, CNUM=10, PCNUM=50, CPU=4, print_step=10){
   
-  
-    
     RESULT=list()
     library(Seurat)
     source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
