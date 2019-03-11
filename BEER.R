@@ -247,6 +247,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH=NULL, CNUM=10, PCNUM=50, CPU=4, print_st
     TABLE=table(BATCH)  
     if(!MAXBATCH %in% rownames(TABLE)){
         MAXBATCH=rownames(TABLE)[which(TABLE==max(TABLE))[1]]}
+    print(MAXBATCH)
     ############################################################################
     ############################################################################
     EXP = DATA
