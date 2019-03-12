@@ -16,7 +16,7 @@ Date: Mar. 7, 2019
 # Usage:
 
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
-* [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
+* [II. Combine Multiple Batches (alpha version)](#II-Combine-Multiple-Batches-alpha-version)
 
 </br>
 </br>
@@ -93,7 +93,7 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
 </br>
 </br>
     
-# II. Combine Multiple Batches
+# II. Combine Multiple Batches (alpha version)
 
 Please use the function named "MBEER" to combine multiple batches (n>=3).
 
