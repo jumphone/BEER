@@ -328,7 +328,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     print('n(Validpair):')
     print(NROW_VP)
     #if(NROW_VP<=1 | is.null(NROW_VP) ){print('Please set a smaller CNUM !!!')}
-    if(NROW_VP<=1 | is.null(NROW_VP) ){return(message("Please set a smaller CNUM !!!"))}
+    #if(NROW_VP<=1 | is.null(NROW_VP) ){return(message("Please set a smaller CNUM !!!"))}
     ##########################
     VP=VP[which(VP_OUT$cor>=VPCOR),]
     MAP=rep('NA',length(GROUP))
@@ -420,7 +420,9 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM)  
     MAX_G1=.getGroup(MAX_D1X,'D1',CNUM)
     DR=pbmc@dr$pca@cell.embeddings 
-      
+    
+    COLNAMES=c()
+    
     i=1
     while(i<=nrow(PAIR)){
           
@@ -433,28 +435,33 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     this_G2=.getGroup(this_D2X,'D2',CNUM)
     this_GROUP=c(MAX_G1, this_G2)
     this_BATCH=c(rep('D1',ncol(MAX_D1)),rep('D2',ncol(this_D2))) 
-    this_VP_OUT=.getValidpair(MAX_D1, MAX_G1, this_D2, this_G2, CPU, method='kendall', print_step)  
-    #this_VP_OUT=.getValidpair(MAX_D1, MAX_G1, this_D2, this_G2, CPU, method='kendall', 10)
-    this_VP=this_VP_OUT$vp
-    this_NROW_VP=nrow(this_VP)
-    print('n(Validpair):')
-    print(this_NROW_VP)
-    if(is.null(this_NROW_VP) | this_NROW_VP<=1  ){return(message("Please set a smaller CNUM !!!"))}     
-    ##########################
-    this_DR=DR[c(which(BATCH %in% this_pair[1]), which(BATCH %in% this_pair[2])),]
-    this_B1index=which(this_BATCH=='D1')
-    this_B2index=which(this_BATCH=='D2')
-    this_OUT=.evaluateBatcheffect(this_DR, this_B1index, this_B2index, this_GROUP, this_VP)      
-    #################
-    COR=cbind(COR,this_OUT$cor)
-    PV=cbind(PV,this_OUT$pv)
-    FDR=cbind(FDR, this_OUT$fdr)
+    this_VP_OUT=.getValidpair(MAX_D1, MAX_G1, this_D2, this_G2, CPU, method='kendall', print_step) 
+     
+    if(is.null(this_VP_OUT)){ 
+        print(this_pair)
+        print('No Valid Pair!')}else{   
+        COLNAMES=c(COLNAMES, this_pair[2])
+        this_VP=this_VP_OUT$vp
+        this_NROW_VP=nrow(this_VP)
+        print('n(Validpair):')
+        print(this_NROW_VP)
+         
+        ##########################
+        this_DR=DR[c(which(BATCH %in% this_pair[1]), which(BATCH %in% this_pair[2])),]
+        this_B1index=which(this_BATCH=='D1')
+        this_B2index=which(this_BATCH=='D2')
+        this_OUT=.evaluateBatcheffect(this_DR, this_B1index, this_B2index, this_GROUP, this_VP)      
+        #################
+        COR=cbind(COR,this_OUT$cor)
+        PV=cbind(PV,this_OUT$pv)
+        FDR=cbind(FDR, this_OUT$fdr)
+        }
           
     i=i+1}
     
-    colnames(COR)=PAIR[,2]
-    colnames(PV)=PAIR[,2]
-    colnames(FDR)=PAIR[,2]
+    colnames(COR)=COLNAMES
+    colnames(PV)=COLNAMES
+    colnames(FDR)=COLNAMES
        
     print('############################################################################')
     print('MainStep3. Output')
