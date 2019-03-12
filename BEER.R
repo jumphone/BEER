@@ -199,7 +199,7 @@
         i=i+1}
     VP=tag1[V,]
     ##############################
-    if(length(V)<=1){return(message("Please set a smaller CNUM !!!"))}
+    if(length(V)<=1){return(message("Please try a different CNUM "))}
     ##############################
     C=c()
     t=1
