@@ -142,7 +142,7 @@
 
 
 
-.data2one <- function(DATA, GENE, CPU=4, PCNUM=100, SEED=1){
+.data2one <- function(DATA, GENE, CPU=4, PCNUM=100, SEED=123){
     PCUSE=1:PCNUM
     print('Start')
     library(Seurat)
@@ -153,7 +153,7 @@
     print('Step3.Scale Data...')
     DATA <- ScaleData(object = DATA, genes.use =GENE, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
     print('Step4.PCA...')
-    DATA <- RunPCA(object = DATA, pcs.compute=PCNUM, pc.genes =GENE, do.print = FALSE)
+    DATA <- RunPCA(object = DATA, seed.use=SEED, pcs.compute=PCNUM, pc.genes =GENE, do.print = FALSE)
     print('Step5.One-dimention...')
     DATA <- RunTSNE(object = DATA, seed.use=SEED, dims.use = PCUSE, do.fast=TRUE,dim.embed = 1)
     DR=DATA@dr$tsne@cell.embeddings
@@ -277,7 +277,8 @@
 
 
 
-BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
+BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123){
+    set.seed(SEED)
     RESULT=list()
     library(Seurat)
     #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
@@ -302,13 +303,13 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
     pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
     #length(x = pbmc@var.genes)
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
-    pbmc <- RunPCA(object = pbmc, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
+    pbmc <- RunPCA(object = pbmc,seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
     
     print('############################################################################')
     print('MainStep3.Convert to one-dimension...')
     print('############################################################################')
-    D1X=.data2one(D1, pbmc@var.genes, CPU, PCNUM)
-    D2X=.data2one(D2, pbmc@var.genes, CPU, PCNUM)
+    D1X=.data2one(D1, pbmc@var.genes, CPU, PCNUM, SEED)
+    D2X=.data2one(D2, pbmc@var.genes, CPU, PCNUM, SEED)
     G1=.getGroup(D1X,'D1',CNUM)
     G2=.getGroup(D2X,'D2',CNUM)
     GROUP=c(G1,G2)
@@ -366,8 +367,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10){
 
 
 # BEER with Multiple Samples
-MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10){
-  
+MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123){
+    set.seed( SEED)
     RESULT=list()
     library(Seurat)
     #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
@@ -395,7 +396,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
     #length(x = pbmc@var.genes)
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
-    pbmc <- RunPCA(object = pbmc, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
     pbmc@meta.data$batch=BATCH
       
     PAIR=c()
@@ -417,7 +418,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
       
       
     MAX_D1=EXP[,which(BATCH == MAXBATCH)]
-    MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM)  
+    MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM, SEED)  
     MAX_G1=.getGroup(MAX_D1X,'D1',CNUM)
     DR=pbmc@dr$pca@cell.embeddings 
     
