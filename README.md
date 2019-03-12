@@ -18,6 +18,8 @@ Date: Mar. 7, 2019
 * [I. Combine Two Batches](#1-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#2-Combine-Multiple-Batches)
 
+</br>
+</br>
 
 # I. Combine Two Batches
 
@@ -87,10 +89,9 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = PCUSE, do.fast = TRUE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
-    
-    
-————————————————————————————————————————————————————————————————————————————    
 
+</br>
+</br>
     
 # II. Combine Multiple Batches
 
