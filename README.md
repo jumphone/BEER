@@ -89,6 +89,9 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
     
+————————————————————————————————————————————————————————————————————————————    
+
+    
 # II. Combine Multiple Batches
 
 Please use the function named "MBEER" to combine multiple batches (n>=3).
