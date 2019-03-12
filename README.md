@@ -95,8 +95,6 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     
 # II. Combine Multiple Batches (Alpha Version)
 
-### * Here is an Alpha Version of Multi-BEER (MBEER).
-
 Please use the function named "MBEER" to combine multiple batches (n>=3).
 
 This function implements the iteration of "Combine Two Batches".
