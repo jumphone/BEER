@@ -96,7 +96,6 @@ COL[which(TARGET_LABEL=='D2')]='blue'
 
 
 
-
 tiff("COMPARE.tif", width = 8, height= 9, units = 'in',res = 400)
 
 TOTAL=length(which(PCH==3)) #820
@@ -126,29 +125,44 @@ points(MNN_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],c
 
 
 ###############
-NCOL=rep('grey90',nrow(BEER_DR))
-NCOL[which(LABEL=='astrocytes_ependymal_batch1')]='red'
-NCOL[which(LABEL=='OPC_batch2')]='blue'
-NCOL[which(LABEL=='microglia_batch1')]='darkgreen'
 
-NCEX=0.3
-plot(MNN_UMAP, col=NCOL,pch=19,cex=NCEX, main='fastMNN')
-#points(MNN_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
-#points(MNN_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
-
+BBK_UMAP[which(BBK_UMAP[,1] < -8),1]= -8
+plot(BBK_UMAP, col=COL,pch=PCH,cex=CEX, main='BBKNN',ylim=c(-12,16))
+points(BBK_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 
 
 ###############
 plot(CCA_UMAP, col=COL,pch=PCH,cex=CEX, main='Seurat (CCA alignment)')
 points(CCA_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
 ###############
-XL=0;XR=7;YB=1;YU=5
+#XL=0;XR=7;YB=1;YU=5
 #rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
 #RNUM=length(which(CCA_UMAP[which(PCH==3),1]>XL & CCA_UMAP[which(PCH==3),1]<XR & CCA_UMAP[which(PCH==3),2]>YB & CCA_UMAP[which(PCH==3),2]<YU))
 #RNUM/TOTAL #0.3195122
 
+###############
+NCOL=rep('grey90',nrow(BEER_DR))
+NCOL[which(LABEL=='astrocytes_ependymal_batch1')]='red'
+NCOL[which(LABEL=='OPC_batch2')]='blue'
+NCOL[which(LABEL=='microglia_batch1')]='darkgreen'
+NCEX=0.3
+plot(MNN_UMAP, col=NCOL,pch=19,cex=NCEX, main='fastMNN')
+#points(MNN_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
+#points(MNN_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
 ###############
+NNCOL=rep('grey90',nrow(BEER_DR))
+NNCOL[which(LABEL=='interneurons_batch1')]='red'
+NNCOL[which(LABEL=='pyramidal SS_batch1')]='darkgreen'
+NNCOL[which(TARGET_LABEL=='D1')]='blue'
+NNCOL[which(TARGET_LABEL=='D2')]='blue'
+plot(BBK_UMAP, col=NNCOL,pch=19,cex=0.3, main='BBKNN',ylim=c(-12,16))
+points(BBK_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
+points(BBK_UMAP[which(NNCOL=='darkgreen'),], col=NNCOL[which(NNCOL=='darkgreen')],pch=19,cex=0.3)
+
+
+###############
+
 plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
 used=which(PCH==3 & BEER_UMAP[,1]> -8 & BEER_UMAP[,1]< 3 & BEER_UMAP[,2]< 5 & BEER_UMAP[,2] > -9)
 points(BEER_UMAP[used,], col=COL[used],pch=PCH[used],cex=CEX)
@@ -157,28 +171,25 @@ points(BEER_UMAP[used,], col=COL[used],pch=PCH[used],cex=CEX)
 #RNUM=length(which(BEER_UMAP[which(PCH==3),1]>XL & BEER_UMAP[which(PCH==3),1]<XR & BEER_UMAP[which(PCH==3),2]>YB & BEER_UMAP[which(PCH==3),2]<YU))
 #RNUM/TOTAL #0.5341463
 
+
+
+###############
+NCOL=rep('grey90',nrow(BEER_DR))
+NCOL[which(LABEL=='astrocytes_ependymal_batch1')]='red'
+NCOL[which(LABEL=='OPC_batch2')]='blue'
+NCOL[which(LABEL=='microglia_batch1')]='darkgreen'
+NCEX=0.3
 plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 #points(BEER_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
 #points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
-BBK_UMAP[which(BBK_UMAP[,1] < -8),1]= -8
 
-plot(BBK_UMAP, col=COL,pch=PCH,cex=CEX, main='BBKNN',ylim=c(-12,16))
-points(BBK_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
-
-
+###############
 NNCOL=rep('grey90',nrow(BEER_DR))
 NNCOL[which(LABEL=='interneurons_batch1')]='red'
 NNCOL[which(LABEL=='pyramidal SS_batch1')]='darkgreen'
 NNCOL[which(TARGET_LABEL=='D1')]='blue'
 NNCOL[which(TARGET_LABEL=='D2')]='blue'
-
-
-plot(BBK_UMAP, col=NNCOL,pch=19,cex=0.3, main='BBKNN',ylim=c(-12,16))
-points(BBK_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
-points(BBK_UMAP[which(NNCOL=='darkgreen'),], col=NNCOL[which(NNCOL=='darkgreen')],pch=19,cex=0.3)
-
-
 plot(BEER_UMAP, col=NNCOL,pch=19,cex=0.3, main='BEER',ylim=c(-12,16))
 points(BEER_UMAP[which(NNCOL=='red'),], col=NNCOL[which(NNCOL=='red')],pch=19,cex=0.3)
 points(BEER_UMAP[which(NNCOL=='darkgreen'),], col=NNCOL[which(NNCOL=='darkgreen')],pch=19,cex=0.3)
@@ -188,6 +199,10 @@ dev.off()
 
 
 #############################################
+
+
+
+
 
 
 
