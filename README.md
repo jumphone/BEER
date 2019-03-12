@@ -139,7 +139,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=MBEER(DATA, BATCH, MAXBATCH="", CNUM=3, PCNUM=20,CPU=2)
+    mybeer=MBEER(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=20,CPU=2)
 
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
@@ -153,7 +153,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="400">
     
-    ALLPC <- 1:length(mybeer$cor)
+    ALLPC <- length(mybeer$cor)
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
@@ -164,8 +164,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER2.png" width="400">
 
-    PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
-    #PCUSE <- which(mybeer$cor> 0.6  & mybeer$fdr<0.05)
+    PCUSE <- which(mybeer$cor> 0.7  & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
     
     # UMAP:
