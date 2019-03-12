@@ -95,7 +95,7 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     
 # II. Combine Multiple Batches (Alpha Version)
 
-### The method (MBEER) to combine multiple batches is still under development and evaluation.
+### The method (MBEER) to combine multiple batches is still under development and test.
 
 ### Here is an Alpha Version of MBEER.
 
