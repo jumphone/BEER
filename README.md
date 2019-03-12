@@ -139,7 +139,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=MBEER(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=20,CPU=2)
+    mybeer=MBEER(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=20, CPU=2, SEED=1 )
 
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
