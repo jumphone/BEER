@@ -15,11 +15,11 @@ Date: Mar. 7, 2019
 
 # Usage:
 
-* [1. Combine Two Batches](#1-Combine-Two-Batches)
-* [2. Combine Multiple Batches](#2-Combine-Multiple-Batches)
+* [I. Combine Two Batches](#1-Combine-Two-Batches)
+* [II. Combine Multiple Batches](#2-Combine-Multiple-Batches)
 
 
-## 1. Combine Two Batches
+# I. Combine Two Batches
 
 Please use the function named "BEER" to combine two batches.
 
@@ -89,7 +89,7 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
     
-## 2. Combine Multiple Batches
+# II. Combine Multiple Batches
 
 Please use the function named "MBEER" to combine multiple batches (n>=3).
 
