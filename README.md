@@ -15,8 +15,8 @@ Date: Mar. 7, 2019
 
 # Usage:
 
-* [I. Combine Two Batches](#1-Combine-Two-Batches)
-* [II. Combine Multiple Batches](#2-Combine-Multiple-Batches)
+* [I. Combine Two Batches](#I-Combine-Two-Batches)
+* [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
 
 </br>
 </br>
