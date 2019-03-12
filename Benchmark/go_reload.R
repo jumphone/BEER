@@ -150,7 +150,7 @@ XL=0;XR=7;YB=1;YU=5
 
 ###############
 plot(BEER_UMAP, col=COL,pch=PCH,cex=CEX, main='BEER')
-used=which(PCH==3 & BEER_UMAP[,1]> -8 & BEER_UMAP[,1]< 0 & BEER_UMAP[,2]< 0 & BEER_UMAP[,2] > -9)
+used=which(PCH==3 & BEER_UMAP[,1]> -8 & BEER_UMAP[,1]< 3 & BEER_UMAP[,2]< 5 & BEER_UMAP[,2] > -9)
 points(BEER_UMAP[used,], col=COL[used],pch=PCH[used],cex=CEX)
 #XL=-8;XR=0;YB=-9;YU=0
 #rect(XL,YB,XR,YU,border='black',lwd=LWD,lty='longdash')
@@ -161,6 +161,7 @@ plot(BEER_UMAP, col=NCOL,pch=19,cex=NCEX, main='BEER')
 #points(BEER_UMAP[which(NCOL=='red'),],pch=20, col=NCOL[which(NCOL=='red')],cex=CEX)
 #points(BEER_UMAP[which(NCOL=='darkgreen'),],pch=20, col=NCOL[which(NCOL=='darkgreen')],cex=CEX)
 
+BBK_UMAP[which(BBK_UMAP[,1] < -8),1]= -8
 
 plot(BBK_UMAP, col=COL,pch=PCH,cex=CEX, main='BBKNN',ylim=c(-12,16))
 points(BBK_UMAP[which(PCH==3),], col=COL[which(PCH==3)],pch=PCH[which(PCH==3)],cex=CEX)
