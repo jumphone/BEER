@@ -142,7 +142,7 @@
 
 
 
-.data2one <- function(DATA, GENE, CPU=4, PCNUM=100, SEED=123,  PP=30){
+.data2one <- function(DATA, GENE, CPU=4, PCNUM=50, SEED=123,  PP=30){
     PCUSE=1:PCNUM
     print('Start')
     library(Seurat)
@@ -161,7 +161,7 @@
     return(DR)
     }
 
-.getGroup <- function(X,TAG,CNUM=100){
+.getGroup <- function(X,TAG,CNUM=10){
     DR=X
     RANK=rank(DR,ties.method='random')
     CUTOFF=CNUM 
