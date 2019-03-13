@@ -144,7 +144,7 @@
 
 .data2one <- function(DATA, GENE, CPU=4, PCNUM=50, SEED=123,  PP=30){
     
-    if(ncol(DATA)<=100){PP=5;print('The cell number is too small! The perplexity is change to 5 !')}
+    if(ncol(DATA)<=200){PP=5;print('The cell number is too small! The perplexity is change to 5 !')}
     
     PCUSE=1:PCNUM
     print('Start')
