@@ -277,7 +277,7 @@
 
 
 
-BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123){
+BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123, PP=30){
     set.seed(SEED)
     RESULT=list()
     library(Seurat)
@@ -288,6 +288,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     D2=D2
     CNUM=CNUM
     PCNUM=PCNUM
+    PP=PP
     print_step=print_step
     
     print('############################################################################')
@@ -308,8 +309,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     print('############################################################################')
     print('MainStep3.Convert to one-dimension...')
     print('############################################################################')
-    D1X=.data2one(D1, pbmc@var.genes, CPU, PCNUM, SEED)
-    D2X=.data2one(D2, pbmc@var.genes, CPU, PCNUM, SEED)
+    D1X=.data2one(D1, pbmc@var.genes, CPU, PCNUM, SEED, PP )
+    D2X=.data2one(D2, pbmc@var.genes, CPU, PCNUM, SEED, PP )
     G1=.getGroup(D1X,'D1',CNUM)
     G2=.getGroup(D2X,'D2',CNUM)
     GROUP=c(G1,G2)
@@ -367,7 +368,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
 
 
 # BEER with Multiple Samples
-MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123){
+MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123, PP=30){
     set.seed( SEED)
     RESULT=list()
     library(Seurat)
@@ -418,7 +419,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
       
       
     MAX_D1=EXP[,which(BATCH == MAXBATCH)]
-    MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM, SEED)  
+    MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM, SEED, PP)  
     MAX_G1=.getGroup(MAX_D1X,'D1',CNUM)
     DR=pbmc@dr$pca@cell.embeddings 
     
@@ -432,7 +433,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     print(i)
     print(this_pair)
     this_D2=EXP[,which(BATCH == this_pair[2])]
-    this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM)         
+    this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM, PP)         
     this_G2=.getGroup(this_D2X,'D2',CNUM)
     this_GROUP=c(MAX_G1, this_G2)
     this_BATCH=c(rep('D1',ncol(MAX_D1)),rep('D2',ncol(this_D2))) 
