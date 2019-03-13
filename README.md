@@ -175,6 +175,14 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
     
+### Another Demo (GSE102130, we only show the final UMAP figures):
+
+#### Keep batch effect:
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER3.png" width="400">
+
+#### Remove batch effect:
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER4.png" width="400">
+
 
 # License
     
