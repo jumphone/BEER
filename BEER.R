@@ -208,7 +208,7 @@
         i=i+1}
     VP=tag1[V,]
     ##############################
-    if(length(V)<=1){return(message("Please try a different CNUM "))}
+    if(length(V)<=1){return(message("Please try a different CNUM to get valid pair."))}
     ##############################
     C=c()
     t=1
