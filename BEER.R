@@ -437,7 +437,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     print(i)
     print(this_pair)
     this_D2=EXP[,which(BATCH == this_pair[2])]
-    this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM, PP)         
+    this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM, SEED, PP)         
     this_G2=.getGroup(this_D2X,'D2',CNUM)
     this_GROUP=c(MAX_G1, this_G2)
     this_BATCH=c(rep('D1',ncol(MAX_D1)),rep('D2',ncol(this_D2))) 
