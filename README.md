@@ -180,7 +180,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 ### *Another Demo of MBEER (GSE102130):
 
-Here, we only show the final UMAP figures.
+Here, we only show the final UMAP figures (All parameters are similar with the first demo).
 
 #### Keep batch effect:
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER3.png" width="400">
