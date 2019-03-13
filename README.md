@@ -157,7 +157,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="400">
     
-    ALLPC <- length(mybeer$cor)
+    ALLPC <- 1:length(mybeer$cor)
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
