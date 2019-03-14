@@ -89,24 +89,6 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = PCUSE, do.fast = TRUE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
-
-#### Use the UMAP vectors to do clustering:
-    
-    VEC=pbmc@dr$umap@cell.embeddings
-    cluster_number=4
-    
-    # Hierarchical clustering
-    D=dist(VEC)
-    H=hclust(D)
-    HC=cutree(H, k=cluster_number) 
-    pbmc@meta.data$HC=HC
-    DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.1)
-    
-    # K-means clustering
-    K=kmeans(VEC,centers=cluster_number)
-    KC=K$cluster
-    pbmc@meta.data$KC=KC
-    DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.1)
     
     
 </br>
@@ -208,6 +190,36 @@ Here, we only show the final UMAP figures (All parameters are the same with that
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER4.png" width="400">
 
 
+
+# III. Use UMAP vectors to do clustering:
+    
+    VEC=pbmc@dr$umap@cell.embeddings
+    cluster_number=5
+    
+    # Hierarchical clustering
+    set.seed(123)
+    D=dist(VEC)
+    H=hclust(D)
+    HC=cutree(H, k=cluster_number) 
+    pbmc@meta.data$HC=HC
+    DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.1)
+    
+    # K-means clustering
+    set.seed(123)
+    K=kmeans(VEC,centers=cluster_number)
+    KC=K$cluster
+    pbmc@meta.data$KC=KC
+    DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.1)
+    
+    # Density-based clustering
+    library("fpc")
+    set.seed(123)
+    df=VEC
+    db <- fpc::dbscan(df, eps = 0.5, MinPts = 5)
+    DC=db$cluster
+    pbmc@meta.data$DC=DC
+    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.1)
+    
 # License
     
     MIT License
