@@ -234,7 +234,21 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     DC=db$cluster
     pbmc@meta.data$DC=DC
     DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
+    
+    
+    
+#### Find marker genes & draw heatmap (density-based clustering):
 
+    library(dplyr)
+    tmp=pbmc@ident
+    pbmc@ident=as.factor(DC)
+    names(pbmc@ident)=names(tmp)
+    pbmc.markers <- FindAllMarkers(object = pbmc, only.pos = TRUE, min.pct = 0.25, thresh.use = 0.25)
+    top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(10, avg_logFC)
+    DoHeatmap(object = pbmc, genes.use = top10$gene, slim.col.label = TRUE, remove.key = TRUE)
+    
+    
+    
 </br>   
 </br> 
     
