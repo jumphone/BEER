@@ -90,6 +90,25 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
 
+#### Use the UMAP vectors to do clustering:
+    
+    VEC=pbmc@dr$umap@cell.embeddings
+    cluster_number=4
+    
+    # Hierarchical clustering
+    D=dist(VEC)
+    H=hclust(D)
+    HC=cutree(H, k=cluster_number) 
+    pbmc@meta.data$HC=HC
+    DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.1)
+    
+    # K-means clustering
+    K=kmeans(VEC,centers=cluster_number)
+    KC=K$cluster
+    pbmc@meta.data$KC=KC
+    DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.1)
+    
+    
 </br>
 </br>
     
