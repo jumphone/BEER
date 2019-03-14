@@ -198,7 +198,11 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     #Demo Data (GSE102130)
     VEC=pbmc@dr$umap@cell.embeddings
     cluster_number=5
-    
+
+#### Hierarchical clustering:
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">   
+
     # Hierarchical clustering
     set.seed(123)
     D=dist(VEC)
@@ -207,9 +211,9 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     pbmc@meta.data$HC=HC
     DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.5)
 
-Hierarchical clustering:
+#### K-means clustering:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">   
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">  
     
     # K-means clustering
     set.seed(123)
@@ -218,9 +222,9 @@ Hierarchical clustering:
     pbmc@meta.data$KC=KC
     DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.5)
 
-K-means clustering:
+#### Density-based clustering:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST3.png" width="400">    
     
     # Density-based clustering
     library("fpc")
@@ -231,9 +235,8 @@ K-means clustering:
     pbmc@meta.data$DC=DC
     DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
 
-Density-based clustering:
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST3.png" width="400">    
+</br>   
+</br> 
     
     
 # License
