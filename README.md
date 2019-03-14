@@ -178,7 +178,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
     
 </br>   
-</br>
 
 ### *Another Demo of MBEER (GSE102130):
 
