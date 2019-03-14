@@ -17,6 +17,7 @@ Date: Mar. 7, 2019
 
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
+* [III. Use UMAP vectors to do clustering](#III-Use-UMAP-vectors-to-do-clustering)
 
 </br>
 </br>
@@ -191,7 +192,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
 
 
 
-# III. Use UMAP vectors to do clustering:
+# III. Use UMAP vectors to do clustering
     
     VEC=pbmc@dr$umap@cell.embeddings
     cluster_number=5
