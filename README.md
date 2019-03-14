@@ -217,6 +217,8 @@ Here, we only show the final UMAP figures (All parameters are the same with that
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
+* Details are in the instruction page of Seurat: https://satijalab.org/seurat/get_started.html
+
     library(dplyr)
     tmp=pbmc@ident
     pbmc@ident=as.factor(DC)
