@@ -239,6 +239,8 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     
 #### Find marker genes & draw heatmap (density-based clustering):
 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST4.png" width="400">    
+
     library(dplyr)
     tmp=pbmc@ident
     pbmc@ident=as.factor(DC)
