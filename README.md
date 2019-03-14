@@ -205,7 +205,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     H=hclust(D)
     HC=cutree(H, k=cluster_number) 
     pbmc@meta.data$HC=HC
-    DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.1)
+    DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.5)
 
 Hierarchical clustering:
 
@@ -216,7 +216,7 @@ Hierarchical clustering:
     K=kmeans(VEC,centers=cluster_number)
     KC=K$cluster
     pbmc@meta.data$KC=KC
-    DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.1)
+    DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.5)
 
 K-means clustering:
 
@@ -229,7 +229,7 @@ K-means clustering:
     db <- fpc::dbscan(df, eps = 0.5, MinPts = 5)
     DC=db$cluster
     pbmc@meta.data$DC=DC
-    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.1)
+    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
 
 Density-based clustering:
 
