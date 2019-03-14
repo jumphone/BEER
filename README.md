@@ -208,6 +208,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     DimPlot(pbmc, reduction.use='umap', group.by='HC', pt.size=0.1)
 
 Hierarchical clustering:
+
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">   
     
     # K-means clustering
@@ -218,6 +219,7 @@ Hierarchical clustering:
     DimPlot(pbmc, reduction.use='umap', group.by='KC', pt.size=0.1)
 
 K-means clustering:
+
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
     
     # Density-based clustering
@@ -230,6 +232,7 @@ K-means clustering:
     DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.1)
 
 Density-based clustering:
+
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST3.png" width="400">    
     
     
