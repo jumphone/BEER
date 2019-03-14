@@ -197,7 +197,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     
     #Demo Data (GSE102130)
     VEC=pbmc@dr$umap@cell.embeddings
-    cluster_number=5
+    cluster_number=6
 
 #### Hierarchical clustering:
 
