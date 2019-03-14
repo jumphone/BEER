@@ -17,7 +17,7 @@ Date: Mar. 7, 2019
 
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
-* [III. Use UMAP vectors to do clustering](#III-Use-UMAP-vectors-to-do-clustering)
+* [III. UMAP Based Clustering](#III-UMAP-Based-Clustering)
 
 </br>
 </br>
@@ -141,8 +141,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     rm(D1);rm(D2);rm(D3);rm(D4);rm(D5);rm(D6)
     rm(D12);rm(D34);rm(D56);rm(D1234);rm(D123456)
     
-    
-    
 ### Step2. Detect Batch Effect
 
     mybeer=MBEER(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=20, CPU=2, SEED=1 )
@@ -192,7 +190,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
 </br>
 </br>
 
-# III. Use UMAP vectors to do clustering
+# III. UMAP Based Clustering
     
     #Demo Data (GSE102130)
     VEC=pbmc@dr$umap@cell.embeddings
