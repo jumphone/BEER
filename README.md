@@ -17,7 +17,7 @@ Date: Mar. 7, 2019
 
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
-* [III. UMAP Based Clustering](#III-UMAP-Based-Clustering)
+* [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
 
 </br>
 </br>
@@ -190,7 +190,7 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 </br>
 </br>
 
-# III. UMAP Based Clustering
+# III. UMAP-based Clustering
     
     #Demo Data (GSE102130)
     VEC=pbmc@dr$umap@cell.embeddings
