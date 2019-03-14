@@ -195,7 +195,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     #Demo Data (GSE102130)
     VEC=pbmc@dr$umap@cell.embeddings
 
-#### Density-based clustering:
+### Step1. Density-based clustering:
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
     
@@ -210,7 +210,7 @@ Here, we only show the final UMAP figures (All parameters are the same with that
     
     
     
-#### Find marker genes & draw heatmap:
+### Step2. Find marker genes & draw heatmap:
 
 * Details are in the instruction page of Seurat: https://satijalab.org/seurat/get_started.html
 
