@@ -441,6 +441,8 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     print('Analyze Pair:')
     print(i)
     print(this_pair)
+    print('Total Number of Batch Pairs:')
+    print(nrow(PAIR))
     this_D2=EXP[,which(BATCH == this_pair[2])]
     this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM, SEED, PP)         
     this_G2=.getGroup(this_D2X,'D2',CNUM)
