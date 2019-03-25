@@ -57,8 +57,6 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     #CNUM: the number of cells in each group
     #PCNUM: the number of computated PCA subspaces 
     
-    #If the gene number per cell is small, please try a larger "CNUM", e.g. 20.
-    
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab="COR", pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
