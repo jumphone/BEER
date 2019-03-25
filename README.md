@@ -55,7 +55,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
     
     #CNUM: the number of cells in each group
-    #If the gene number per cell is low, please try larger "CNUM", e.g. 50.
+    #If the gene number per cell is small, please try larger "CNUM", e.g. 50.
     
     #PCNUM: the number of computated PCA subspaces 
     
