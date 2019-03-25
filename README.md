@@ -28,7 +28,7 @@ Please use the function named "BEER" to combine two batches.
 
 Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
 
-Please do quality control before using BEER.
+Please do basic quality control before using BEER (e.g. remove low-quality cells & genes).
 
 ### Step1. Load Data
 
