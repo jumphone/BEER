@@ -28,6 +28,8 @@ Please use the function named "BEER" to combine two batches.
 
 Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
 
+Please do quality control before using BEER.
+
 ### Step1. Load Data
 
     library(Seurat)
