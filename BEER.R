@@ -383,7 +383,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     }
 
 
-# BEER with Multiple Samples
+# BEER with Multiple Batches
 MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123, PP=30, REGBATCH=FALSE){
     set.seed( SEED)
     RESULT=list()
