@@ -203,12 +203,12 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 
 # III. UMAP-based Clustering
     
-    #Demo Data (GSE102130)
-    VEC=pbmc@dr$umap@cell.embeddings
-
 ### Step1. Clustering:
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
+
+    #Demo Data (GSE102130)
+    VEC=pbmc@dr$umap@cell.embeddings
     
     # Here, we use the "dbscan" function to do clustering.
     library("fpc")
