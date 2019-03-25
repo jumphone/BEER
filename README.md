@@ -100,6 +100,8 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
+    #If you cannot get appropriate result, please try:
+    #mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
 </br>
 </br>
