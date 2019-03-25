@@ -319,7 +319,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     if(REGBATCH==FALSE){
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
     }else{
-    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI","BATCH"), num.cores=CPU, do.par=TRUE)
+    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI","batch"), num.cores=CPU, do.par=TRUE)
     }
     pbmc <- RunPCA(object = pbmc,seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
     
@@ -384,7 +384,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
 
 
 # BEER with Multiple Samples
-MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123, PP=30){
+MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123, PP=30, REGBATCH=FALSE){
     set.seed( SEED)
     RESULT=list()
     library(Seurat)
@@ -408,13 +408,21 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     ############################################################################
     ############################################################################
     EXP = DATA
-    pbmc=CreateSeuratObject(raw.data = EXP, min.cells = 0, min.genes = 0, project = "ALL") 
+    pbmc = CreateSeuratObject(raw.data = EXP, min.cells = 0, min.genes = 0, project = "ALL") 
+    
+    pbmc@meta.data$batch=BATCH
+    
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
     #length(x = pbmc@var.genes)
+    if(REGBATCH==FALSE){
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
+    }else{
+    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI","batch"), num.cores=CPU, do.par=TRUE)
+    }
+    
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
-    pbmc@meta.data$batch=BATCH
+    
       
     PAIR=c()
     for(one in rownames(TABLE)){
