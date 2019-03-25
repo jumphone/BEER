@@ -42,6 +42,11 @@ Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zi
     # "D1" & "D2" are UMI matrix (or FPKM, RPKM, TPM, PKM ...; Should not be gene-centric scaled data)
     # Rownames of "D1" & "D2" are gene names
     # Colnames of "D1" & "D2" are cell names 
+    
+    # There shouldn't be duplicated colnames in "D1" & "D2":
+    colnames(D1)=paste0('D1_', colnames(D1))
+    colnames(D2)=paste0('D2_', colnames(D2))
+
 
 ### Step2. Detect Batch Effect
 
