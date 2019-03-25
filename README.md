@@ -55,9 +55,9 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
     
     #CNUM: the number of cells in each group
-    #If the gene number per cell is small, please try larger "CNUM", e.g. 50.
-    
     #PCNUM: the number of computated PCA subspaces 
+    
+    #If the gene number per cell is small, please try a larger "CNUM", e.g. 20.
     
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab="COR", pch=16)
