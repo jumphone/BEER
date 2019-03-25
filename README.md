@@ -57,6 +57,9 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     #CNUM: the number of cells in each group
     #PCNUM: the number of computated PCA subspaces 
     
+    #If you plan to combine data from different sequencing platforms, please try:
+    #mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2, REGBATCH=TRUE)
+    
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab="COR", pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
@@ -100,8 +103,6 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
     #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
-    #If you cannot get appropriate result, please try:
-    #mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
 </br>
 </br>
