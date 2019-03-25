@@ -57,7 +57,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     #CNUM: the number of cells in each group
     #PCNUM: the number of computated PCA subspaces 
     
-    #If you plan to combine data from different sequencing platforms, please try:
+    #If you are combining data from different sequencing platforms, please try:
     #mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
     par(mfrow=c(1,2))
