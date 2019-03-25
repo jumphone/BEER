@@ -63,13 +63,12 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     
 ### Step3. Visualization 
     
-    pbmc <- mybeer$seurat
-    
 #### Keep batch effect:
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="400">
     
     ALLPC <- 1:length(mybeer$cor)
+    pbmc <- mybeer$seurat
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
@@ -87,6 +86,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
   
     PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
+    pbmc <- mybeer$seurat
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
@@ -158,13 +158,12 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step3. Visualization 
     
-    pbmc <- mybeer$seurat
-    
 #### Keep batch effect:
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="400">
     
     ALLPC <- 1:length(mybeer$cor)
+    pbmc <- mybeer$seurat
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
@@ -177,6 +176,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
     PCUSE <- which(mybeer$cor> 0.7  & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
+    pbmc <- mybeer$seurat
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
