@@ -286,7 +286,7 @@
 
 
 
-BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123, PP=30){
+BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123, PP=30, REGBATCH=FALSE){
     set.seed(SEED)
     RESULT=list()
     library(Seurat)
@@ -298,6 +298,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     CNUM=CNUM
     PCNUM=PCNUM
     PP=PP
+    REGBATCH=REGBATCH
+    
     print_step=print_step
     
     print('############################################################################')
@@ -305,6 +307,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     print('############################################################################')
     EXP=.simple_combine(D1,D2)$combine
     pbmc=CreateSeuratObject(raw.data = EXP, min.cells = 0, min.genes = 0, project = "ALL") 
+    BATCH=c(rep('D1',ncol(D1)),rep('D2',ncol(D2)))
+    pbmc@meta.data$batch=BATCH
     
     print('############################################################################')
     print('MainStep2.Preprocess Data...')
@@ -312,7 +316,11 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
     #length(x = pbmc@var.genes)
+    if(REGBATCH==FALSE){
     pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
+    }else{
+    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI","BATCH"), num.cores=CPU, do.par=TRUE)
+    }
     pbmc <- RunPCA(object = pbmc,seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
     
     print('############################################################################')
@@ -323,9 +331,8 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     G1=.getGroup(D1X,'D1',CNUM)
     G2=.getGroup(D2X,'D2',CNUM)
     GROUP=c(G1,G2)
-    BATCH=c(rep('D1',ncol(D1)),rep('D2',ncol(D2)))
     pbmc@meta.data$group=GROUP
-    pbmc@meta.data$batch=BATCH
+    
     
     
     print('############################################################################')
