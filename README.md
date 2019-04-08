@@ -10,8 +10,8 @@ Date: Mar. 7, 2019
 # Requirement:
 
     #R >=3.5
-    install.packages('Seurat') #2.3.4
-    install.packages('pcaPP')
+    install.packages('Seurat') # 2.3.4
+    install.packages('pcaPP') # 1.9.73
 
 # Usage:
 
