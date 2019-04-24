@@ -228,7 +228,7 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 ### Step2. Find marker genes & draw heatmap:
 
 * Details are in the instruction page of Seurat:
-https://satijalab.org/seurat/get_started.html or https://satijalab.org/seurat/v1.4/pbmc3k_tutorial.html
+https://satijalab.org/seurat/get_started.html
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
