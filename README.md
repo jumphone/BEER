@@ -80,12 +80,13 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
+    
+    # Seurat 3.0:
+    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
+    
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
-    # tSNE:
-    pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = ALLPC, do.fast = TRUE, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
-    #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
+
 
 #### Remove batch effect:
 
@@ -99,12 +100,12 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
+    
+    # Seurat 3.0:
+    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
-    # tSNE:
-    pbmc <- RunTSNE(object = pbmc, reduction.use='pca',dims.use = PCUSE, do.fast = TRUE, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='tsne', group.by='batch', pt.size=0.1)
-    #DimPlot(pbmc, reduction.use='tsne', group.by='map', pt.size=0.1)
     
     
 </br>
@@ -127,6 +128,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 ### Step1. Load Data
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    
+    #Seurat 3.0:
+    #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER_Seurat3.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
@@ -220,6 +224,9 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
     #Demo Data (GSE102130)
     VEC=pbmc@dr$umap@cell.embeddings
     
+    #Seurat 3.0:
+    #VEC=pbmc@$reductions$umap@cell.embeddings
+    
     # Here, we use the "dbscan" function to do clustering.
     library("fpc")
     set.seed(123)
@@ -234,7 +241,7 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 ### Step2. Find marker genes & draw heatmap:
 
 * Details are in the instruction page of Seurat:
-https://satijalab.org/seurat/get_started.html
+
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
@@ -246,7 +253,8 @@ https://satijalab.org/seurat/get_started.html
     top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(10, avg_logFC)
     DoHeatmap(object = pbmc, genes.use = top10$gene, slim.col.label = TRUE, remove.key = TRUE)
     
-    
+    # For Seurat 3.0, see:
+    # https://satijalab.org/seurat/get_started.html
     
 </br>   
 </br> 
