@@ -152,16 +152,16 @@
     print('Start')
     library(Seurat)
     print('Step1.Create Seurat Object...')
-    DATA = CreateSeuratObject(raw.data = DATA, min.cells = 0, min.genes = 0, project = "DATA") 
+    DATA =CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL")   
     print('Step2.Normalize Data...')
     DATA <- NormalizeData(object = DATA, normalization.method = "LogNormalize", scale.factor = 10000)
     print('Step3.Scale Data...')
-    DATA <- ScaleData(object = DATA, genes.use =GENE, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
+    DATA <- ScaleData(object = DATA, features = GENE, vars.to.regress = c("nCount_RNA"), num.cores=CPU, do.par=TRUE)
     print('Step4.PCA...')
-    DATA <- RunPCA(object = DATA, seed.use=SEED, pcs.compute=PCNUM, pc.genes =GENE, do.print = FALSE)
+    DATA <- RunPCA(object = DATA, seed.use=SEED, npcs=PCNUM, features = GENE, ndims.print=1,nfeatures.print=1)
     print('Step5.One-dimention...')
     DATA <- RunTSNE(object = DATA, seed.use=SEED, dims.use = PCUSE, do.fast=TRUE,dim.embed = 1,  perplexity= PP)
-    DR=DATA@dr$tsne@cell.embeddings
+    DR=DATA@reductions$tsne@cell.embeddings
     print('Finished!!!')
     return(DR)
     }
@@ -190,6 +190,9 @@
 
 .getValidpair <- function(DATA1, GROUP1, DATA2, GROUP2, CPU=4, method='kendall', print_step=10){
     #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    print_step=print_step
+    method=method
+    CPU=CPU
     print('Start')
     print('Step1.Generate Reference...')
     REF1=.generate_ref(DATA1, cbind(GROUP1, GROUP1), min_cell=1) 
@@ -306,7 +309,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     print('MainStep1.Combine Data...')
     print('############################################################################')
     EXP=.simple_combine(D1,D2)$combine
-    pbmc=CreateSeuratObject(raw.data = EXP, min.cells = 0, min.genes = 0, project = "ALL") 
+    pbmc=CreateSeuratObject(counts = EXP, min.cells = 0, min.features = 0, project = "ALL") 
     BATCH=c(rep('D1',ncol(D1)),rep('D2',ncol(D2)))
     pbmc@meta.data$batch=BATCH
     
@@ -314,20 +317,20 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     print('MainStep2.Preprocess Data...')
     print('############################################################################')
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-    pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
-    #length(x = pbmc@var.genes)
-    if(REGBATCH==FALSE){
-    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
-    }else{
-    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI","batch"), num.cores=CPU, do.par=TRUE)
-    }
-    pbmc <- RunPCA(object = pbmc,seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
+    pbmc <- FindVariableFeatures(object = pbmc, selection.method = "vst", nfeatures = 2000)
+    #length(pbmc@assays$RNA@var.features)
     
+    if(REGBATCH==FALSE){
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA"), num.cores=CPU, do.par=TRUE)
+    }else{
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","batch"), num.cores=CPU, do.par=TRUE)
+    }
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     print('############################################################################')
     print('MainStep3.Convert to one-dimension...')
     print('############################################################################')
-    D1X=.data2one(D1, pbmc@var.genes, CPU, PCNUM, SEED, PP )
-    D2X=.data2one(D2, pbmc@var.genes, CPU, PCNUM, SEED, PP )
+    D1X=.data2one(D1, VariableFeatures(object = pbmc), CPU, PCNUM, SEED, PP )
+    D2X=.data2one(D2, VariableFeatures(object = pbmc), CPU, PCNUM, SEED, PP )
     G1=.getGroup(D1X,'D1',CNUM)
     G2=.getGroup(D2X,'D2',CNUM)
     GROUP=c(G1,G2)
@@ -357,7 +360,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     print('############################################################################')
     print('MainStep5.Detect subspaces with batch effect...')
     print('############################################################################')
-    DR=pbmc@dr$pca@cell.embeddings 
+    DR=pbmc@reductions$pca@cell.embeddings 
     B1index=which(BATCH=='D1')
     B2index=which(BATCH=='D2')
     OUT=.evaluateBatcheffect(DR, B1index, B2index, GROUP, VP)
