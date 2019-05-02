@@ -411,20 +411,19 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     ############################################################################
     ############################################################################
     EXP = DATA
-    pbmc = CreateSeuratObject(raw.data = EXP, min.cells = 0, min.genes = 0, project = "ALL") 
-    
+    pbmc = CreateSeuratObject(counts = EXP, min.cells = 0, min.features = 0, project = "ALL")
     pbmc@meta.data$batch=BATCH
     
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-    pbmc <- FindVariableGenes(object = pbmc, do.plot=F,mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
-    #length(x = pbmc@var.genes)
-    if(REGBATCH==FALSE){
-    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI"), num.cores=CPU, do.par=TRUE)
-    }else{
-    pbmc <- ScaleData(object = pbmc, genes.use=pbmc@var.genes, vars.to.regress = c("nUMI","batch"), num.cores=CPU, do.par=TRUE)
-    }
+    pbmc <- FindVariableFeatures(object = pbmc, selection.method = "vst", nfeatures = 2000)
+    #length(pbmc@assays$RNA@var.features)
     
-    pbmc <- RunPCA(object = pbmc, seed.use=SEED, pcs.compute=PCNUM,pc.genes = pbmc@var.genes, do.print =F)
+    if(REGBATCH==FALSE){
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA"), num.cores=CPU, do.par=TRUE)
+    }else{
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","batch"), num.cores=CPU, do.par=TRUE)
+    }
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     
       
     PAIR=c()
@@ -448,7 +447,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     MAX_D1=EXP[,which(BATCH == MAXBATCH)]
     MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM, SEED, PP)  
     MAX_G1=.getGroup(MAX_D1X,'D1',CNUM)
-    DR=pbmc@dr$pca@cell.embeddings 
+    DR=pbmc@reductions$pca@cell.embeddings  
     
     COLNAMES=c()
     
