@@ -79,10 +79,11 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     
     # Seurat 3.0:
     # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
+    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
@@ -182,6 +183,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
     # Seurat 3.0:
     # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
+    
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
    
 
