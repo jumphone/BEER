@@ -176,6 +176,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+    # Seurat 3.0:
+    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
    
 
@@ -190,6 +192,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     # UMAP:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
+    # Seurat 3.0:
+    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
     
 </br>   
