@@ -35,7 +35,8 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
     library(Seurat)
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    # For Seurat 3.0, please use: source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER_Seurat3.R')
+    # For Seurat 3.0, please use:
+    # source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER_Seurat3.R')
     
     #Load Demo Data (subset of GSE70630: MGH53 & MGH54)
     #Download: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
