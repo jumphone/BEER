@@ -445,7 +445,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
       
       
     MAX_D1=EXP[,which(BATCH == MAXBATCH)]
-    MAX_D1X=.data2one(MAX_D1, pbmc@var.genes, CPU, PCNUM, SEED, PP)  
+    MAX_D1X=.data2one(MAX_D1, VariableFeatures(object = pbmc), CPU, PCNUM, SEED, PP)  
     MAX_G1=.getGroup(MAX_D1X,'D1',CNUM)
     DR=pbmc@reductions$pca@cell.embeddings  
     
@@ -461,7 +461,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     print('Total Number of Batch Pairs:')
     print(nrow(PAIR))
     this_D2=EXP[,which(BATCH == this_pair[2])]
-    this_D2X=.data2one(this_D2, pbmc@var.genes, CPU, PCNUM, SEED, PP)         
+    this_D2X=.data2one(this_D2, VariableFeatures(object = pbmc), CPU, PCNUM, SEED, PP)         
     this_G2=.getGroup(this_D2X,'D2',CNUM)
     this_GROUP=c(MAX_G1, this_G2)
     this_BATCH=c(rep('D1',ncol(MAX_D1)),rep('D2',ncol(this_D2))) 
