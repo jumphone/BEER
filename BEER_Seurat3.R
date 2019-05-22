@@ -289,7 +289,7 @@
 
 
 
-BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123, PP=30, REGBATCH=FALSE){
+BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=123, PP=30,MTTAG="^MT-", REGBATCH=FALSE){
     set.seed(SEED)
     RESULT=list()
     library(Seurat)
@@ -302,6 +302,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     PCNUM=PCNUM
     PP=PP
     REGBATCH=REGBATCH
+    MTTAG=MTTAG
     
     print_step=print_step
     
@@ -319,11 +320,12 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc <- FindVariableFeatures(object = pbmc, selection.method = "vst", nfeatures = 2000)
     #length(pbmc@assays$RNA@var.features)
+    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
     
     if(REGBATCH==FALSE){
-    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA"), num.cores=CPU, do.par=TRUE)
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
     }else{
-    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","batch"), num.cores=CPU, do.par=TRUE)
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","batch","percent.mt"), num.cores=CPU, do.par=TRUE)
     }
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     print('############################################################################')
@@ -387,7 +389,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
 
 
 # BEER with Multiple Batches
-MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123, PP=30, REGBATCH=FALSE){
+MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step=10, SEED=123, PP=30,MTTAG="^MT-", REGBATCH=FALSE){
     set.seed( SEED)
     RESULT=list()
     library(Seurat)
@@ -398,6 +400,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     BATCH=BATCH
     CNUM=CNUM
     PCNUM=PCNUM
+    MTTAG=MTTAG
     print_step=print_step
     
     print('############################################################################')
@@ -417,11 +420,12 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc <- FindVariableFeatures(object = pbmc, selection.method = "vst", nfeatures = 2000)
     #length(pbmc@assays$RNA@var.features)
+    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
     
     if(REGBATCH==FALSE){
-    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA"), num.cores=CPU, do.par=TRUE)
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
     }else{
-    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","batch"), num.cores=CPU, do.par=TRUE)
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA", "batch", "percent.mt"), num.cores=CPU, do.par=TRUE)
     }
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     
