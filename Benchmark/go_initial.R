@@ -29,6 +29,13 @@ Sys.time()
 mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
 Sys.time()
 
+
+mybeer5 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=5)
+mybeer50 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=50)
+mybeer100 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=100)
+saveRDS(mybeer5, 'mybeer5.RDS')
+saveRDS(mybeer50, 'mybeer50.RDS')
+saveRDS(mybeer100, 'mybeer100.RDS')
 #BEER Start Time: 2019-03-08 13:56:14 EST
 #BEER End Time: 2019-03-08 14:01:39 EST
 #BEER Time: 5 min 
@@ -42,7 +49,23 @@ LABEL[which(LABEL %in% c('MOL1_batch2','MOL2_batch2','MOL3_batch2','MOL4_batch2'
 LABEL[which(LABEL %in% c('MFOL1_batch2','MFOL2_batch2'))]='Myelin-forming Oligodendrocytes_batch2'
 LABEL[which(LABEL %in% c('NFOL1_batch2','NFOL2_batch2'))]='Newly-formed Oligodendrocytes_batch2'
 LABEL[which(LABEL %in% c('COP_batch2'))]='Differentiation-committed oligodendrocyte precursors_batch2'
+
 pbmc@meta.data$label=LABEL
+
+pbmc5=mybeer5$seurat
+pbmc50=mybeer50$seurat
+pbmc100=mybeer100$seurat
+pbmc5@meta.data$label=LABEL
+pbmc50@meta.data$label=LABEL
+pbmc100@meta.data$label=LABEL
+
+mybeer3050 <- BEER(D1, D2, CNUM=50, PCNUM=50, CPU=2,PP=30)
+mybeer30100 <- BEER(D1, D2, CNUM=100, PCNUM=50, CPU=2,PP=30)
+
+
+
+
+
 
 
 
