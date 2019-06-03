@@ -72,6 +72,8 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     plot(mybeer$cor, xlab='PCs', ylab="COR", pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
     
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT.png" width="400">
+    
 ### Step3. Visualization 
     
 #### Keep batch effect:
@@ -173,8 +175,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     par(mfrow=c(1,2))
     plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
-    
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT.png" width="400">
 
     
 ### Step3. Visualization 
