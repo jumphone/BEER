@@ -83,3 +83,27 @@ pdf('mybeer100.pdf',width=15,height=12)
 DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
 dev.off()
 
+mybeer=mybeer3050
+
+pbmc <- mybeer$seurat
+pbmc@meta.data$label=LABEL
+PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
+pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
+pdf('mybeer3050.pdf',width=15,height=12)
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
+dev.off()
+
+mybeer=mybeer30100
+
+pbmc <- mybeer$seurat
+pbmc@meta.data$label=LABEL
+PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
+pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
+pdf('mybeer30100.pdf',width=15,height=12)
+DimPlot(pbmc, reduction.use='umap', group.by='label', pt.size=0.1,do.label=T)
+dev.off()
+
+
+
+
+
