@@ -100,7 +100,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
     pbmc <- mybeer$seurat
 
-    PCUSE <- which(mybeer$cor> min(0.7, median(mybeer$cor))  & mybeer$fdr<0.05)
+    PCUSE <- which(mybeer$cor> 0.75 & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
     
     # UMAP:
