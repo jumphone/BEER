@@ -6,6 +6,11 @@ Author: Feng Zhang
 
 Date: Mar. 7, 2019
 
+# News:
+
+* June 2019, stop updating the BEER source code for Seurat2. Any new feature is for the version of Seurat3.
+
+* May 2019, "BEER_Seurat3.R" is available (for Seurat3).
 
 # Requirement:
 
