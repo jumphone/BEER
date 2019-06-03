@@ -34,7 +34,11 @@ saveRDS(mybeer5, 'mybeer5.RDS')
 saveRDS(mybeer50, 'mybeer50.RDS')
 saveRDS(mybeer100, 'mybeer100.RDS')
 
+mybeer3050 <- BEER(D1, D2, CNUM=50, PCNUM=50, CPU=2,PP=30)
+mybeer30100 <- BEER(D1, D2, CNUM=100, PCNUM=50, CPU=2,PP=30)
 
+saveRDS(mybeer3050, 'mybeer3050.RDS')
+saveRDS(mybeer30100, 'mybeer30100.RDS')
 
 
 LABEL=c(paste0(as.character(ori_label[,2]),'_batch1'), paste0(EXP@meta.data$label,'_batch2') )
