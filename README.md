@@ -174,6 +174,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
     plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
     
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT.png" width="400">
+
+    
 ### Step3. Visualization 
     
 #### Keep batch effect:
