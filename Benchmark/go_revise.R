@@ -26,6 +26,7 @@ dim(D2)
 ################################################################################################
 
 
+#length(x = pbmc@var.genes)
 
 mybeer5 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=5)
 mybeer50 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=50)
