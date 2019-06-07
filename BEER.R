@@ -61,7 +61,6 @@
     cl= makeCluster(CPU,outfile='')
     RUN = parLapply(cl=cl,1:length(exp_sc_mat[1,]), SINGLE)
     stopCluster(cl)
-    #RUN = mclapply(1:length(colname_sc), SINGLE, mc.cores=CPU)
     COR = c()
     for(cor_list in RUN){
         COR=cbind(COR, cor_list)}
