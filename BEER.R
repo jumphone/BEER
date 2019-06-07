@@ -288,7 +288,7 @@ BEER <- function(D1, D2, CNUM=10, PCNUM=50, VPCOR=0, CPU=4, print_step=10, SEED=
     set.seed(SEED)
     RESULT=list()
     library(Seurat)
-    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    ###################
     print('BEER start!')
     print(Sys.time())
     D1=D1
@@ -386,7 +386,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, CPU=4, print_step
     set.seed( SEED)
     RESULT=list()
     library(Seurat)
-    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    ############################
     print('BEER start!')
     print(Sys.time())
     DATA=DATA
