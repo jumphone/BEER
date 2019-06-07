@@ -188,7 +188,6 @@
 
 
 .getValidpair <- function(DATA1, GROUP1, DATA2, GROUP2, CPU=4, method='kendall', print_step=10){
-    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('Start')
     print('Step1.Generate Reference...')
     REF1=.generate_ref(DATA1, cbind(GROUP1, GROUP1), min_cell=1) 
