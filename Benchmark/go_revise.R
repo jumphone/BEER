@@ -51,6 +51,22 @@ LABEL[which(LABEL %in% c('NFOL1_batch2','NFOL2_batch2'))]='Newly-formed Oligoden
 LABEL[which(LABEL %in% c('COP_batch2'))]='Differentiation-committed oligodendrocyte precursors_batch2'
 
 
+############################
+mybeer5=readRDS('mybeer5.RDS')
+mybeer50=readRDS('mybeer50.RDS')
+mybeer100=readRDS('mybeer100.RDS')
+mybeer3010=readRDS('mybeer3010.RDS')
+mybeer3050=readRDS('mybeer3050.RDS')
+mybeer30100=readRDS('mybeer30100.RDS')
+
+
+
+
+
+
+
+
+
 
 mybeer=mybeer5
 
