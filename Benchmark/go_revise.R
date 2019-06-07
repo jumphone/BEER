@@ -1,5 +1,4 @@
-library('Seurat')
-source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+
 
 #####Load Zeisel#######
 load('TSNE.RData')
@@ -24,13 +23,15 @@ dim(D2)
 #23556  5069
 
 ################################################################################################
+library('Seurat')
+source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
 
 #length(x = pbmc@var.genes)
-
-mybeer5 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=5)
-mybeer50 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=50)
-mybeer100 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2,PP=100)
+CPU=1
+mybeer5 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=CPU,PP=5)
+mybeer50 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=CPU,PP=50)
+mybeer100 <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=CPU,PP=100)
 saveRDS(mybeer5, 'mybeer5.RDS')
 saveRDS(mybeer50, 'mybeer50.RDS')
 saveRDS(mybeer100, 'mybeer100.RDS')
