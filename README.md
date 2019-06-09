@@ -266,14 +266,6 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
-    library(dplyr)
-    tmp=pbmc@ident
-    pbmc@ident=as.factor(DC)
-    names(pbmc@ident)=names(tmp)
-    pbmc.markers <- FindAllMarkers(object = pbmc, only.pos = TRUE, min.pct = 0.25, thresh.use = 0.25)
-    top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(10, avg_logFC)
-    DoHeatmap(object = pbmc, genes.use = top10$gene, slim.col.label = TRUE, remove.key = TRUE)
-    
     # For more details about Seurat 3, please see:
     # https://satijalab.org/seurat/get_started.html
     
