@@ -264,10 +264,11 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 
 * Details are in the instruction page of Seurat:
 
+https://satijalab.org/seurat/get_started.html
+
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
-    # For more details about Seurat 3, please see:
-    # https://satijalab.org/seurat/get_started.html
+
     
 </br>   
 </br> 
