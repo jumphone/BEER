@@ -39,9 +39,11 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 ### Step1. Load Data
 
     library(Seurat)
+    # For Seurat 2.3.4, please use:
+    #source('https://raw.githubusercontent.com/jumphone/BEER/master/OLD/BEER_Seurat2.3.4.R')
+    
+    # For Seurat 3
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    # For Seurat 3.0, please use:
-    # source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER_Seurat3.R')
     
     #Load Demo Data (subset of GSE70630: MGH53 & MGH54)
     #Download: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
@@ -85,10 +87,11 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     ALLPC <- 1:length(mybeer$cor)
     
     # UMAP:
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+    #Seurat 2.3.4:
+    #pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
     
-    # Seurat 3.0:
-    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
+    # Seurat 3:
+    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     
@@ -106,11 +109,12 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
     
     # UMAP:
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
+    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
     
-    # Seurat 3.0:
-    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    # Seurat 3:
+    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
     
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
@@ -135,10 +139,11 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 ### Step1. Load Data
     
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    #Seurat 2.3.4:
+    #source('https://raw.githubusercontent.com/jumphone/BEER/master/OLD/BEER_Seurat2.3.4.R')
     
-    #Seurat 3.0:
-    #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER_Seurat3.R')
+    #Seurat 3:
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
@@ -188,9 +193,11 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     ALLPC <- 1:length(mybeer$cor)
     
     # UMAP:
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
-    # Seurat 3.0:
-    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
+    # Seurat 2.3.4:
+    #pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
+    
+    # Seurat 3:
+    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
    
@@ -204,10 +211,12 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     PCUSE <- which(mybeer$cor> 0.7  & mybeer$fdr<0.05)
     # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
     
-    # UMAP:
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
-    # Seurat 3.0:
-    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    # Seurat 2.3.4:
+    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
+    
+    # Seurat 3:
+    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
     
 </br>   
@@ -232,10 +241,12 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
     #Demo Data (GSE102130)
-    VEC=pbmc@dr$umap@cell.embeddings
     
-    #Seurat 3.0:
-    #VEC=pbmc@$reductions$umap@cell.embeddings
+    #Seurat 2.3.4:
+    #VEC=pbmc@dr$umap@cell.embeddings
+    
+    #Seurat 3:
+    VEC=pbmc@$reductions$umap@cell.embeddings
     
     # Here, we use the "dbscan" function to do clustering.
     library("fpc")
@@ -252,7 +263,6 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
 
 * Details are in the instruction page of Seurat:
 
-
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
     library(dplyr)
@@ -263,7 +273,7 @@ Here, we show the final UMAP figures (All parameters are the same with that of t
     top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(10, avg_logFC)
     DoHeatmap(object = pbmc, genes.use = top10$gene, slim.col.label = TRUE, remove.key = TRUE)
     
-    # For Seurat 3.0, see:
+    # For more details about Seurat 3, please see:
     # https://satijalab.org/seurat/get_started.html
     
 </br>   
