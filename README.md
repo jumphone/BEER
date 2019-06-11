@@ -8,7 +8,7 @@ Date: Mar. 7, 2019
 
 # News:
 
-* June 2019, stop updating the BEER source code for Seurat2. Any new feature is only for Seurat3.
+* June 2019, stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
 * May 2019, "BEER_Seurat3.R" is available (for Seurat3).
 
