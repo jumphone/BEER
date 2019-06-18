@@ -64,3 +64,28 @@ immune.combined@meta.data$type=LABEL
 DimPlot(immune.combined, reduction = "umap", group.by = "type",label=T)
 
 
+
+
+
+
+UTARGET_LABEL=LABEL
+UTARGET_LABEL[which(LABEL=='oligodendrocytes_batch1')]='Oligdend'
+UTARGET_LABEL[which(LABEL %in% c('Myelin-forming Oligodendrocytes_batch2','Newly-formed Oligodendrocytes_batch2','Mature Oligodendrocytes_batch2'))]='Oligdend'
+
+USE=which(!UTARGET_LABEL %in% c('NA'))
+BATCH=UTARGET_LABEL[USE]
+
+COM_UUMAP=immune.combined@reductions$umap@cell.embeddings[USE,]
+
+
+library(vegan)
+library(cluster)
+
+dis = dist(COM_UUMAP)
+out1=silhouette(as.numeric(as.factor(BATCH)),dis)
+summary(out1[,3])
+
+
+boxplot(out1[,3],ylim=c(-1,1), names=c('NEW'),las=2,main='Oligodend Merged' ,ylab='Silhouette Coefficient')
+
+
