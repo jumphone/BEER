@@ -273,7 +273,7 @@ https://satijalab.org/seurat/get_started.html
 
 
 
-### ProBEER (a new release, will replace BEER & MBEER soon)
+# ProBEER (a new release, will replace BEER & MBEER soon)
 
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/OLD/BEER_Seurat2.3.4.R')
