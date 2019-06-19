@@ -6,7 +6,7 @@ Author: Feng Zhang
 
 # News:
 
-* June 2019, "MBEER" and "BEER" are integrated, please directly use BEER to integrate multiple batches
+* June 2019, "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
 
 * June 2019, stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
