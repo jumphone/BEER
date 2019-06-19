@@ -199,12 +199,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
-    #Demo Data (GSE102130)
-    
-    #Seurat 2.3.4:
-    #VEC=pbmc@dr$umap@cell.embeddings
-    
-    #Seurat 3:
     VEC=pbmc@$reductions$umap@cell.embeddings
     
     # Here, we use the "dbscan" function to do clustering.
