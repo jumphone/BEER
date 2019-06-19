@@ -426,5 +426,6 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     return(RESULT)
 }
 
+MBEER=BEER
 ####################
 
