@@ -161,6 +161,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CPNEW.png" width="400">
+
     
 ### Step3. Visualization 
         
