@@ -4,8 +4,6 @@
 
 Author: Feng Zhang
 
-Date: Mar. 7, 2019
-
 # News:
 
 * June 2019, "MBEER" and "BEER" are integrated, please directly use BEER to integrate multiple batches
