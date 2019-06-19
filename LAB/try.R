@@ -7,11 +7,28 @@ BATCH=pbmc@meta.data$batch
 
 mybeer=ProBEER(EXP,BATCH)
 
+
+
+
+
 pbmc <- mybeer$seurat
 plot(mybeer$cor)
-PCUSE <- which(mybeer$cor> 0.7 & mybeer$fdr<0.05)
+plot(mybeer$lcor)
+plot(rank(mybeer$cor),rank(mybeer$lcor),pch=16)
+
+
+
+
+PCUSE=which(rank(mybeer$cor)>=length(mybeer$cor)/2 & rank(mybeer$lcor) >=length(mybeer$cor)/2)
+COL=rep('black',length(mybeer$cor))
+COL[PCUSE]='red'
+plot(mybeer$cor,mybeer$lcor,pch=16,col=COL)
+
+
+
 pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
 DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
+#DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
 
 
 
