@@ -310,7 +310,7 @@ https://satijalab.org/seurat/get_started.html
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
-    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation')
+    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
 
     # Run UMAP
     pbmc <- mybeer$seurat
