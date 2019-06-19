@@ -166,7 +166,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
         
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBKP_NEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBKPKP_NEW.png" width="400">
     
     pbmc <- mybeer$seurat
     ALLPC <- 1:length(mybeer$cor)   
