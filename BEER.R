@@ -584,7 +584,7 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, GN=2000, CPU=4, p
    }
 
 
-ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123,MTTAG="^MT-", REGBATCH=FALSE){
+ProBEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123,MTTAG="^MT-", REGBATCH=FALSE){
 
     set.seed( SEED)
     RESULT=list()
@@ -597,6 +597,8 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
     CNUM=CNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
+    MAXBATCH=MAXBATCH
+    UBATCH=unique(BATCH)
     GN=GN
     print_step=print_step
     
@@ -643,30 +645,36 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
 
     pbmc@meta.data$group=GROUP
     VP=c()
-    i=1
-    while(i<length(UBATCH)){
-        j=i+1
+    
+    if(MAXBATCH==''){
+        i=which(UBATCH==names(which(table(BATCH)==max(table(BATCH)))))
+        }else{i= which(UBATCH==MAXBATCH)}
+    #while(i<length(UBATCH)){
+        
         batch1=UBATCH[i]
         batch1_index=which(BATCH==batch1)
         exp1=as.matrix(pbmc@assays$RNA@data[,batch1_index])
         g1=GROUP[batch1_index]
-     
+        
+        j=1
         while(j<=length(UBATCH)){
-            batch2=UBATCH[j]
-            batch2_index=which(BATCH==batch2)
-            exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
-            g2=GROUP[batch2_index]
-            VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
+            if(j!=i){
+                batch2=UBATCH[j]
+                batch2_index=which(BATCH==batch2)
+                exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
+                g2=GROUP[batch2_index]
+                VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
             
-            if(is.null(VP_OUT)){
-                print('pass')
-            }else{
-                this_vp=VP_OUT$vp
-                VP=cbind(VP,t(this_vp))
-            }           
+                if(is.null(VP_OUT)){
+                    print('pass')
+                }else{
+                    this_vp=VP_OUT$vp
+                    VP=cbind(VP,t(this_vp))
+                }  
+            }         
             j=j+1}
-        i=i+1
-        }
+        #i=i+1
+        #}
 
     VP=t(VP)
     DR=pbmc@reductions$pca@cell.embeddings  
