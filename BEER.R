@@ -599,6 +599,13 @@ ProBEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4,
     MTTAG=MTTAG
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
+    
+    if(!MAXBATCH %in% UBATCH){
+        MAXBATCH=names(which(table(BATCH)==max(table(BATCH))))
+        }
+    print('Max batch is:')
+    print(MAXBATCH)
+    
     GN=GN
     print_step=print_step
     
@@ -646,9 +653,10 @@ ProBEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4,
     pbmc@meta.data$group=GROUP
     VP=c()
     
-    if(MAXBATCH==''){
-        i=which(UBATCH==names(which(table(BATCH)==max(table(BATCH)))))
-        }else{i= which(UBATCH==MAXBATCH)}
+    #if(MAXBATCH==''){
+        #i=which(UBATCH==names(which(table(BATCH)==max(table(BATCH)))))
+        #}else{
+    i= which(UBATCH==MAXBATCH)
     #while(i<length(UBATCH)){
         
         batch1=UBATCH[i]
