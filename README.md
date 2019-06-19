@@ -8,9 +8,11 @@ Date: Mar. 7, 2019
 
 # News:
 
+* June 2019, "MBEER" and "BEER" are integrated, please directly use BEER to integrate multiple batches
+
 * June 2019, stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
-* May 2019, "BEER_Seurat3.R" is available (for Seurat3).
+* May 2019, "BEER_Seurat3.R" & "MBEER" is available (for Seurat3).
 
 # Requirement:
 
@@ -18,6 +20,7 @@ Date: Mar. 7, 2019
     install.packages('Seurat') # 3.0     
     install.packages('pcaPP') # 1.9.73
 
+    #For Seurat 2
     #require(devtools);install_version('Seurat',version='2.3.4')  # 2.3.4 
     
 # Usage:
