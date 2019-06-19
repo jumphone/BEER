@@ -652,8 +652,13 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
             exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
             g2=GROUP[batch2_index]
             VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
-            this_vp=VP_OUT$vp 
-            VP=cbind(VP,t(this_vp))
+            
+            if(is.null(VP_OUT)){
+                print('pass')
+            }else{
+                this_vp=VP_OUT$vp
+                VP=cbind(VP,t(this_vp))
+            }           
             j=j+1}
         i=i+1
         }
@@ -680,6 +685,12 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
     RESULT$lpv=OUT$lpv
     RESULT$lfdr=OUT$lfdr
 
+    
+    
+    PCUSE=which(rank(RESULT$cor)>=length(RESULT$cor)/2 & rank(RESULT$lcor) >=length(RESULT$cor)/2)
+    
+    RESULT$
+    
     print('############################################################################')
     print('BEER cheers !!! All main steps finished.')
     print('############################################################################')
