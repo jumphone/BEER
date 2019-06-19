@@ -1,8 +1,26 @@
 library(Seurat)
 pbmc=readRDS('RAW.RDS')
-
-
 source('BEER_NEW.R')
+EXP=as.matrix(pbmc@assays$RNA@counts)
+BATCH=pbmc@meta.data$batch
+
+
+mybeer=ProBEER(EXP,BATCH)
+
+pbmc <- mybeer$seurat
+plot(mybeer$cor)
+PCUSE <- which(mybeer$cor> 0.7 & mybeer$fdr<0.05)
+pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
+
+
+
+
+
+
+
+
+
 
 EXP=as.matrix(pbmc@assays$RNA@counts)
 BATCH=pbmc@meta.data$batch
@@ -16,67 +34,7 @@ print_step=10
 method='kendall'
 
 
-VARG=c()
-for(this_batch in UBATCH){
-    this_pbmc=CreateSeuratObject(counts = EXP[,which(BATCH==this_batch)], min.cells = 0, 
-                                 min.features = 0, project = this_batch)
-    this_pbmc <- NormalizeData(object = this_pbmc, normalization.method = "LogNormalize", 
-                           scale.factor = 10000)
-    this_pbmc <- FindVariableFeatures(object = this_pbmc, selection.method = "vst", nfeatures = GN)  
-    this_varg=VariableFeatures(object = this_pbmc)
-    VARG=c(VARG, this_varg)
-    }
-VARG=unique(VARG)
 
-
-
-pbmc=CreateSeuratObject(counts = EXP, min.cells = 0, min.features = 0, project = "ALL") 
-pbmc@meta.data$batch=BATCH
-VariableFeatures(object = pbmc)=VARG
-
-
-pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
-
-CPU=4
-pbmc <- ScaleData(object = pbmc, features = VARG, vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
-pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
-pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
-
-
-ONE=pbmc@reductions$umap@cell.embeddings[,1]
-GROUP=rep('NA',length(BATCH))
-for(this_batch in UBATCH){
-    this_index=which(BATCH==this_batch)
-    this_one=ONE[this_index]
-    this_group=.getGroup(this_one,this_batch,CNUM)
-    GROUP[this_index]=this_group
-}
-
-pbmc@meta.data$group=GROUP
-VP=c()
-i=1
-while(i<length(UBATCH)){
-    j=i+1
-    batch1=UBATCH[i]
-    batch1_index=which(BATCH==batch1)
-    exp1=as.matrix(pbmc@assays$RNA@data[,batch1_index])
-    g1=GROUP[batch1_index]
-     
-    while(j<=length(UBATCH)){
-        batch2=UBATCH[j]
-        batch2_index=which(BATCH==batch2)
-        exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
-        g2=GROUP[batch2_index]
-        VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
-        this_vp=VP_OUT$vp 
-        VP=cbind(VP,t(this_vp))
-        j=j+1}
-    i=i+1
-    }
-
-VP=t(VP)
-DR=pbmc@reductions$pca@cell.embeddings
 
 
 .evaluateNew <- function(DR, GROUP, VP){
@@ -122,11 +80,110 @@ DR=pbmc@reductions$pca@cell.embeddings
     return(OUT)
    }
 
-  
-OUT=.evaluateNew(DR, GROUP, VP)
 
 
 
+
+
+
+ProBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123,MTTAG="^MT-", REGBATCH=FALSE){
+
+    set.seed( SEED)
+    RESULT=list()
+    library(Seurat)
+    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    print('BEER start!')
+    print(Sys.time())
+    DATA=DATA
+    BATCH=BATCH
+    CNUM=CNUM
+    PCNUM=PCNUM
+    MTTAG=MTTAG
+    GN=GN
+    print_step=print_step
+    
+    VARG=c()
+    for(this_batch in UBATCH){
+        this_pbmc=CreateSeuratObject(counts = EXP[,which(BATCH==this_batch)], min.cells = 0, 
+                                 min.features = 0, project = this_batch)
+        this_pbmc <- NormalizeData(object = this_pbmc, normalization.method = "LogNormalize", 
+                           scale.factor = 10000)
+        this_pbmc <- FindVariableFeatures(object = this_pbmc, selection.method = "vst", nfeatures = GN)  
+        this_varg=VariableFeatures(object = this_pbmc)
+        VARG=c(VARG, this_varg)
+        }
+    VARG=unique(VARG)
+
+
+
+    pbmc=CreateSeuratObject(counts = EXP, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc@meta.data$batch=BATCH
+    VariableFeatures(object = pbmc)=VARG
+
+
+    pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
+
+    CPU=4
+    pbmc <- ScaleData(object = pbmc, features = VARG, vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
+
+
+    ONE=pbmc@reductions$umap@cell.embeddings[,1]
+    GROUP=rep('NA',length(BATCH))
+    for(this_batch in UBATCH){
+        this_index=which(BATCH==this_batch)
+        this_one=ONE[this_index]
+        this_group=.getGroup(this_one,this_batch,CNUM)
+        GROUP[this_index]=this_group
+    }
+
+    pbmc@meta.data$group=GROUP
+    VP=c()
+    i=1
+    while(i<length(UBATCH)){
+        j=i+1
+        batch1=UBATCH[i]
+        batch1_index=which(BATCH==batch1)
+        exp1=as.matrix(pbmc@assays$RNA@data[,batch1_index])
+        g1=GROUP[batch1_index]
+     
+        while(j<=length(UBATCH)){
+            batch2=UBATCH[j]
+            batch2_index=which(BATCH==batch2)
+            exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
+            g2=GROUP[batch2_index]
+            VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
+            this_vp=VP_OUT$vp 
+            VP=cbind(VP,t(this_vp))
+            j=j+1}
+        i=i+1
+        }
+
+    VP=t(VP)
+    DR=pbmc@reductions$pca@cell.embeddings
+
+
+    
+
+    MAP=rep('NA',length(GROUP))
+    MAP[which(GROUP %in% VP[,1])]='V1'
+    MAP[which(GROUP %in% VP[,2])]='V2'
+    pbmc@meta.data$map=MAP
+    
+
+    OUT=.evaluateNew(DR, GROUP, VP)
+
+    RESULT=list()
+    RESULT$seurat=pbmc
+    RESULT$vp=VP
+    RESULT$vpcor=VP_OUT$cor
+    RESULT$cor=OUT$cor
+    RESULT$pv=OUT$pv
+    RESULT$fdr=OUT$fdr
+    return(RESULT)
+}
 
 
 
