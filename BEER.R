@@ -1,6 +1,7 @@
 # Batch EffEct Remover for single-cell data (BEER)
 # Author: Feng Zhang
 # Date: May 2, 2019
+# For Seurat 3
 
 #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
