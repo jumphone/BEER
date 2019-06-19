@@ -530,13 +530,6 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, GN=2000, CPU=4, p
 
 ################ 2019.06.18 #####
 
-
-
-
-
-
-####################
-
 .evaluateProBEER <- function(DR, GROUP, VP){
     
     OUT=list() 
@@ -574,8 +567,8 @@ MBEER <- function(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=50, GN=2000, CPU=4, p
          
         ALL_COR=c(ALL_COR, this_cor)
         ALL_PV=c(ALL_PV, this_pv) 
-        ALL_LCOR=c(ALL_COR, this_cor2)
-        ALL_LPV=c(ALL_PV, this_pv2) 
+        ALL_LCOR=c(ALL_LCOR, this_cor2)
+        ALL_LPV=c(ALL_LPV, this_pv2) 
         print(THIS_DR)
         
         THIS_DR=THIS_DR+1}
@@ -698,4 +691,5 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
     return(RESULT)
 }
 
+####################
 
