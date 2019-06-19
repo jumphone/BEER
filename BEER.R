@@ -611,7 +611,7 @@ ProBEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4,
     
     VARG=c()
     for(this_batch in UBATCH){
-        this_pbmc=CreateSeuratObject(counts = EXP[,which(BATCH==this_batch)], min.cells = 0, 
+        this_pbmc=CreateSeuratObject(counts = DATA[,which(BATCH==this_batch)], min.cells = 0, 
                                  min.features = 0, project = this_batch)
         this_pbmc <- NormalizeData(object = this_pbmc, normalization.method = "LogNormalize", 
                            scale.factor = 10000)
@@ -622,7 +622,7 @@ ProBEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4,
     VARG=unique(VARG)
 
 
-    pbmc=CreateSeuratObject(counts = EXP, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
     pbmc@meta.data$batch=BATCH
     VariableFeatures(object = pbmc)=VARG
 
