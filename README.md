@@ -25,7 +25,6 @@ Author: Feng Zhang
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
 
 </br>
-</br>
 
 # I. Combine Two Batches
 
