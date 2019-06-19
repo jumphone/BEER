@@ -80,7 +80,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect_NEW.png" width="400">
     
     pbmc <- mybeer$seurat
     
@@ -96,7 +96,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect_NEW.png" width="400">
 
     pbmc <- mybeer$seurat
 
