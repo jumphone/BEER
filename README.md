@@ -83,13 +83,10 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect_NEW.png" width="400">
     
     pbmc <- mybeer$seurat
-    
-    ALLPC <- 1:length(mybeer$cor)
-    
+    ALLPC <- 1:length(mybeer$cor)   
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
 
@@ -99,13 +96,10 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect_NEW.png" width="400">
 
     pbmc <- mybeer$seurat
-
     PCUSE <- mybeer$select
-
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
     
@@ -115,11 +109,9 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     
 # II. Combine Multiple Batches
 
-Please use the function named "MBEER" to combine multiple batches (n>=3).
+When combining multiple batches, BEER implements the iteration of "Combine Two Batches".
 
-This function implements the iteration of "Combine Two Batches".
-
-MBEER compares each batch with the batch having the largest cell number.
+BEER compares each batch with the batch having the largest cell number.
 
 The assumption is that the batch having the largest cell number has almost all cell-types within all batches.
 
@@ -129,10 +121,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 ### Step1. Load Data
     
-    #Seurat 2.3.4:
-    #source('https://raw.githubusercontent.com/jumphone/BEER/master/OLD/BEER_Seurat2.3.4.R')
-    
-    #Seurat 3:
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
@@ -165,62 +153,43 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=MBEER(DATA, BATCH, MAXBATCH="", CNUM=10, PCNUM=20, CPU=2, SEED=1 )
+    mybeer=BEER(DATA, BATCH, MAXBATCH="", CNUM=50, PCNUM=50, CPU=2, SEED=1 )
 
-    par(mfrow=c(1,2))
-    plot(mybeer$cor, xlab='PCs', ylab='COR', pch=16)
-    plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
+    # Check selected PCs
+    PCUSE=mybeer$select
+    COL=rep('black',length(mybeer$cor))
+    COL[PCUSE]='red'
+    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
 
     
 ### Step3. Visualization 
-    
+        
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER1.png" width="400">
-
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBKP_NEW.png" width="400">
+    
     pbmc <- mybeer$seurat
-    
-    ALLPC <- 1:length(mybeer$cor)
-    
-    # UMAP:
-    # Seurat 2.3.4:
-    #pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
-    
-    # Seurat 3:
+    ALLPC <- 1:length(mybeer$cor)   
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
-   
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    
+
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER2.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBRM_NEW.png" width="400">
 
     pbmc <- mybeer$seurat
-    
-    PCUSE <- which(mybeer$cor> 0.7  & mybeer$fdr<0.05)
-    # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
-    
-    # Seurat 2.3.4:
-    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
-    
-    # Seurat 3:
+    PCUSE <- mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
+    
     
 </br>   
-
-### *Another Demo of MBEER (GSE102130):
-
-Here, we show the final UMAP figures (All parameters are the same with that of the first demo).
-
-#### Keep batch effect:
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER3.png" width="400">
-
-#### Remove batch effect:
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBEER4.png" width="400">
-
 </br>
 </br>
 
