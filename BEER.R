@@ -688,8 +688,7 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
     
     
     PCUSE=which(rank(RESULT$cor)>=length(RESULT$cor)/2 & rank(RESULT$lcor) >=length(RESULT$cor)/2)
-    
-    RESULT$
+    RESULT$select=PCUSE
     
     print('############################################################################')
     print('BEER cheers !!! All main steps finished.')
