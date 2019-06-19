@@ -622,7 +622,12 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
     pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
 
     CPU=4
-    pbmc <- ScaleData(object = pbmc, features = VARG, vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
+    if(REGBATCH==FALSE){
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
+    }else{
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA", "batch", "percent.mt"), num.cores=CPU, do.par=TRUE)
+    }
+    
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
 
