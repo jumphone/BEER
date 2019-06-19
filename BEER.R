@@ -684,8 +684,6 @@ ProBEER <- function(DATA, BATCH,  CNUM=50, PCNUM=50, GN=2000, CPU=4, print_step=
     RESULT$lcor=OUT$lcor
     RESULT$lpv=OUT$lpv
     RESULT$lfdr=OUT$lfdr
-
-    
     
     PCUSE=which(rank(RESULT$cor)>=length(RESULT$cor)/2 & rank(RESULT$lcor) >=length(RESULT$cor)/2)
     RESULT$select=PCUSE
