@@ -18,7 +18,6 @@ Author: Feng Zhang
     install.packages('Seurat') # >=3.0     
     install.packages('pcaPP') # 1.9.73
 
-    
 # Usage:
 
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
@@ -60,19 +59,22 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2)
+    mybeer <- BEER(DATA, BATCH, CNUM=50, PCNUM=50, CPU=2)
     
     #CNUM: the number of cells in each group
     #PCNUM: the number of computated PCA subspaces 
     
     #If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
-    #mybeer <- BEER(D1, D2, CNUM=10, PCNUM=50, CPU=2, REGBATCH=TRUE)
+    #mybeer <- BEER(DATA, BATCH, CNUM=50, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
-    par(mfrow=c(1,2))
-    plot(mybeer$cor, xlab='PCs', ylab="COR", pch=16)
-    plot(-log(mybeer$fdr,10), xlab='PCs', ylab='-log10(FDR)', pch=16)
+    # Check selected PCs
+    PCUSE=mybeer$select
+    COL=rep('black',length(mybeer$cor))
+    COL[PCUSE]='red'
+    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT.png" width="400">
+    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT_NEW.png" width="400">
     
 ### Step3. Visualization 
     
@@ -84,11 +86,6 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     
     ALLPC <- 1:length(mybeer$cor)
     
-    # UMAP:
-    #Seurat 2.3.4:
-    #pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = ALLPC, check_duplicates=FALSE)
-    
-    # Seurat 3:
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
@@ -103,13 +100,8 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
     pbmc <- mybeer$seurat
 
-    PCUSE <- which(mybeer$cor> 0.75 & mybeer$fdr<0.05)
-    # Users can set the cutoff of "mybeer$cor" based on the distribution of "mybeer$cor".
-    
-    # UMAP:
-    # pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims.use = PCUSE, check_duplicates=FALSE)
-    
-    # Seurat 3:
+    PCUSE <- mybeer$select
+
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
