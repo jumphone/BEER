@@ -20,8 +20,6 @@ Date: Mar. 7, 2019
     install.packages('Seurat') # 3.0     
     install.packages('pcaPP') # 1.9.73
 
-    #For Seurat 2
-    #require(devtools);install_version('Seurat',version='2.3.4')  # 2.3.4 
     
 # Usage:
 
@@ -34,8 +32,6 @@ Date: Mar. 7, 2019
 
 # I. Combine Two Batches
 
-Please use the function named "BEER" to combine two batches.
-
 Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
 
 Please do basic quality control before using BEER (e.g. remove low-quality cells & genes).
@@ -43,10 +39,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 ### Step1. Load Data
 
     library(Seurat)
-    # For Seurat 2.3.4, please use:
-    #source('https://raw.githubusercontent.com/jumphone/BEER/master/OLD/BEER_Seurat2.3.4.R')
-    
-    # For Seurat 3
+  
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
     #Load Demo Data (subset of GSE70630: MGH53 & MGH54)
@@ -63,6 +56,9 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     colnames(D1)=paste0('D1_', colnames(D1))
     colnames(D2)=paste0('D2_', colnames(D2))
 
+    DATA=.simple_combine(D1,D2)$combine
+    BATCH=rep('D2',ncol(DATA))
+    BATCH[c(1:ncol(D1))]='D1'
 
 ### Step2. Detect Batch Effect
 
