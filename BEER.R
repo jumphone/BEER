@@ -198,7 +198,7 @@ library(pcaPP)
     #D=dist(X)
     #H=hclust(D)
     #CLUST=cutree(H,k=GNUM)
-    CLUST=kmeans(X,centers=GNUM)$cluster
+    CLUST=kmeans(X,centers=GNUM,iter.max =100)$cluster
     GROUP=paste0(TAG,'_',as.character(CLUST))
     
     print('Group Number:')
@@ -379,15 +379,16 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
 
 
-    ONE=pbmc@reductions$umap@cell.embeddings[,1]
+    DR=pbmc@reductions$umap@cell.embeddings
     GROUP=rep('NA',length(BATCH))
     for(this_batch in UBATCH){
         this_index=which(BATCH==this_batch)
-        this_one=ONE[this_index]
+        this_one=DR[this_index,]
         #CNUM=max(c(5, round(length(this_index)/GNUM) ))
         this_group=.getGroup(this_one,this_batch,GNUM)
         GROUP[this_index]=this_group
     }
+
 
     pbmc@meta.data$group=GROUP
     VP=c()
@@ -515,15 +516,15 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     pbmc=mybeer$seurat
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
-    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=3)
     
     ########
     
-    ONE=pbmc@reductions$umap@cell.embeddings[,1]
+    DR=pbmc@reductions$umap@cell.embeddings
     GROUP=rep('NA',length(BATCH))
     for(this_batch in UBATCH){
         this_index=which(BATCH==this_batch)
-        this_one=ONE[this_index]
+        this_one=DR[this_index,]
         #CNUM=max(c(5, round(length(this_index)/GNUM) ))
         this_group=.getGroup(this_one,this_batch,GNUM)
         GROUP[this_index]=this_group
