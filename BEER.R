@@ -323,7 +323,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     if(!MAXBATCH %in% UBATCH){
         MAXBATCH=names(which(table(BATCH)==max(table(BATCH))))
         }
-    print('Max batch is:')
+    print('Max batch (MAXBATCH) is:')
     print(MAXBATCH)
     print('Group number (GNUM) is:')
     print(GNUM)
