@@ -465,3 +465,119 @@ MBEER=BEER
 ####################
 
 
+
+GroupBEER <- function(BEER, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
+
+    set.seed( SEED)
+    RESULT=list()
+    library(Seurat)
+    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
+    print('BEER start!')
+    print(Sys.time())
+    DATA=BEER$seurat@assays$RNA@counts
+    BATCH=BEER$seurat@meta.data$batch
+    GNUM=GNUM
+    PCNUM=PCNUM
+    MTTAG=MTTAG
+    MAXBATCH=MAXBATCH
+    UBATCH=unique(BATCH)
+    REGBATCH=REGBATCH
+    GN=GN
+    print_step=print_step
+    
+    if(!MAXBATCH %in% UBATCH){
+        MAXBATCH=names(which(table(BATCH)==max(table(BATCH))))
+        }
+    print('Max batch (MAXBATCH) is:')
+    print(MAXBATCH)
+    print('Group number (GNUM) is:')
+    print(GNUM)
+    print('Varible gene number (GN) is:')
+    print(GN)
+    
+    pbmc=BEER$seurat
+    VARG=VariableFeatures(object = pbmc)
+    ########
+    
+    ONE=pbmc@reductions$umap@cell.embeddings[,1]
+    GROUP=rep('NA',length(BATCH))
+    for(this_batch in UBATCH){
+        this_index=which(BATCH==this_batch)
+        this_one=ONE[this_index]
+        CNUM=max(c(5, round(length(this_index)/GNUM) ))
+        this_group=.getGroup(this_one,this_batch,CNUM)
+        GROUP[this_index]=this_group
+    }
+
+    pbmc@meta.data$group=GROUP
+    VP=c()
+    
+    #if(MAXBATCH==''){
+        #i=which(UBATCH==names(which(table(BATCH)==max(table(BATCH)))))
+        #}else{
+    i= which(UBATCH==MAXBATCH)
+    #while(i<length(UBATCH)){
+        
+        batch1=UBATCH[i]
+        batch1_index=which(BATCH==batch1)
+        exp1=as.matrix(pbmc@assays$RNA@data[,batch1_index])
+        g1=GROUP[batch1_index]
+        
+        j=1
+        while(j<=length(UBATCH)){
+            if(j!=i){
+                batch2=UBATCH[j]
+                batch2_index=which(BATCH==batch2)
+                exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
+                g2=GROUP[batch2_index]
+                VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
+            
+                if(is.null(VP_OUT)){
+                    print('pass')
+                }else{
+                    this_vp=VP_OUT$vp
+                    VP=cbind(VP,t(this_vp))
+                }  
+            }         
+            j=j+1}
+        #i=i+1
+        #}
+
+    VP=t(VP)
+    DR=pbmc@reductions$pca@cell.embeddings  
+
+    MAP=rep('NA',length(GROUP))
+    MAP[which(GROUP %in% VP[,1])]='V1'
+    MAP[which(GROUP %in% VP[,2])]='V2'
+    pbmc@meta.data$map=MAP
+    
+
+    OUT=.evaluateProBEER(DR, GROUP, VP)
+
+    RESULT=list()
+    RESULT$seurat=pbmc
+    RESULT$vp=VP
+    RESULT$vpcor=VP_OUT$cor
+    RESULT$cor=OUT$cor
+    RESULT$pv=OUT$pv
+    RESULT$fdr=OUT$fdr
+    RESULT$lcor=OUT$lcor
+    RESULT$lpv=OUT$lpv
+    RESULT$lc1=OUT$lc1
+    RESULT$lc2=OUT$lc2
+    RESULT$lfdr=OUT$lfdr
+    
+    PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
+                (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)   #&
+                #p.adjust(RESULT$lc1,method='fdr') >0.05
+               ) 
+    
+    RESULT$select=PCUSE
+    
+    print('############################################################################')
+    print('BEER cheers !!! All main steps finished.')
+    print('############################################################################')
+    print(Sys.time())
+
+    return(RESULT)
+}
