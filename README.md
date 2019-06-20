@@ -31,7 +31,7 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
-* [IV. Combine scATAC-seq & scRNA-seq](#IV-combine-scATAC-seq-scRNA-seq)
+* [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 </br>
 
 # I. Combine Two Batches
@@ -234,6 +234,7 @@ https://satijalab.org/seurat/get_started.html
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
+</br> 
 
 # IV. Combine scATAC-seq & scRNA-seq
 
