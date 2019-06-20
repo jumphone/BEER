@@ -64,14 +64,13 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, CNUM=50, PCNUM=50, CPU=2)
+    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2)
     
-    #CNUM: the number of cells in each group. 
-    #You can change CNUM based on the total cell number. e.g. CNUM = round(min(table(BATCH))/50)
+    #GNUM: the number of groups in each batch. 
     #PCNUM: the number of computated PCA subspaces 
     
     #If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
-    #mybeer <- BEER(DATA, BATCH, CNUM=50, PCNUM=50, CPU=2, REGBATCH=TRUE)
+    #mybeer <- BEER(DATA, BATCH, GNUM=50, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
     # Check selected PCs
     PCUSE=mybeer$select
@@ -162,7 +161,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, MAXBATCH="", CNUM=50, PCNUM=50, CPU=2, SEED=1 )
+    mybeer=BEER(DATA, BATCH, MAXBATCH="", GNUM=30, PCNUM=50, CPU=2, SEED=1 )
 
     # Check selected PCs
     PCUSE=mybeer$select
