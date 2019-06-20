@@ -10,9 +10,9 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 # News:
 
-* June 2019 ( v0.0.6 ): 'GNUM' is used to replace "CNUM".
+* June 2019 ( v0.0.6 ): "GNUM" is used to replace "CNUM".
 
-* June 2019 ( v0.0.5 ): Add a new parameter for selecting PCUSE.
+* June 2019 ( v0.0.5 ): Add a new parameter for selecting used PCs.
 
 * June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
 
