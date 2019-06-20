@@ -38,7 +38,9 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
 
-Please do basic quality control before using BEER (e.g. remove low-quality cells & genes).
+Please do basic quality control before using BEER (e.g. remove low-quality cells & genes). 
+
+For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html 
 
 ### Step1. Load Data
 
