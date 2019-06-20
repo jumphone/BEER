@@ -274,8 +274,8 @@
         olddata=data.frame(lst1=lst1_quantile, lst2=lst2_quantile)
         fit=lm(lst1 ~lst2, data=olddata) 
         
-        ALL_LC1=c(ALL_LC1, fit$coefficients[1])
-        ALL_L21=c(ALL_LC2, fit$coefficients[2])
+        ALL_LC1=c(ALL_LC1, summary(fit)$coefficients[1,4])
+        ALL_LC2=c(ALL_LC2, summary(fit)$coefficients[2,4])
         
         ALL_COR=c(ALL_COR, this_cor)
         ALL_PV=c(ALL_PV, this_pv) 
@@ -424,7 +424,8 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
     
-    PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7) ) 
+    PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
+                (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)    ) 
     
     RESULT$select=PCUSE
     
@@ -449,7 +450,13 @@ MBEER=BEER
     return(PCUSE)
     }
 
-
+.selectUSE <-function(RESULT, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5, CC=0.05){
+    PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)*RR | RESULT$cor>CUTR )    & 
+                (rank(RESULT$lcor) >=length(RESULT$cor)*RR | RESULT$lcor>CUTL)   &
+                 RESULT$lc1 >CC
+               ) 
+    return(PCUSE)
+    }
 
 ####################
 
