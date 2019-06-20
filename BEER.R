@@ -519,9 +519,8 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     pbmc=mybeer$seurat
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
-    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
     
-    
+    #Combat######
     pca=pbmc@reductions$pca@cell.embeddings
     if(CB==TRUE){
         
@@ -538,8 +537,9 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
         rownames(ttt)=rownames(pbmc@reductions$pca@cell.embeddings)
         pbmc@reductions$pca@cell.embeddings=ttt
         } 
+    ##############
     
-    
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
     ########
     
     DR=pbmc@reductions$umap@cell.embeddings
