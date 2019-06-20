@@ -240,7 +240,15 @@ https://satijalab.org/seurat/get_started.html
 
 Please go to the webpage of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
  
+    library(Seurat)
+    library(ggplot2)
+    peaks <- Read10X_h5("../data/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
 
+    activity.matrix <- CreateGeneActivityMatrix(peak.matrix = peaks, annotation.file = "../data/Homo_sapiens.GRCh37.82.gtf", 
+        seq.levels = c(1:22, "X", "Y"), upstream = 2000, verbose = TRUE)
+        
+        
+    
 </br>   
 </br> 
     
