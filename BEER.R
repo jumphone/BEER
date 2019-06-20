@@ -466,7 +466,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
+ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123){
 
     set.seed( SEED)
     RESULT=list()
@@ -481,7 +481,6 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     MTTAG=MTTAG
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
-    REGBATCH=REGBATCH
     GN=GN
     print_step=print_step
     
@@ -495,8 +494,13 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     print('Varible gene number (GN) is:')
     print(GN)
     
+    
+     
     pbmc=mybeer$seurat
     VARG=VariableFeatures(object = pbmc)
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
+    
     ########
     
     ONE=pbmc@reductions$umap@cell.embeddings[,1]
