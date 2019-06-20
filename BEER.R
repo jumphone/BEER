@@ -168,7 +168,7 @@ library(pcaPP)
     return(DR)
     }
 
-.getGroup <- function(X,TAG,CNUM=10){
+.getGroupOld <- function(X,TAG,CNUM=10){
     DR=X
     RANK=rank(DR,ties.method='random')
     CUTOFF=CNUM 
@@ -189,6 +189,18 @@ library(pcaPP)
     return(GROUP)
 }
 
+
+.getGroup <- function(X,TAG,GNUM){
+    #DR=X
+    #RANK=rank(DR,ties.method='random')
+      
+    CLUST=kmeans(X,centers=30)
+    GROUP=paste0(TAG,'_',as.character(CLUST))
+    
+    print('Group Number:')
+    print(length(table(GROUP)))
+    return(GROUP)
+}
 
 
 
@@ -368,8 +380,8 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     for(this_batch in UBATCH){
         this_index=which(BATCH==this_batch)
         this_one=ONE[this_index]
-        CNUM=max(c(5, round(length(this_index)/GNUM) ))
-        this_group=.getGroup(this_one,this_batch,CNUM)
+        #CNUM=max(c(5, round(length(this_index)/GNUM) ))
+        this_group=.getGroup(this_one,this_batch,GNUM)
         GROUP[this_index]=this_group
     }
 
@@ -508,8 +520,8 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     for(this_batch in UBATCH){
         this_index=which(BATCH==this_batch)
         this_one=ONE[this_index]
-        CNUM=max(c(5, round(length(this_index)/GNUM) ))
-        this_group=.getGroup(this_one,this_batch,CNUM)
+        #CNUM=max(c(5, round(length(this_index)/GNUM) ))
+        this_group=.getGroup(this_one,this_batch,GNUM)
         GROUP[this_index]=this_group
     }
 
