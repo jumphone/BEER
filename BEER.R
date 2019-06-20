@@ -318,7 +318,7 @@ library(pcaPP)
    }
 
 
-BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
+BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2){
 
     set.seed( SEED)
     RESULT=list()
@@ -335,6 +335,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     UBATCH=unique(BATCH)
     REGBATCH=REGBATCH
     GN=GN
+    N=N
     print_step=print_step
     
     if(!MAXBATCH %in% UBATCH){
@@ -376,7 +377,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     }
     
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
-    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=1)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
 
 
     DR=pbmc@reductions$umap@cell.embeddings
@@ -483,7 +484,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123){
+ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2){
 
     set.seed( SEED)
     RESULT=list()
@@ -499,6 +500,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     GN=GN
+    N=N
     print_step=print_step
     
     if(!MAXBATCH %in% UBATCH){
@@ -516,7 +518,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     pbmc=mybeer$seurat
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
-    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=3)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
     
     ########
     
