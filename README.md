@@ -4,6 +4,8 @@
 
 Author: Feng Zhang
 
+BEER's latest version: https://github.com/jumphone/BEER/releases
+
 BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 # News:
