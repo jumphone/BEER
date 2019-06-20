@@ -72,6 +72,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
+    # Users can select PCA subspaces based on the distribution of "Linear Correlation" and "Rank Correlation". 
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT_NEW.png" width="400">
     
