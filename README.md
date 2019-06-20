@@ -24,7 +24,8 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
     #R >=3.5
     install.packages('Seurat') # >=3.0     
-    install.packages('pcaPP') # 1.9.73
+    install.packages('pcaPP') 
+    install.packages('mclust')
 
 # Usage:
 
@@ -272,14 +273,14 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
  
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, GNUM=50, PCNUM=50, CPU=2, REGBATCH=TRUE)
+    mybeer <- BEER(DATA, BATCH, GNUM=100, PCNUM=100, CPU=2, REGBATCH=TRUE)
     
-    mybeer <- ReBEER(mybeer, GNUM=150, PCNUM=100, CPU=2)
+    # Users can use "ReBEER" to adjust GNUM&PCNUM.
+    # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, CPU=2)
     
-    # Check selected PCs
-    PCUSE <- mybeer$select
+    # Use ".selectUSE" to select PCs when dealing with huge batch effect    
+    PCUSE <- .selectUSE(mybeer, CC=0.05)
     
-    PCUSE <-.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5, CC=0.05)
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
@@ -305,7 +306,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
 
     pbmc <- mybeer$seurat
-    PCUSE <-.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5, CC=0.05)
+    PCUSE <- .selectUSE(mybeer, CC=0.05)
     
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
