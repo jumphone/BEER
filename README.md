@@ -273,7 +273,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
  
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, GNUM=100, PCNUM=100, CPU=2, REGBATCH=TRUE)
+    mybeer <- BEER(DATA, BATCH, GNUM=100, PCNUM=100, GN=5000, CPU=2, REGBATCH=TRUE)
     
     # Users can use "ReBEER" to adjust GNUM&PCNUM.
     # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, CPU=2)
@@ -295,9 +295,6 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
     
     pbmc <- mybeer$seurat
-    ALLPC <- 1:length(mybeer$cor)   
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
-    
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)    
 
@@ -306,14 +303,20 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
 
     pbmc <- mybeer$seurat
-    PCUSE <- .selectUSE(mybeer, CC=0.05)
-    
+    PCUSE <- .selectUSE(mybeer, CC=0.05)    
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
     #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
+    pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
+    pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
+    meta <- read.table("../data/atac_v1_pbmc_10k_singlecell.csv", sep = ",", header = TRUE, row.names = 1, 
+    stringsAsFactors = FALSE)
     
+    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
 </br>   
 </br> 
