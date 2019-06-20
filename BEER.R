@@ -466,7 +466,7 @@ MBEER=BEER
 
 
 
-GroupBEER <- function(BEER, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
+GroupBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
 
     set.seed( SEED)
     RESULT=list()
@@ -474,8 +474,8 @@ GroupBEER <- function(BEER, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTT
     #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print('BEER start!')
     print(Sys.time())
-    DATA=BEER$seurat@assays$RNA@counts
-    BATCH=BEER$seurat@meta.data$batch
+    DATA=mybeer$seurat@assays$RNA@counts
+    BATCH=mybeer$seurat@meta.data$batch
     GNUM=GNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
@@ -495,7 +495,7 @@ GroupBEER <- function(BEER, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTT
     print('Varible gene number (GN) is:')
     print(GN)
     
-    pbmc=BEER$seurat
+    pbmc=mybeer$seurat
     VARG=VariableFeatures(object = pbmc)
     ########
     
