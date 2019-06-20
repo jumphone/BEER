@@ -194,7 +194,7 @@ library(pcaPP)
     #DR=X
     #RANK=rank(DR,ties.method='random')
       
-    CLUST=kmeans(X,centers=30)
+    CLUST=kmeans(X,centers=GNUM)$cluster
     GROUP=paste0(TAG,'_',as.character(CLUST))
     
     print('Group Number:')
