@@ -317,6 +317,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     MTTAG=MTTAG
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
+    REGBATCH=REGBATCH
     GN=GN
     print_step=print_step
     
