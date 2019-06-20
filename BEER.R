@@ -215,7 +215,7 @@ library(pcaPP)
         i=i+1}
     VP=tag1[V,]
     ##############################
-    if(length(V)<=1){return(message("If BEER stopped, please try a different GNUM to get valid pair."))}
+    if(length(V)<=1){return(message("If BEER crashed, please try a different GNUM to get valid pair."))}
     ##############################
     C=c()
     t=1
