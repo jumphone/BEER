@@ -64,7 +64,8 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
     mybeer <- BEER(DATA, BATCH, CNUM=50, PCNUM=50, CPU=2)
     
-    #CNUM: the number of cells in each group
+    #CNUM: the number of cells in each group. 
+    #You can change CNUM based on the total cell number. e.g. CNUM = round(min(table(BATCH))/50)
     #PCNUM: the number of computated PCA subspaces 
     
     #If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
