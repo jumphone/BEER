@@ -6,8 +6,8 @@
 #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
 
-#library(Seurat)
-#library(pcaPP)
+library(Seurat)
+library(pcaPP)
 
 
 ############################################################################################
