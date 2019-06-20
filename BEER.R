@@ -243,7 +243,8 @@
     ALL_PV=c() 
     ALL_LCOR=c()
     ALL_LPV=c()
-
+    ALL_LC1=c()
+    ALL_LC2=c()
 
     print('Start')
     THIS_DR=1
@@ -269,7 +270,13 @@
         this_test2=cor.test(lst1_quantile, lst2_quantile, method='pearson')        
         this_cor2=this_test2$estimate
         this_pv2=this_test2$p.value
-         
+        
+        olddata=data.frame(lst1=lst1_quantile, lst2=lst2_quantile)
+        fit=lm(lst1 ~lst2, data=olddata) 
+        
+        ALL_LC1=c(ALL_LC1, fit$coefficients[1])
+        ALL_L21=c(ALL_LC2, fit$coefficients[2])
+        
         ALL_COR=c(ALL_COR, this_cor)
         ALL_PV=c(ALL_PV, this_pv) 
         ALL_LCOR=c(ALL_LCOR, this_cor2)
@@ -282,7 +289,8 @@
     OUT$cor=ALL_COR
     OUT$pv=ALL_PV
     OUT$fdr=p.adjust(ALL_PV,method='fdr')
-
+    OUT$lc1=ALL_LC1
+    OUT$lc2=ALL_LC2
     OUT$lcor=ALL_LCOR
     OUT$lpv=ALL_LPV
     OUT$lfdr=p.adjust(ALL_LPV,method='fdr')
@@ -412,6 +420,8 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     RESULT$fdr=OUT$fdr
     RESULT$lcor=OUT$lcor
     RESULT$lpv=OUT$lpv
+    RESULT$lc1=OUT$lc1
+    RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
     
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7) ) 
@@ -438,5 +448,8 @@ MBEER=BEER
     
     return(PCUSE)
     }
+
+
+
 ####################
 
