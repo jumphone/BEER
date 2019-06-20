@@ -425,7 +425,9 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     RESULT$lfdr=OUT$lfdr
     
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
-                (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)    ) 
+                (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)   &
+                RESULT$lc1 >0.05
+               ) 
     
     RESULT$select=PCUSE
     
