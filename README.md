@@ -238,7 +238,7 @@ https://satijalab.org/seurat/get_started.html
 
 # IV. Combine scATAC-seq & scRNA-seq
 
-Please go to the webpage of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
+Please go to the website of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
  
     library(Seurat)
     library(ggplot2)
