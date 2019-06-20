@@ -521,6 +521,25 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
     
+    
+    pca=pbmc@reductions$pca@cell.embeddings
+    if(CB==TRUE){
+        
+        batch=as.character(pbmc@meta.data$batch)
+        library(sva)
+        library(limma)
+        pheno = data.frame(batch=as.matrix(batch))
+        edata = t(pca)
+        batch = pheno$batch
+        modcombat = model.matrix(~1, data=pheno)
+        combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
+        ttt=t(combat_edata)
+        colnames(ttt)=colnames(pbmc@reductions$pca@cell.embeddings)
+        rownames(ttt)=rownames(pbmc@reductions$pca@cell.embeddings)
+        pbmc@reductions$pca@cell.embeddings=ttt
+        } 
+    
+    
     ########
     
     DR=pbmc@reductions$umap@cell.embeddings
@@ -575,8 +594,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     MAP[which(GROUP %in% VP[,2])]='V2'
     pbmc@meta.data$map=MAP
     
-    
-    
+       
     
     OUT=.evaluateProBEER(DR, GROUP, VP)
 
@@ -592,25 +610,9 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     RESULT$lc1=OUT$lc1
     RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
-    
+    RESULT$pca=pca
     #########
-    
-    if(CB==TRUE){
-        pca=pbmc@reductions$pca@cell.embeddings
-        batch=as.character(pbmc@meta.data$batch)
-        library(sva)
-        library(limma)
-        pheno = data.frame(batch=as.matrix(batch))
-        edata = t(pca)
-        batch = pheno$batch
-        modcombat = model.matrix(~1, data=pheno)
-        combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
-        ttt=t(combat_edata)
-        colnames(ttt)=colnames(pbmc@reductions$pca@cell.embeddings)
-        rownames(ttt)=rownames(pbmc@reductions$pca@cell.embeddings)
-        RESULT$combat=ttt
-        } 
-    
+
     #########
        
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
