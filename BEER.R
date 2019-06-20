@@ -484,7 +484,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2){
+ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2,CB=FALSE){
 
     set.seed( SEED)
     RESULT=list()
@@ -500,6 +500,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     GN=GN
+    CB=CB
     N=N
     print_step=print_step
     
@@ -574,7 +575,9 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     MAP[which(GROUP %in% VP[,2])]='V2'
     pbmc@meta.data$map=MAP
     
-
+    
+    
+    
     OUT=.evaluateProBEER(DR, GROUP, VP)
 
     RESULT=list()
@@ -590,6 +593,26 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
     
+    #########
+    
+    if(CB==TRUE){
+        pca=pbmc@reductions$pca@cell.embeddings
+        batch=as.character(pbmc@meta.data$batch)
+        library(sva)
+        library(limma)
+        pheno = data.frame(batch=as.matrix(batch))
+        edata = t(pca)
+        batch = pheno$batch
+        modcombat = model.matrix(~1, data=pheno)
+        combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
+        ttt=t(combat_edata)
+        colnames(ttt)=colnames(pbmc@reductions$pca@cell.embeddings)
+        rownames(ttt)=rownames(pbmc@reductions$pca@cell.embeddings)
+        RESULT$combat=ttt
+        } 
+    
+    #########
+       
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
                 (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)   #&
                 #p.adjust(RESULT$lc1,method='fdr') >0.05
