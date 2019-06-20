@@ -511,8 +511,8 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     print(MAXBATCH)
     print('Group number (GNUM) is:')
     print(GNUM)
-    print('Varible gene number (GN) is:')
-    print(GN)
+    #print('Varible gene number (GN) is:')
+    #print(GN)
     
     
      
