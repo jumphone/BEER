@@ -428,7 +428,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
 
 MBEER=BEER
 
-.getUSE <-function(RESULT, CUTR=0.7,CURL=0.7){
+.getUSE <-function(RESULT, CUTR=0.7,CUTL=0.7){
     PCUSE=which( (RESULT$cor>CUTR )    & (RESULT$lcor>CUTL) ) 
     return(PCUSE)
     }
