@@ -191,8 +191,14 @@ library(pcaPP)
 
 
 .getGroup <- function(X,TAG,GNUM){
-  
-    CLUST=kmeans(X,centers=GNUM)$cluster
+    
+    print('Get group for:')
+    print(TAG)
+    
+    D=dist(X)
+    H=hclust(D)
+    CLUST=cutree(H,k=GNUM)
+    #CLUST=kmeans(X,centers=GNUM)$cluster
     GROUP=paste0(TAG,'_',as.character(CLUST))
     
     print('Group Number:')
