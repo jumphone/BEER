@@ -4,6 +4,8 @@
 
 Author: Feng Zhang
 
+BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.3.zip
+
 # News:
 
 * June 2019, "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
