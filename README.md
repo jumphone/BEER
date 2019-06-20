@@ -312,8 +312,6 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
-    meta <- read.table("../data/atac_v1_pbmc_10k_singlecell.csv", sep = ",", header = TRUE, row.names = 1, 
-    stringsAsFactors = FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
     
