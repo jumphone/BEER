@@ -72,7 +72,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     #PCNUM: the number of computated PCA subspaces 
     
     #If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
-    #mybeer <- BEER(DATA, BATCH, GNUM=50, PCNUM=50, CPU=2, REGBATCH=TRUE)
+    #mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
     # Check selected PCs
     PCUSE=mybeer$select
