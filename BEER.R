@@ -432,5 +432,11 @@ MBEER=BEER
     PCUSE=which( (RESULT$cor>CUTR )    & (RESULT$lcor>CUTL) ) 
     return(PCUSE)
     }
+
+.getRUSE <-function(RESULT, CUTR=0.7,CUTL=0.7){
+    PCUSE=which( rank(RESULT$cor)>=length(RESULT$cor)*CUTR  &  rank(RESULT$lcor) >=length(RESULT$cor)*CUTL ) 
+    
+    return(PCUSE)
+    }
 ####################
 
