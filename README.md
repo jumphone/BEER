@@ -31,7 +31,7 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
-* [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
+
 </br>
 
 # I. Combine Two Batches
@@ -244,8 +244,10 @@ Please go to the webpage of Seurat to download DEMO data: https://satijalab.org/
     library(ggplot2)
     peaks <- Read10X_h5("../data/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
 
-    activity.matrix <- CreateGeneActivityMatrix(peak.matrix = peaks, annotation.file = "../data/Homo_sapiens.GRCh37.82.gtf", 
+    activity.matrix <- CreateGeneActivityMatrix(peak.matrix = peaks, 
+        annotation.file = "../data/Homo_sapiens.GRCh37.82.gtf", 
         seq.levels = c(1:22, "X", "Y"), upstream = 2000, verbose = TRUE)
+    
         
         
     
