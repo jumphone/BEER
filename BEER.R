@@ -426,7 +426,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
                 (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)   &
-                RESULT$lc1 >0.05
+                p.adjust(RESULT$lc1,method='fdr') >0.05
                ) 
     
     RESULT$select=PCUSE
@@ -446,16 +446,11 @@ MBEER=BEER
     return(PCUSE)
     }
 
-.getRUSE <-function(RESULT, CUTR=0.7,CUTL=0.7){
-    PCUSE=which( rank(RESULT$cor)>=length(RESULT$cor)*CUTR  &  rank(RESULT$lcor) >=length(RESULT$cor)*CUTL ) 
-    
-    return(PCUSE)
-    }
 
 .selectUSE <-function(RESULT, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5, CC=0.05){
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)*RR | RESULT$cor>CUTR )    & 
                 (rank(RESULT$lcor) >=length(RESULT$cor)*RR | RESULT$lcor>CUTL)   &
-                 RESULT$lc1 >CC
+                 p.adjust(RESULT$lc1,method='fdr') > CC
                ) 
     return(PCUSE)
     }
