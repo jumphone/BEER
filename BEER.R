@@ -190,6 +190,8 @@ library(pcaPP)
 }
 
 
+
+
 .getValidpair <- function(DATA1, GROUP1, DATA2, GROUP2, CPU=4, method='kendall', print_step=10){
     #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
     print_step=print_step
@@ -213,7 +215,7 @@ library(pcaPP)
         i=i+1}
     VP=tag1[V,]
     ##############################
-    if(length(V)<=1){return(message("Please try a different CNUM to get valid pair."))}
+    if(length(V)<=1){return(message("Please try a different GNUM to get valid pair."))}
     ##############################
     C=c()
     t=1
@@ -300,7 +302,7 @@ library(pcaPP)
    }
 
 
-BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
+BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123){
 
     set.seed( SEED)
     RESULT=list()
@@ -310,20 +312,23 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     print(Sys.time())
     DATA=DATA
     BATCH=BATCH
-    CNUM=CNUM
+    GNUM=GNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
+    GN=GN
+    print_step=print_step
     
     if(!MAXBATCH %in% UBATCH){
         MAXBATCH=names(which(table(BATCH)==max(table(BATCH))))
         }
     print('Max batch is:')
     print(MAXBATCH)
-    
-    GN=GN
-    print_step=print_step
+    print('Group number (GNUM) is:')
+    print(GNUM)
+    print('Varible gene number (GN) is:')
+    print(GN)
     
     VARG=c()
     for(this_batch in UBATCH){
@@ -362,6 +367,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='', CNUM=50, PCNUM=50, GN=2000, CPU=4, MT
     for(this_batch in UBATCH){
         this_index=which(BATCH==this_batch)
         this_one=ONE[this_index]
+        CNUM=max(c(5, round(length(this_index)/GNUM) ))
         this_group=.getGroup(this_one,this_batch,CNUM)
         GROUP[this_index]=this_group
     }
@@ -456,4 +462,5 @@ MBEER=BEER
     }
 
 ####################
+
 
