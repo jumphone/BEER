@@ -10,13 +10,15 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 # News:
 
-* June 2019 ( v0.0.5 ) Add a new parameter for selecting PCUSE.
+* June 2019 ( v0.0.6 ): 'GNUM' is used to replace "CNUM".
 
-* June 2019 ( v0.0.4 ), "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
+* June 2019 ( v0.0.5 ): Add a new parameter for selecting PCUSE.
 
-* June 2019, stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
+* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
 
-* May 2019, "BEER_Seurat3.R" & "MBEER" is available (for Seurat3).
+* June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
+
+* May 2019: "BEER_Seurat3.R" & "MBEER" is available (for Seurat3).
 
 # Requirement:
 
@@ -82,13 +84,13 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
     # PCUSE=.getUSE(mybeer, CUTR=0.7, CUTL=0.7)
     
     
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CORPLOT_NEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT1.png" width="400">
     
 ### Step3. Visualization 
     
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/KeepBatchEffect_NEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
     
     pbmc <- mybeer$seurat
     ALLPC <- 1:length(mybeer$cor)   
@@ -101,7 +103,7 @@ Please do basic quality control before using BEER (e.g. remove low-quality cells
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/RemoveBatchEffect_NEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
