@@ -171,14 +171,14 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CPNEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT4.png" width="400">
 
     
 ### Step3. Visualization 
         
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBKPKP_NEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
     
     pbmc <- mybeer$seurat
     ALLPC <- 1:length(mybeer$cor)   
@@ -191,7 +191,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/MBRM_NEW.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
