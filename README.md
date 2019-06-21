@@ -302,6 +302,12 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
+    umap=BEER.bbknn(mybeer, PCUSE, NB=3, NT=10)
+    pbmc@reductions$umap@cell.embeddings=umap
+    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT11.png" width="400"> 
+ 
 </br>   
 </br> 
     
