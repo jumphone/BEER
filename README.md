@@ -213,9 +213,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 </br>
 
 # III. UMAP-based Clustering
-    
-### Step1. Clustering:
-
+   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
     VEC=pbmc@$reductions$umap@cell.embeddings
@@ -230,21 +228,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
     
     
-    
-### Step2. Find marker genes & draw heatmap:
-
-* Details are in the instruction page of Seurat:
-
-https://satijalab.org/seurat/get_started.html
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
-
-</br> 
-</br>
-
-
-
-
 # IV. Combine scATAC-seq & scRNA-seq
 
 Please go to the website of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
