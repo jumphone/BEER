@@ -484,7 +484,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2,CB=FALSE){
+ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2){
 
     set.seed( SEED)
     RESULT=list()
@@ -520,24 +520,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     
-    #Combat######
-    pca=pbmc@reductions$pca@cell.embeddings
-    if(CB==TRUE){
-        
-        batch=as.character(pbmc@meta.data$batch)
-        library(sva)
-        library(limma)
-        pheno = data.frame(batch=as.matrix(batch))
-        edata = t(pca)
-        batch = pheno$batch
-        modcombat = model.matrix(~1, data=pheno)
-        combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
-        ttt=t(combat_edata)
-        colnames(ttt)=colnames(pbmc@reductions$pca@cell.embeddings)
-        rownames(ttt)=rownames(pbmc@reductions$pca@cell.embeddings)
-        pbmc@reductions$pca@cell.embeddings=ttt
-        } 
-    ##############
+    
     
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
     ########
@@ -610,7 +593,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     RESULT$lc1=OUT$lc1
     RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
-    RESULT$pca=pca
+    
     #########
 
     #########
@@ -629,3 +612,17 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
 
     return(RESULT)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
