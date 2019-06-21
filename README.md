@@ -280,8 +280,9 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, CPU=2)
     
     # Use ".selectUSE" to select PCs when dealing with huge batch effect    
-    PCUSE <- .selectUSE(mybeer, CC=0.05)
+    # PCUSE <- .selectUSE(mybeer, CC=0.05)
     
+    PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
@@ -304,7 +305,8 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
 
     pbmc <- mybeer$seurat
-    PCUSE <- .selectUSE(mybeer, CC=0.05)    
+    #PCUSE <- .selectUSE(mybeer, CC=0.05)    
+    PCUSE=mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
