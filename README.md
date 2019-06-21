@@ -302,6 +302,9 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
+
+### Step4. BBKNN
+
  Users can use BBKNN to further adjust the figure
   
  Details about BBKNN are in: https://github.com/Teichlab/bbknn
@@ -311,7 +314,17 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT11.png" width="400"> 
- 
+
+Use BBKNN without BEER:
+
+    umap=BEER.bbknn(mybeer, c(1:ncol(pbmc@reductions$pca@cell.embeddings)), NB=3, NT=10)
+    pbmc@reductions$umap@cell.embeddings=umap
+    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400"> 
+
+
+
 </br>   
 </br> 
     
