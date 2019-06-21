@@ -31,6 +31,7 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
 * [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
+* [V. Tune-up with BBKNN](#v-tune-up-with-bbknn)
   
 </br>
 
@@ -299,8 +300,10 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
+</br>
+</br>
 
-### Step4. Tune-up
+# V. Tune-up with BBKNN
 
 If you need a "tune-up", please try BBKNN.
 
