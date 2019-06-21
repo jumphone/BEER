@@ -302,6 +302,8 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 ### Step4. BBKNN
 
+If you need a "tune-up", please try BBKNN.
+
 Details about BBKNN are in: https://github.com/Teichlab/bbknn
 
 ### Use BBKNN without BEER:
