@@ -627,6 +627,8 @@ BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
     mybeer=mybeer
     PCUSE=PCUSE
     
+    pbmc=mybeer$seurat
+    
     pca.all=pbmc@reductions$pca@cell.embeddings
     pca.use=pbmc@reductions$pca@cell.embeddings[,PCUSE]
     batch=as.character(pbmc@meta.data$batch)
@@ -645,8 +647,7 @@ BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
     adata$obsm$X_pca = pca.use
     #NB=50
     #NT=10
-
-    print(NB)
+    #print(NB)
     bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
     #bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
     
