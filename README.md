@@ -309,7 +309,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 Details about BBKNN are in: https://github.com/Teichlab/bbknn
 
-Use BBKNN without BEER:
+### Use BBKNN without BEER:
 
     umap=BEER.bbknn(mybeer, c(1:ncol(pbmc@reductions$pca@cell.embeddings)), NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
@@ -318,7 +318,7 @@ Use BBKNN without BEER:
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400"> 
 
 
-Use BBKNN with BEER:
+### Use BBKNN with BEER:
   
     umap=BEER.bbknn(mybeer, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
