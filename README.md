@@ -307,9 +307,9 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 If you need a "tune-up", please try BBKNN.
 
-Before reading this section, please go through [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
+Details about BBKNN are in: https://github.com/Teichlab/bbknn.
 
-Details about BBKNN are in: https://github.com/Teichlab/bbknn
+The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
 ### Use BBKNN without BEER:
 
@@ -328,9 +328,57 @@ Details about BBKNN are in: https://github.com/Teichlab/bbknn
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT11.png" width="400"> 
 
+</br>
+</br>
 
+# VI. Biological meanings of those PCs with batch effect
 
+Please install "RITANdata" and "RITAN".
 
+RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enrichment.html
+
+The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
+
+    library(RITANdata)
+    library(RITAN)
+    
+    PCUSE <- mybeer$select
+    PCALL <- c(1:length(mybeer$cor))
+    PCnotUSE <- PCALL[which(!PCALL %in% PCUSE)]
+    
+    LD=mybeer$seurat@reductions$pca@feature.loadings
+    GNAME=rownames(LD)
+    
+    N=100
+    getPosAndNegTop <- function(x){
+        O=c(order(x)[1:N],order(x)[(length(x)-99):length(x)])
+        G=GNAME[O]
+        return(G)
+        }
+    
+    GMAT=apply(LD,2,getPosAndNegTop)
+    colnames(GMAT)=paste0(colnames(GMAT),'_R_',round(mybeer$cor,1),"_L_",round(mybeer$lcor,1))
+    GMAT=GMAT[,PCnotUSE]
+    
+    study_set=list()
+    TAG=colnames(GMAT)
+    i=1
+    while(i<=ncol(GMAT)){
+         study_set=c(study_set,list(GMAT[,i]))
+         i=i+1
+         }  
+         
+    names(study_set)=TAG
+    #names(geneset_list)
+    resources=c('KEGG_filtered_canonical_pathways','MSigDB_Hallmarks')
+    
+    e <- term_enrichment_by_subset( study_set, q_value_threshold = 1e-5, 
+                                resources = resources,
+                                all_symbols = cached_coding_genes )
+    
+    plot( e, show_values = FALSE, label_size_y = 7, label_size_x = 7, cap=10 )
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOTE.png" width="600"> 
 
 </br>   
 </br> 
