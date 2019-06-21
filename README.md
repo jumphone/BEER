@@ -300,7 +300,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
 
-### Step4. BBKNN
+### Step4. Tune-up
 
 If you need a "tune-up", please try BBKNN.
 
