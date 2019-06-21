@@ -15,7 +15,7 @@ batch=readRDS('batch.RDS')
 
 
 
-#pca.use=pca.all
+pca.use=pca.all
 
 
 library(reticulate)
