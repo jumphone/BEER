@@ -620,7 +620,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
 
 #########################
 
-BEER.bbknn <- function(mybeer, PCUSE, NB=50, NT=10){
+BEER.bbknn <- function(mybeer, PCUSE, NB=10, NT=10){
   
     NB=NB
     NT=NT
