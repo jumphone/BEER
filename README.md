@@ -210,7 +210,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 </br>   
 </br>
-</br>
+
 
 # III. UMAP-based Clustering
    
@@ -227,7 +227,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     pbmc@meta.data$DC=DC
     DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
     
-    
+</br>   
+</br>
+
 # IV. Combine scATAC-seq & scRNA-seq
 
 Please go to the website of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
