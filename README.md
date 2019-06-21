@@ -352,7 +352,7 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
     
     N=100
     getPosAndNegTop <- function(x){
-        O=c(order(x)[1:N],order(x)[(length(x)-99):length(x)])
+        O=c(order(x)[1:N],order(x)[(length(x)-(N-1)):length(x)])
         G=GNAME[O]
         return(G)
         }
