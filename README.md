@@ -302,8 +302,9 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
-    # Users can use BBKNN to further adjust the figure
-    # Details about BBKNN are in: https://github.com/Teichlab/bbknn
+ Users can use BBKNN to further adjust the figure
+  
+ Details about BBKNN are in: https://github.com/Teichlab/bbknn
 
     umap=BEER.bbknn(mybeer, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
