@@ -381,7 +381,7 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
     
 </br> 
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOTEB.png" width="600"> 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOTEB.png" width="1000"> 
 
 </br>   
 </br> 
