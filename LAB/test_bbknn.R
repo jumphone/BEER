@@ -30,12 +30,12 @@ PCNUM=ncol(pca.use)
 
 sc$tl$pca(adata, n_comps=as.integer(PCNUM))
 adata$obsm$X_pca = pca.use
-#NB=50
-#NT=10
+NB=3
+NT=10
 
 print(NB)
-#bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
-bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
+bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
+#bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
 
 sc$tl$umap(adata)
 umap = py_to_r(adata$obsm$X_umap)
