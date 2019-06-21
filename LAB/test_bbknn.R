@@ -8,12 +8,14 @@ saveRDS(pca.use,file='pca.use.RDS')
 saveRDS(batch,file='batch.RDS')
 
 
-
-
 pca.all=readRDS('pca.all.RDS')
 pca.use=readRDS('pca.use.RDS')
 batch=readRDS('batch.RDS')
 
+
+
+
+#pca.use=pca.all
 
 
 library(reticulate)
@@ -28,11 +30,13 @@ PCNUM=ncol(pca.use)
 
 sc$tl$pca(adata, n_comps=as.integer(PCNUM))
 adata$obsm$X_pca = pca.use
-NB=50
-NT=10
+#NB=50
+#NT=10
 
 print(NB)
-bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
+#bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
+bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
+
 sc$tl$umap(adata)
 umap = py_to_r(adata$obsm$X_umap)
 
@@ -49,6 +53,5 @@ umap=readRDS('umap.RDS')
 rownames(umap)=rownames(pbmc@reductions$umap@cell.embeddings)
 colnames(umap)=colnames(pbmc@reductions$umap@cell.embeddings)
 
-
 pbmc@reductions$umap@cell.embeddings=umap
-
+DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
