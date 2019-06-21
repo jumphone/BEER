@@ -308,7 +308,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 If you need a "tune-up", please try BBKNN.
 
-Details about BBKNN are in: https://github.com/Teichlab/bbknn.
+Please install BBKNN: https://github.com/Teichlab/bbknn.
 
 The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
