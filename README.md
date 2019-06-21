@@ -378,6 +378,8 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
                                 all_symbols = cached_coding_genes )
     
     plot( e, show_values = FALSE, label_size_y = 7, label_size_x = 7, cap=10 )
+    
+</br> 
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOTEB.png" width="600"> 
 
