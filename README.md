@@ -261,11 +261,8 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
     mybeer <- BEER(DATA, BATCH, GNUM=100, PCNUM=100, GN=5000, CPU=2, REGBATCH=TRUE)
     
-    # Users can use "ReBEER" to adjust GNUM&PCNUM.
+    # Users can use "ReBEER" to adjust GNUM & PCNUM.
     # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, CPU=2)
-    
-    # Use ".selectUSE" to select PCs when dealing with huge batch effect    
-    # PCUSE <- .selectUSE(mybeer, CC=0.05)
     
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
