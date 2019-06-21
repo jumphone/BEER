@@ -32,7 +32,7 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
 * [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 * [V. Tune-up with BBKNN](#v-tune-up-with-bbknn)
-* [VI. Biological meanings of those PCs with batch effect](#vi-biological-meanings-of-those-pcs-with-batch-effect)
+* [VI. Biological meanings of batch effect](#vi-biological-meanings-of-batch-effect)
   
 </br>
 
@@ -332,7 +332,7 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
 </br>
 </br>
 
-# VI. Biological meanings of those PCs with batch effect
+# VI. Biological meanings of batch effect
 
 Please install "RITANdata" and "RITAN".
 
