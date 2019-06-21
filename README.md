@@ -10,7 +10,7 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 # News:
 
-* June 2019 ( v0.0.7 ): BEER can be used to combine scATAC-seq & scRNA-seq
+* June 2019 ( v0.0.8 ): BEER can be used to combine scATAC-seq & scRNA-seq
 
 * ...
 
