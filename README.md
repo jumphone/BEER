@@ -10,15 +10,13 @@ BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 # News:
 
-* June 2019 ( v0.0.6 ): "GNUM" is used to replace "CNUM".
+* June 2019 ( v0.0.7 ): BEER can be used to combine scATAC-seq & scRNA-seq
 
-* June 2019 ( v0.0.5 ): Add a new parameter for selecting PCs.
+...
 
 * June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
 
 * June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
-
-* May 2019: "BEER_Seurat3.R" & "MBEER" is available (for Seurat3).
 
 # Requirement:
 
