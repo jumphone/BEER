@@ -563,24 +563,27 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     p1=c()
     p2=c()
     score=c()
+    W=1
     i=1
     while(i<=nrow(CVREF)){
         this_p1=rownames(CVREF)[i]
         j=i+1
         while(j<=ncol(CVREF)){
             this_p2=colnames(CVREF)[j]
-            t1=unlist(strsplit(this_p1,'_'))[1]
-            t2=unlist(strsplit(this_p2,'_'))[1]
-            if(t1!=t2){
+            #t1=unlist(strsplit(this_p1,'_'))[1]
+            #t2=unlist(strsplit(this_p2,'_'))[1]
+            #if(t1!=t2){W=1}else{W=2}
+                
                 p1=c(p1,this_p1)
                 p2=c(p2,this_p2)
                 this_score=CVREF[i,j]
-                score=c(score,this_score)
-                }
+                score=c(score, this_score)
+                
             j=j+1}        
         i=i+1}
 
-
+    
+    
     NET = cbind(p1,p2) 
     g <- make_graph(t(NET),directed = FALSE)
     MST=mst(g, weights = (1-score), algorithm = NULL)
@@ -589,8 +592,10 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     VP=c()
     i=1
     while(i<=nrow(E_MST)){
-        t1=unlist(strsplit(E_MST[i,1],'_'))[1]
-        t2=unlist(strsplit(E_MST[i,2],'_'))[1]
+        #t1=unlist(strsplit(E_MST[i,1],'_'))[1]
+        #t2=unlist(strsplit(E_MST[i,2],'_'))[1]
+        t1='1'
+        t2='2'
         if(t1!=t2){VP=cbind(VP,E_MST[i,])}
         i=i+1}
     VP=t(VP)
@@ -612,6 +617,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     RESULT=list()
     RESULT$seurat=pbmc
     RESULT$vp=VP
+    RESULT$mst=MST
     RESULT$vpcor=VP_OUT$cor
     RESULT$cor=OUT$cor
     RESULT$pv=OUT$pv
