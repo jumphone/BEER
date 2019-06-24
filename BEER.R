@@ -503,7 +503,6 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     GN=GN
-    CB=CB
     N=N
     print_step=print_step
     
