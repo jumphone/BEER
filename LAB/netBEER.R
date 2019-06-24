@@ -569,10 +569,14 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
         j=i+1
         while(j<=ncol(CVREF)){
             this_p2=colnames(CVREF)[j]
-            p1=c(p1,this_p1)
-            p2=c(p2,this_p2)
-            this_score=CVREF[i,j]
-            score=c(score,this_score)
+            t1=unlist(strsplit(this_p1,'_'))[1]
+            t2=unlist(strsplit(this_p2,'_'))[1]
+            if(t1!=t2){
+                p1=c(p1,this_p1)
+                p2=c(p2,this_p2)
+                this_score=CVREF[i,j]
+                score=c(score,this_score)
+                }
             j=j+1}        
         i=i+1}
 
