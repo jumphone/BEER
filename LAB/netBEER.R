@@ -8,7 +8,7 @@
 
 library(Seurat)
 library(pcaPP)
-
+library(igraph)
 
 ############################################################################################
 ############################################################################################
@@ -395,40 +395,51 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
 
 
     pbmc@meta.data$group=GROUP
-    VP=c()
     
-    #if(MAXBATCH==''){
-        #i=which(UBATCH==names(which(table(BATCH)==max(table(BATCH)))))
-        #}else{
-    i= which(UBATCH==MAXBATCH)
-    #while(i<length(UBATCH)){
-        
-        batch1=UBATCH[i]
-        batch1_index=which(BATCH==batch1)
-        exp1=as.matrix(pbmc@assays$RNA@data[,batch1_index])
-        g1=GROUP[batch1_index]
-        
-        j=1
-        while(j<=length(UBATCH)){
-            if(j!=i){
-                batch2=UBATCH[j]
-                batch2_index=which(BATCH==batch2)
-                exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
-                g2=GROUP[batch2_index]
-                VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
-            
-                if(is.null(VP_OUT)){
-                    print('pass')
-                }else{
-                    this_vp=VP_OUT$vp
-                    VP=cbind(VP,t(this_vp))
-                }  
-            }         
-            j=j+1}
-        #i=i+1
-        #}
+    
+    
+    #######    
+    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
+    VREF=REF#REF[which(rownames(REF) %in% VARG),]
+    CVREF=cor(VREF,method='spearman')
 
+
+    library(igraph)
+
+    p1=c()
+    p2=c()
+    score=c()
+    i=1
+    while(i<=nrow(CVREF)){
+        this_p1=rownames(CVREF)[i]
+        j=i+1
+        while(j<=ncol(CVREF)){
+            this_p2=colnames(CVREF)[j]
+            p1=c(p1,this_p1)
+            p2=c(p2,this_p2)
+            this_score=CVREF[i,j]
+            score=c(score,this_score)
+            j=j+1}        
+        i=i+1}
+
+
+    NET = cbind(p1,p2) 
+    g <- make_graph(t(NET),directed = FALSE)
+    MST=mst(g, weights = (1-score), algorithm = NULL)
+    E_MST=as_edgelist(MST, names = TRUE)
+
+    VP=c()
+    i=1
+    while(i<=nrow(E_MST)){
+        t1=unlist(strsplit(E_MST[i,1],'_'))[1]
+        t2=unlist(strsplit(E_MST[i,2],'_'))[1]
+        if(t1!=t2){VP=cbind(VP,E_MST[i,])}
+        i=i+1}
     VP=t(VP)
+
+    
+    ########
+    
     DR=pbmc@reductions$pca@cell.embeddings  
 
     MAP=rep('NA',length(GROUP))
@@ -442,7 +453,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     RESULT=list()
     RESULT$seurat=pbmc
     RESULT$vp=VP
-    RESULT$vpcor=VP_OUT$cor
+    #RESULT$vpcor=VP_OUT$cor
     RESULT$cor=OUT$cor
     RESULT$pv=OUT$pv
     RESULT$fdr=OUT$fdr
@@ -538,40 +549,51 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     }
 
     pbmc@meta.data$group=GROUP
-    VP=c()
     
-    #if(MAXBATCH==''){
-        #i=which(UBATCH==names(which(table(BATCH)==max(table(BATCH)))))
-        #}else{
-    i= which(UBATCH==MAXBATCH)
-    #while(i<length(UBATCH)){
-        
-        batch1=UBATCH[i]
-        batch1_index=which(BATCH==batch1)
-        exp1=as.matrix(pbmc@assays$RNA@data[,batch1_index])
-        g1=GROUP[batch1_index]
-        
-        j=1
-        while(j<=length(UBATCH)){
-            if(j!=i){
-                batch2=UBATCH[j]
-                batch2_index=which(BATCH==batch2)
-                exp2=as.matrix(pbmc@assays$RNA@data[,batch2_index])
-                g2=GROUP[batch2_index]
-                VP_OUT=.getValidpair(exp1, g1, exp2, g2, CPU, method='kendall', print_step)
-            
-                if(is.null(VP_OUT)){
-                    print('pass')
-                }else{
-                    this_vp=VP_OUT$vp
-                    VP=cbind(VP,t(this_vp))
-                }  
-            }         
-            j=j+1}
-        #i=i+1
-        #}
+    
+    
+    #######    
+    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
+    VREF=REF#REF[which(rownames(REF) %in% VARG),]
+    CVREF=cor(VREF,method='spearman')
 
+
+    library(igraph)
+
+    p1=c()
+    p2=c()
+    score=c()
+    i=1
+    while(i<=nrow(CVREF)){
+        this_p1=rownames(CVREF)[i]
+        j=i+1
+        while(j<=ncol(CVREF)){
+            this_p2=colnames(CVREF)[j]
+            p1=c(p1,this_p1)
+            p2=c(p2,this_p2)
+            this_score=CVREF[i,j]
+            score=c(score,this_score)
+            j=j+1}        
+        i=i+1}
+
+
+    NET = cbind(p1,p2) 
+    g <- make_graph(t(NET),directed = FALSE)
+    MST=mst(g, weights = (1-score), algorithm = NULL)
+    E_MST=as_edgelist(MST, names = TRUE)
+
+    VP=c()
+    i=1
+    while(i<=nrow(E_MST)){
+        t1=unlist(strsplit(E_MST[i,1],'_'))[1]
+        t2=unlist(strsplit(E_MST[i,2],'_'))[1]
+        if(t1!=t2){VP=cbind(VP,E_MST[i,])}
+        i=i+1}
     VP=t(VP)
+
+    
+    ########
+    
     DR=pbmc@reductions$pca@cell.embeddings  
 
     MAP=rep('NA',length(GROUP))
