@@ -3,7 +3,7 @@
 
 # Welcome to BEER's laboratory !
 
-# We are making new BEER here.
+## We are making new BEER here.
 
 Author: Feng Zhang
 
