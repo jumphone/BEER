@@ -221,7 +221,7 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
     
 </br> 
 
-<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB5.png" width="400">
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB5.png" width="800">
 
 </br>   
 </br> 
