@@ -1,5 +1,5 @@
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/BEER_LOGO.png" width="200">
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/BEERLAB_LOGO.png" width="200">
 
 # Welcome to BEER's laboratory !
 
