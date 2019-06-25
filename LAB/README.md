@@ -72,10 +72,14 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=3,  CPU=2, SEED=1 )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=3, CPU=2, SEED=1 )
+   
+    # GNUM: the number of groups in each batch
+    # PCNUM: the number of computated PCA subspaces  
+    # ROUND: a large round value leads to strong batch-effect-removing
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
-    # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=5 CPU=2)
+    mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1)
     
     # Check selected PCs
     PCUSE=mybeer$select
@@ -103,7 +107,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB1.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
@@ -116,89 +120,13 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 </br>   
 </br>
 
+# V. Tune-up
+
+If you need a "tune-up", please install combat & BBKNN.
+
+BBKNN: https://github.com/Teichlab/bbknn.
 
 
-# IV. Combine scATAC-seq & scRNA-seq
-
-Please go to the website of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
- 
-### Step1. Load Data
-
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    
-    library(Seurat)
-    library(ggplot2)
-    peaks <- Read10X_h5("../data/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
-
-    activity.matrix <- CreateGeneActivityMatrix(peak.matrix = peaks, 
-        annotation.file = "../data/Homo_sapiens.GRCh37.82.gtf", 
-        seq.levels = c(1:22, "X", "Y"), upstream = 2000, verbose = TRUE)
-         
-    pbmc.rna <- readRDS("../data/pbmc_10k_v3.rds")
-    
-    D1=as.matrix(activity.matrix)
-    D2=as.matrix(pbmc.rna@assays$RNA@counts)
-    colnames(D1)=paste0('ATAC_', colnames(D1))
-    colnames(D2)=paste0('RNA_', colnames(D2))
-    DATA=.simple_combine(D1,D2)$combine
-    BATCH=rep('RNA',ncol(DATA))
-    BATCH[c(1:ncol(D1))]='ATAC'
- 
- 
-### Step2. Detect Batch Effect
-
-    mybeer <- BEER(DATA, BATCH, GNUM=100, PCNUM=100, GN=5000, CPU=2, REGBATCH=TRUE)
-    
-    # Users can use "ReBEER" to adjust GNUM & PCNUM.
-    # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, CPU=2)
-    
-    PCUSE=mybeer$select
-    COL=rep('black',length(mybeer$cor))
-    COL[PCUSE]='red'
-    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT7.png" width="400">   
-
-
-### Step3. Visualization 
-    
-#### Keep batch effect:
-  
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
-    
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)    
-
-#### Remove batch effect:
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
-
-    pbmc <- mybeer$seurat
-    #PCUSE <- .selectUSE(mybeer, CC=0.05)    
-    PCUSE=mybeer$select
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
-    
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
-    pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
-    pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
-    
-    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
-    
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
-
-</br>
-</br>
-
-# V. Tune-up with BBKNN
-
-If you need a "tune-up", please try BBKNN.
-
-Please install BBKNN: https://github.com/Teichlab/bbknn.
-
-The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
 ### Use BBKNN without BEER:
 
