@@ -635,13 +635,33 @@ BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
     
     pbmc=mybeer$seurat
     
+    ##############
+    
+    pca=pbmc@reductions$pca@cell.embeddings
+    
+    library(sva)
+    library(limma)
+    pheno = data.frame(batch=as.matrix(batch))
+    edata = t(pca)
+    batch = pheno$batch
+    modcombat = model.matrix(~1, data=pheno)
+    combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
+    ttt=t(combat_edata)
+    colnames(ttt)=colnames(pbmc@reductions$pca@cell.embeddings)
+    rownames(ttt)=rownames(pbmc@reductions$pca@cell.embeddings)
+
+    pca=ttt
+    pbmc@reductions$pca@cell.embeddings=pca
+    
+    ##############
     pca.all=pbmc@reductions$pca@cell.embeddings
     pca.use=pbmc@reductions$pca@cell.embeddings[,PCUSE]
     batch=as.character(pbmc@meta.data$batch)
-
+        
     library(reticulate)
     #use_python("C:\Users\cchmc\Anaconda3\python")
-
+    
+    
     anndata = import("anndata",convert=FALSE)
     bbknn = import("bbknn", convert=FALSE)
     sc = import("scanpy.api",convert=FALSE)
