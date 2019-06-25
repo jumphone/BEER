@@ -230,7 +230,7 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
    
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
-    VEC=pbmc@$reductions$umap@cell.embeddings
+    VEC=pbmc@reductions$umap@cell.embeddings
     
     # Here, we use the "dbscan" function to do clustering.
     library("fpc")
