@@ -404,11 +404,6 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     N=N
     print_step=print_step
     
-    if(!MAXBATCH %in% UBATCH){
-        MAXBATCH=names(which(table(BATCH)==max(table(BATCH))))
-        }
-    print('Max batch (MAXBATCH) is:')
-    print(MAXBATCH)
     print('Group number (GNUM) is:')
     print(GNUM)
     print('Varible gene number (GN) is:')
@@ -542,19 +537,13 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", pri
     N=N
     print_step=print_step
     
-    if(!MAXBATCH %in% UBATCH){
-        MAXBATCH=names(which(table(BATCH)==max(table(BATCH))))
-        }
-    print('Max batch (MAXBATCH) is:')
-    print(MAXBATCH)
+    pbmc=mybeer$seurat
+    
     print('Group number (GNUM) is:')
     print(GNUM)
-    #print('Varible gene number (GN) is:')
-    #print(GN)
-    
-    
-     
-    pbmc=mybeer$seurat
+    print('Varible gene number (GN) is:')
+    print(length(VariableFeatures(object = pbmc)))
+      
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     
