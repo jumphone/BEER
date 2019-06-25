@@ -254,6 +254,66 @@ library(igraph)
 
 
 
+.getVPnet<- function(pbmc, ROUND){
+    library(igraph)
+    pbmc=pbmc
+    ROUND=ROUND
+
+    ################
+    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
+    VREF=REF
+    CVREF=cor(VREF,method='spearman')
+    #ROUND=3
+    VP=c()
+    I=1    
+    while(I<=ROUND){
+        
+        p1=c()
+        p2=c()
+        score=c()
+        i=1
+        while(i<=nrow(CVREF)){
+            this_p1=rownames(CVREF)[i]
+            j=i+1
+            while(j<=ncol(CVREF)){
+                this_p2=colnames(CVREF)[j]  
+                p1=c(p1,this_p1)
+                p2=c(p2,this_p2)
+            
+                vp_index=which(VP[,1]==this_p1 & VP[,2]==this_p2) 
+                if(length(vp_index) >0){
+                    this_score=999999 }else{
+                    this_score=1-CVREF[i,j]}         
+                score=c(score,this_score)
+                j=j+1}        
+            i=i+1}
+
+
+        NET = cbind(p1,p2) 
+        g <- make_graph(t(NET),directed = FALSE)
+        MST=mst(g, weights = score, algorithm = NULL)
+        E_MST=as_edgelist(MST, names = TRUE)
+
+        i=1
+        while(i<=nrow(E_MST)){
+            t1=unlist(strsplit(E_MST[i,1],'_'))[1]
+            t2=unlist(strsplit(E_MST[i,2],'_'))[1]
+            if(t1!=t2){VP=cbind(VP,E_MST[i,])}
+                i=i+1}
+
+        print(I)
+        I=I+1
+        }       
+        
+        
+    VP=t(VP)
+    #######################
+    return(VP)
+    }
+
+
+
+
 ################ 2019.06.18 #####
 
 .evaluateProBEER <- function(DR, GROUP, VP){
@@ -321,7 +381,7 @@ library(igraph)
    }
 
 
-BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2){
+BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=3){
 
     set.seed( SEED)
     RESULT=list()
@@ -337,6 +397,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     REGBATCH=REGBATCH
+    ROUND=ROUND
     GN=GN
     N=N
     print_step=print_step
@@ -397,48 +458,9 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     pbmc@meta.data$group=GROUP
     
     
-    
-    #######    
-    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
-    VREF=REF#REF[which(rownames(REF) %in% VARG),]
-    CVREF=cor(VREF,method='spearman')
-
-
-    library(igraph)
-
-    p1=c()
-    p2=c()
-    score=c()
-    i=1
-    while(i<=nrow(CVREF)){
-        this_p1=rownames(CVREF)[i]
-        j=i+1
-        while(j<=ncol(CVREF)){
-            this_p2=colnames(CVREF)[j]
-            p1=c(p1,this_p1)
-            p2=c(p2,this_p2)
-            this_score=CVREF[i,j]
-            score=c(score,this_score)
-            j=j+1}        
-        i=i+1}
-
-
-    NET = cbind(p1,p2) 
-    g <- make_graph(t(NET),directed = FALSE)
-    MST=mst(g, weights = (1-score), algorithm = NULL)
-    E_MST=as_edgelist(MST, names = TRUE)
-
-    VP=c()
-    i=1
-    while(i<=nrow(E_MST)){
-        t1=unlist(strsplit(E_MST[i,1],'_'))[1]
-        t2=unlist(strsplit(E_MST[i,2],'_'))[1]
-        if(t1!=t2){VP=cbind(VP,E_MST[i,])}
-        i=i+1}
-    VP=t(VP)
-
-    
-    ########
+    ##########
+    VP=.getVPnet(pbmc, ROUND)
+    ##########
     
     DR=pbmc@reductions$pca@cell.embeddings  
 
@@ -550,58 +572,10 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
 
     pbmc@meta.data$group=GROUP
     
-    
-    
-    #######    
-    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
-    VREF=REF#REF[which(rownames(REF) %in% VARG),]
-    CVREF=cor(VREF,method='spearman')
-
-
-    library(igraph)
-
-    p1=c()
-    p2=c()
-    score=c()
-    W=1
-    i=1
-    while(i<=nrow(CVREF)){
-        this_p1=rownames(CVREF)[i]
-        j=i+1
-        while(j<=ncol(CVREF)){
-            this_p2=colnames(CVREF)[j]
-            #t1=unlist(strsplit(this_p1,'_'))[1]
-            #t2=unlist(strsplit(this_p2,'_'))[1]
-            #if(t1!=t2){W=1}else{W=2}
-                
-                p1=c(p1,this_p1)
-                p2=c(p2,this_p2)
-                this_score=CVREF[i,j]
-                score=c(score, this_score)
-                
-            j=j+1}        
-        i=i+1}
-
-    
-    
-    NET = cbind(p1,p2) 
-    g <- make_graph(t(NET),directed = FALSE)
-    MST=mst(g, weights = (1-score), algorithm = NULL)
-    E_MST=as_edgelist(MST, names = TRUE)
-
-    VP=c()
-    i=1
-    while(i<=nrow(E_MST)){
-        #t1=unlist(strsplit(E_MST[i,1],'_'))[1]
-        #t2=unlist(strsplit(E_MST[i,2],'_'))[1]
-        t1='1'
-        t2='2'
-        if(t1!=t2){VP=cbind(VP,E_MST[i,])}
-        i=i+1}
-    VP=t(VP)
-
-    
-    ########
+     
+    ##########
+    VP=.getVPnet(pbmc, ROUND)
+    ##########
     
     DR=pbmc@reductions$pca@cell.embeddings  
 
@@ -617,8 +591,8 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     RESULT=list()
     RESULT$seurat=pbmc
     RESULT$vp=VP
-    RESULT$mst=MST
-    RESULT$vpcor=VP_OUT$cor
+    #RESULT$mst=MST
+    #RESULT$vpcor=VP_OUT$cor
     RESULT$cor=OUT$cor
     RESULT$pv=OUT$pv
     RESULT$fdr=OUT$fdr
