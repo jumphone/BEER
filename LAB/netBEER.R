@@ -625,11 +625,11 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
 
 
 #########################
-BEER.combat <- function(mybeer){
+BEER.combat <- function(pbmc){
     
-    mybeer=mybeer
+    #mybeer=mybeer
 
-    pbmc=mybeer$seurat
+    pbmc=pbmc#mybeer$seurat
     batch=as.character(pbmc@meta.data$batch)
     
     pca=pbmc@reductions$pca@cell.embeddings 
@@ -650,14 +650,16 @@ BEER.combat <- function(mybeer){
     }
 
 
-BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
+BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
   
     NB=NB
     NT=NT
-    mybeer=mybeer
+    #mybeer=mybeer
+
+    pbmc=pbmc#mybeer$seurat
     PCUSE=PCUSE
     
-    pbmc=mybeer$seurat
+    #pbmc=mybeer$seurat
     batch=as.character(pbmc@meta.data$batch)
     
     pca.all=pbmc@reductions$pca@cell.embeddings
