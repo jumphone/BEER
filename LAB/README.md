@@ -101,9 +101,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
-
 
 #### Remove batch effect:
 
@@ -113,9 +110,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     PCUSE <- mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)     
     
 </br>   
 </br>
