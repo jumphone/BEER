@@ -228,7 +228,6 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
     
 # IV. UMAP-based Clustering
    
-<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB6.png" width="400"> 
 
     VEC=pbmc@reductions$umap@cell.embeddings
     
@@ -241,15 +240,20 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
     pbmc@meta.data$clust=CLUST
     DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
     
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB6.png" width="400"> 
     
-    # Or, select some cells manully
+    # Or, manually select some cells
     
     ppp=DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
     used.cells <- CellSelector(plot = ppp)
     
-    markers <- FindMarkers(pbmc, ident.1=used.cells,only.pos=T)
-    
-    FeaturePlot(pbmc, feature=c('AQP4','OLIG2','NES','PDGFRA','CCL3','C1QA'))
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB7.png" width="400"> 
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB8.png" width="400"> 
+       
+    markers <- FindMarkers(pbmc, ident.1=used.cells,only.pos=T)    
+    head(markers, n=20)
+
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB9.png" width="400"> 
     
 </br>   
 </br>
