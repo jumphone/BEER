@@ -76,7 +76,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
    
     # GNUM: the number of groups in each batch
     # PCNUM: the number of computated PCA subspaces  
-    # ROUND: a large round value leads to strong batch-effect-removing
+    # ROUND: the strength of batch-effect removal
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
     mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1)
