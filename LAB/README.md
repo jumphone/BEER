@@ -28,8 +28,8 @@ Install bbknn in python: https://github.com/Teichlab/bbknn
 # Usage:
 
 * [I. Combine Batches](#i-Combine-Batches)
-* [II. Tune-up with BBKNN](#ii-tune-up-with-bbknn)
-* [III. Biological meanings of batch effect](#iii-biological-meanings-of-batch-effect)
+* [II. Tune-Up](#ii-tune-up)
+* [III. Biological meanings of "batch effect"](#iii-biological-meanings-of-batch-effect)
 * [IV. UMAP-based Clustering](#iv-UMAP-based-Clustering)
  
 </br>
@@ -120,12 +120,19 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 </br>   
 </br>
 
-# V. Tune-up
+# V. Tune-Up
 
-If you need a "tune-up", please install combat & BBKNN.
+If you need a "tune-up", please install ComBat & BBKNN.
+
+ComBat: 
+
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
+    BiocManager::install("sva")
+    BiocManager::install("limma")
 
 BBKNN: https://github.com/Teichlab/bbknn.
-
+ 
 
 
 ### Use BBKNN without BEER:
