@@ -216,7 +216,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
-    VEC=pbmc@$reductions$umap@cell.embeddings
+    VEC=pbmc@reductions$umap@cell.embeddings
     
     # Here, we use the "dbscan" function to do clustering.
     library("fpc")
