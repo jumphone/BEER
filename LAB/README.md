@@ -28,7 +28,7 @@ Install bbknn in python: https://github.com/Teichlab/bbknn
 # Usage:
 
 * [I. Combine Batches](#i-Combine-Batches)
-* [II. Tune-Up](#ii-tune-up)
+* [II. Batch-effect Removal Enhancement](#ii-batch-effect-removal-enhancement)
 * [III. Biological Interpretation](#iii-biological-interpretation)
 * [IV. UMAP-based Clustering](#iv-UMAP-based-Clustering)
  
@@ -120,9 +120,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 </br>   
 </br>
 
-# II. Tune-Up
+# II. Batch-effect Removal Enhancement
 
-If you need a "Tune-Up", please install ComBat & BBKNN.
+Please install ComBat & BBKNN.
 
 ComBat: 
 
