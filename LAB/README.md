@@ -228,18 +228,18 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
     
 # IV. UMAP-based Clustering
    
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB6.png" width="400"> 
 
     VEC=pbmc@reductions$umap@cell.embeddings
     
-    # Here, we use the "dbscan" function to do clustering.
-    library("fpc")
+    # Here, we use K-means to do the clustering
+    N=30
     set.seed(123)
-    df=VEC
-    db <- fpc::dbscan(df, eps = 0.5, MinPts = 5)
-    DC=db$cluster
-    pbmc@meta.data$DC=DC
-    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
+    K=kmeans(VEC,centers=20)
+    
+    CLUST=K$cluster
+    pbmc@meta.data$clust=CLUST
+    DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
     
 </br>   
 </br>
