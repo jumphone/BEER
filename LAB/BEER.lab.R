@@ -383,7 +383,7 @@ library(limma)
    }
 
 
-BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=3){
+BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=3){
 
     set.seed( SEED)
     RESULT=list()
@@ -396,7 +396,7 @@ BEER <- function(DATA, BATCH, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, M
     GNUM=GNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
-    MAXBATCH=MAXBATCH
+    #MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     REGBATCH=REGBATCH
     ROUND=ROUND
@@ -522,7 +522,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=3){
+ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=3){
 
     set.seed( SEED)
     RESULT=list()
@@ -535,7 +535,7 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
     GNUM=GNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
-    MAXBATCH=MAXBATCH
+    #MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     GN=GN
     ROUND=ROUND
