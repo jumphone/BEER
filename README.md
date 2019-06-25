@@ -4,6 +4,11 @@
 
 Author: Feng Zhang
 
+If you are not satisfied with the results of current BEER, 
+
+please try BEER.lab: https://github.com/jumphone/BEER/tree/master/LAB
+
+
 BEER's latest version: https://github.com/jumphone/BEER/releases
 
 BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
