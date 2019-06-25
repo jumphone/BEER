@@ -16,7 +16,14 @@ Author: Feng Zhang
     install.packages('mclust')
     install.packages('igraph')
     
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+    BiocManager::install("sva")
+    BiocManager::install("limma")
+    
 Install bbknn in python: https://github.com/Teichlab/bbknn
+
+
 
 # Usage:
 
