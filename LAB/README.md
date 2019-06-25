@@ -1,8 +1,6 @@
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/BEER_LOGO.png" width="200">
 
-### BEER: Batch EffEct Remover for single-cell data
-
 # Welcome to BEER's laboratory !
 
 # We are making new BEER here.
