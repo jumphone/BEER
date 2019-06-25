@@ -120,45 +120,72 @@ DR=pbmc@reductions$umap@cell.embeddings
 
 
 
+
+
+
+################
 REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
 
 VREF=REF#REF[which(rownames(REF) %in% VARG),]
 CVREF=cor(VREF,method='spearman')
 
-################
-library(igraph)
-
-p1=c()
-p2=c()
-score=c()
-i=1
-while(i<=nrow(CVREF)){
-    this_p1=rownames(CVREF)[i]
-    j=i+1
-    while(j<=ncol(CVREF)){
-        this_p2=colnames(CVREF)[j]
-        p1=c(p1,this_p1)
-        p2=c(p2,this_p2)
-        this_score=CVREF[i,j]
-        score=c(score,this_score)
-        j=j+1}        
-    i=i+1}
-
-
-NET = cbind(p1,p2) 
-g <- make_graph(t(NET),directed = FALSE)
-MST=mst(g, weights = (1-score), algorithm = NULL)
-E_MST=as_edgelist(MST, names = TRUE)
-
+SAME=3
 VP=c()
-i=1
-while(i<=nrow(E_MST)){
-    t1=unlist(strsplit(E_MST[i,1],'_'))[1]
-    t2=unlist(strsplit(E_MST[i,2],'_'))[1]
-    if(t1!=t2){VP=cbind(VP,E_MST[i,])}
-    i=i+1}
 
+I=1
+
+library(igraph)
+while(I<=TIME){
+        
+    p1=c()
+    p2=c()
+    score=c()
+    i=1
+    while(i<=nrow(CVREF)){
+        this_p1=rownames(CVREF)[i]
+        j=i+1
+        while(j<=ncol(CVREF)){
+            this_p2=colnames(CVREF)[j]  
+            p1=c(p1,this_p1)
+            p2=c(p2,this_p2)
+            
+            vp_index=which(VP[,1]==this_p1 & VP[,2]==this_p2) 
+            if(length(vp_index) >0){
+                this_score=999999 }else{
+                this_score=1-CVREF[i,j]}         
+            score=c(score,this_score)
+            j=j+1}        
+        i=i+1}
+
+
+    NET = cbind(p1,p2) 
+    g <- make_graph(t(NET),directed = FALSE)
+    MST=mst(g, weights = score, algorithm = NULL)
+    E_MST=as_edgelist(MST, names = TRUE)
+
+    i=1
+    while(i<=nrow(E_MST)){
+        t1=unlist(strsplit(E_MST[i,1],'_'))[1]
+        t2=unlist(strsplit(E_MST[i,2],'_'))[1]
+        if(t1!=t2){VP=cbind(VP,E_MST[i,])}
+            i=i+1}
+
+    print(I)
+    I=I+1
+    }       
+        
+        
 VP=t(VP)
+
+#######################
+
+
+
+
+
+
+
+
 
 
 DR=pbmc@reductions$pca@cell.embeddings  
@@ -175,7 +202,7 @@ DR=pbmc@reductions$pca@cell.embeddings
 RESULT=list()
     RESULT$seurat=pbmc
     RESULT$vp=VP
-    #RESULT$vpcor=VP_OUT$cor
+    #RESULT$mst=MST
     RESULT$cor=OUT$cor
     RESULT$pv=OUT$pv
     RESULT$fdr=OUT$fdr
@@ -208,6 +235,6 @@ pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicate
 
 DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)
 
-FeaturePlot(pbmc,features=c('AQP4'))
+FeaturePlot(pbmc,features=c('AQP4','PDGFRA','NES','GFAP','TOP2A'))
 
 
