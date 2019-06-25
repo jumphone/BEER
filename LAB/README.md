@@ -29,7 +29,7 @@ Install bbknn in python: https://github.com/Teichlab/bbknn
 
 * [I. Combine Batches](#i-Combine-Batches)
 * [II. Tune-Up](#ii-tune-up)
-* [III. Biological meanings of "batch effect"](#iii-biological-meanings-of-batch-effect)
+* [III. Biological Interpretation](#iii-biological-interpretation)
 * [IV. UMAP-based Clustering](#iv-UMAP-based-Clustering)
  
 </br>
@@ -174,13 +174,11 @@ BBKNN: https://github.com/Teichlab/bbknn.
 </br>
 </br>
 
-# III. Biological meanings of batch effect
+# III. Biological Interpretation
 
 Please install "RITANdata" and "RITAN".
 
 RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enrichment.html
-
-The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
     library(RITANdata)
     library(RITAN)
