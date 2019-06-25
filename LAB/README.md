@@ -241,6 +241,16 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
     pbmc@meta.data$clust=CLUST
     DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
     
+    
+    # Or, select some cells manully
+    
+    ppp=DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
+    used.cells <- CellSelector(plot = ppp)
+    
+    markers <- FindMarkers(pbmc, ident.1=used.cells,only.pos=T)
+    
+    FeaturePlot(pbmc, feature=c('AQP4','OLIG2','NES','PDGFRA','CCL3','C1QA'))
+    
 </br>   
 </br>
     
