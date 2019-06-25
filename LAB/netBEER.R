@@ -280,7 +280,7 @@ library(igraph)
                 p1=c(p1,this_p1)
                 p2=c(p2,this_p2)
             
-                vp_index=which(VP[,1]==this_p1 & VP[,2]==this_p2) 
+                vp_index=which(VP[1,]==this_p1 & VP[2,]==this_p2) 
                 if(length(vp_index) >0){
                     this_score=999999 }else{
                     this_score=1-CVREF[i,j]}         
