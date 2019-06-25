@@ -4,14 +4,13 @@
 
 Author: Feng Zhang
 
-If you are not satisfied with the results of current BEER, 
+* BEER's latest version: https://github.com/jumphone/BEER/releases
 
-please try BEER.lab: https://github.com/jumphone/BEER/tree/master/LAB
+* BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
+* If you are not satisfied with the results of current BEER, 
 
-BEER's latest version: https://github.com/jumphone/BEER/releases
-
-BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
+please try "BEER.lab": https://github.com/jumphone/BEER/tree/master/LAB
 
 # News:
 
