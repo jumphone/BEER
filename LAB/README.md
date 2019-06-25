@@ -27,104 +27,13 @@ Install bbknn in python: https://github.com/Teichlab/bbknn
 
 # Usage:
 
-* [I. Combine Two Batches](#I-Combine-Two-Batches)
-* [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
-* [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
-* [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
-* [V. Tune-up with BBKNN](#v-tune-up-with-bbknn)
-* [VI. Biological meanings of batch effect](#vi-biological-meanings-of-batch-effect)
+* [I. Combine Batches](#i-Combine-Batches)
+* [II. Tune-up with BBKNN](#ii-tune-up-with-bbknn)
+* [III. Biological meanings of batch effect](#iii-biological-meanings-of-batch-effect)
   
 </br>
 
-# I. Combine Two Batches
-
-Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
-
-Please do basic quality control before using BEER (e.g. remove low-quality cells & genes). 
-
-For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html 
-
-### Step1. Load Data
-
-    library(Seurat)
-  
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    
-    #Load Demo Data (subset of GSE70630: MGH53 & MGH54)
-    #Download: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
-    
-    D1 <- read.table(unz("demodata.zip","DATA1_MAT.txt"), sep='\t', row.names=1, header=T)
-    D2 <- read.table(unz("demodata.zip","DATA2_MAT.txt"), sep='\t', row.names=1, header=T)
-
-    # "D1" & "D2" are UMI matrix (or FPKM, RPKM, TPM, PKM ...; Should not be gene-centric scaled data)
-    # Rownames of "D1" & "D2" are gene names
-    # Colnames of "D1" & "D2" are cell names 
-    
-    # There shouldn't be duplicated colnames in "D1" & "D2":
-    colnames(D1)=paste0('D1_', colnames(D1))
-    colnames(D2)=paste0('D2_', colnames(D2))
-
-    DATA=.simple_combine(D1,D2)$combine
-    BATCH=rep('D2',ncol(DATA))
-    BATCH[c(1:ncol(D1))]='D1'
-
-### Step2. Detect Batch Effect
-
-    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2)
-    
-    #GNUM: the number of groups in each batch. 
-    #PCNUM: the number of computated PCA subspaces 
-    
-    #If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
-    #mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2, REGBATCH=TRUE)
-    
-    #Users can use "ReBEER" to re-run BEER faster with different parameters (REGBATCH and MTTAG can not be changed):
-    #mybeer <- ReBEER(mybeer, GNUM=50, PCNUM=50, CPU=2)
-    
-    # Check selected PCs
-    PCUSE=mybeer$select
-    COL=rep('black',length(mybeer$cor))
-    COL[PCUSE]='red'
-    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
-    
-    # Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation". 
-    # PCUSE=.getUSE(mybeer, CUTR=0.7, CUTL=0.7)
-    
-    
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT1.png" width="400">
-    
-### Step3. Visualization 
-    
-#### Keep batch effect:
-  
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
-    
-    pbmc <- mybeer$seurat
-    ALLPC <- 1:length(mybeer$cor)   
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
-    
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
-
-
-#### Remove batch effect:
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
-
-    pbmc <- mybeer$seurat
-    PCUSE <- mybeer$select
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
-    
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
-    
-    
-</br>
-</br>
-    
-# II. Combine Multiple Batches
+# I. Combine Batches
 
 When combining multiple batches, BEER implements the iteration of "Combine Two Batches".
 
