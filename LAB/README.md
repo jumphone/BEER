@@ -120,9 +120,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 </br>   
 </br>
 
-# V. Tune-Up
+# II. Tune-Up
 
-If you need a "tune-up", please install ComBat & BBKNN.
+If you need a "Tune-Up", please install ComBat & BBKNN.
 
 ComBat: 
 
@@ -133,29 +133,48 @@ ComBat:
 
 BBKNN: https://github.com/Teichlab/bbknn.
  
+### Solution 1: ComBat  
 
-
-### Use BBKNN without BEER:
-
-    umap=BEER.bbknn(mybeer, c(1:ncol(pbmc@reductions$pca@cell.embeddings)), NB=3, NT=10)
-    pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    pbmc <- mybeer$seurat
+    PCUSE=mybeer$select
     
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400"> 
+    pbmc=BEER.combat(pbmc) 
+    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=T)
 
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB2.png" width="400">
 
-### Use BBKNN with BEER:
-  
-    umap=BEER.bbknn(mybeer, PCUSE, NB=3, NT=10)
+### Solution 2: BBKNN  
+ 
+    pbmc <- mybeer$seurat
+    PCUSE=mybeer$select
+
+    umap=BEER.bbknn(pbmc, PCUSE, NB=10, NT=10)
+    
     pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=T)
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT11.png" width="400"> 
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB3.png" width="400">
+
+### Solution 3: ComBat + BBKNN 
+
+    pbmc <- mybeer$seurat
+    PCUSE=mybeer$select
+    
+    pbmc=BEER.combat(pbmc) 
+    
+    umap=BEER.bbknn(pbmc, PCUSE, NB=10, NT=10)
+    
+    pbmc@reductions$umap@cell.embeddings=umap
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=T)
+    
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB4.png" width="400">
+
 
 </br>
 </br>
 
-# VI. Biological meanings of batch effect
+# III. Biological meanings of batch effect
 
 Please install "RITANdata" and "RITAN".
 
@@ -204,7 +223,7 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
     
 </br> 
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOTEB.png" width="1000"> 
+<img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB5.png" width="400">
 
 </br>   
 </br> 
