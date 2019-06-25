@@ -233,9 +233,9 @@ RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enr
     VEC=pbmc@reductions$umap@cell.embeddings
     
     # Here, we use K-means to do the clustering
-    N=30
+    N=20
     set.seed(123)
-    K=kmeans(VEC,centers=20)
+    K=kmeans(VEC,centers=N)
     
     CLUST=K$cluster
     pbmc@meta.data$clust=CLUST
