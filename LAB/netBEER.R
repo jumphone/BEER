@@ -634,7 +634,7 @@ BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
     PCUSE=PCUSE
     
     pbmc=mybeer$seurat
-    
+    batch=as.character(pbmc@meta.data$batch)
     ##############
     
     pca=pbmc@reductions$pca@cell.embeddings
@@ -656,7 +656,7 @@ BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
     ##############
     pca.all=pbmc@reductions$pca@cell.embeddings
     pca.use=pbmc@reductions$pca@cell.embeddings[,PCUSE]
-    batch=as.character(pbmc@meta.data$batch)
+    
         
     library(reticulate)
     #use_python("C:\Users\cchmc\Anaconda3\python")
