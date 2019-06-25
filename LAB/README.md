@@ -30,25 +30,18 @@ Install bbknn in python: https://github.com/Teichlab/bbknn
 * [I. Combine Batches](#i-Combine-Batches)
 * [II. Tune-up with BBKNN](#ii-tune-up-with-bbknn)
 * [III. Biological meanings of batch effect](#iii-biological-meanings-of-batch-effect)
-  
+* [IV. UMAP-based Clustering](#iv-UMAP-based-Clustering)
+ 
 </br>
 
 # I. Combine Batches
-
-When combining multiple batches, BEER implements the iteration of "Combine Two Batches".
-
-BEER compares each batch with the batch having the largest cell number.
-
-The assumption is that the batch having the largest cell number has almost all cell-types within all batches.
-
-If you want to define a batch having almost all cell-types, please set "MAXBATCH" to the label of that batch.
 
 Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 ### Step1. Load Data
     
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/LAB/BEER.lab.R')
+    #source('BEER.lab.R')
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
     
@@ -79,8 +72,11 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, MAXBATCH="", GNUM=30, PCNUM=50, CPU=2, SEED=1 )
-
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=3,  CPU=2, SEED=1 )
+    
+    # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
+    # mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=5 CPU=2)
+    
     # Check selected PCs
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
@@ -121,23 +117,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 </br>
 
 
-# III. UMAP-based Clustering
-   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
-
-    VEC=pbmc@$reductions$umap@cell.embeddings
-    
-    # Here, we use the "dbscan" function to do clustering.
-    library("fpc")
-    set.seed(123)
-    df=VEC
-    db <- fpc::dbscan(df, eps = 0.5, MinPts = 5)
-    DC=db$cluster
-    pbmc@meta.data$DC=DC
-    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
-    
-</br>   
-</br>
 
 # IV. Combine scATAC-seq & scRNA-seq
 
@@ -295,6 +274,23 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
 </br>   
 </br> 
     
+# IV. UMAP-based Clustering
+   
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
+
+    VEC=pbmc@$reductions$umap@cell.embeddings
+    
+    # Here, we use the "dbscan" function to do clustering.
+    library("fpc")
+    set.seed(123)
+    df=VEC
+    db <- fpc::dbscan(df, eps = 0.5, MinPts = 5)
+    DC=db$cluster
+    pbmc@meta.data$DC=DC
+    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
+    
+</br>   
+</br>
     
 # License
     
