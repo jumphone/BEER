@@ -625,20 +625,8 @@ ReBEER <- function(mybeer, MAXBATCH='',  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTA
 
 
 #########################
-
-BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
-  
-    NB=NB
-    NT=NT
-    mybeer=mybeer
-    PCUSE=PCUSE
-    
-    pbmc=mybeer$seurat
-    batch=as.character(pbmc@meta.data$batch)
-    ##############
-    
-    pca=pbmc@reductions$pca@cell.embeddings
-    
+BEER.combat <- function(mybeer){
+    pca=pbmc@reductions$pca@cell.embeddings 
     library(sva)
     library(limma)
     pheno = data.frame(batch=as.matrix(batch))
@@ -652,8 +640,19 @@ BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
 
     pca=ttt
     pbmc@reductions$pca@cell.embeddings=pca
+    return(pbmc)
+    }
+
+BEER.bbknn <- function(mybeer, PCUSE, NB=3, NT=10){
+  
+    NB=NB
+    NT=NT
+    mybeer=mybeer
+    PCUSE=PCUSE
     
-    ##############
+    pbmc=mybeer$seurat
+    batch=as.character(pbmc@meta.data$batch)
+    
     pca.all=pbmc@reductions$pca@cell.embeddings
     pca.use=pbmc@reductions$pca@cell.embeddings[,PCUSE]
     
