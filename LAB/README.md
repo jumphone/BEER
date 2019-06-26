@@ -97,9 +97,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
     
     pbmc <- mybeer$seurat
-    ALLPC <- 1:length(mybeer$cor)   
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
-    
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
 
 #### Remove batch effect:
