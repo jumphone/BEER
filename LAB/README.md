@@ -83,6 +83,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     # Check selected PCs
     PCUSE=mybeer$select
+    
+    #PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5, CC=1)
+    
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
