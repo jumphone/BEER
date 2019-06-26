@@ -25,7 +25,6 @@ Author: Feng Zhang
     #R >=3.5
     install.packages('Seurat') # >=3.0     
     install.packages('pcaPP') 
-    install.packages('mclust')
 
 # Usage:
 
