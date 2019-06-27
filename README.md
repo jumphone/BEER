@@ -12,7 +12,7 @@ Author: Feng Zhang
 
 # News:
 
-* June 2019 ( v0.0.8 ): BEER can be used to combine scATAC-seq & scRNA-seq
+* June 2019 ( v0.1.0 ): Batch-effect removal enhancement with ComBat & BBKNN
 
 * ...
 
