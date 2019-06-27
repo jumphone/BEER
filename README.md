@@ -10,8 +10,6 @@ Author: Feng Zhang
 
 * We are developing new version at: https://github.com/jumphone/BEER/tree/master/LAB
 
-* The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BEER doesn't use "imputation".
-
 
 # News:
 
