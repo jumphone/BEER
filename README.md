@@ -25,6 +25,8 @@ Author: Feng Zhang
     #R >=3.5
     install.packages('Seurat') # >=3.0     
 
+For batch-effect removal enhancement, please install Combat & BBKNN:
+
     if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
     BiocManager::install("sva")
