@@ -32,7 +32,7 @@ For batch-effect removal enhancement, please install Combat & BBKNN:
     BiocManager::install("sva")
     BiocManager::install("limma")
 
-Install bbknn in python: https://github.com/Teichlab/bbknn
+    Install bbknn in python: https://github.com/Teichlab/bbknn
 
 # Usage:
 
