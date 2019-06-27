@@ -10,7 +10,7 @@ Author: Feng Zhang
 
 * We are developing new version at: https://github.com/jumphone/BEER/tree/master/LAB
 
-* What is the main difference between BEER and Seurat when combing scRNA-seq & scATAC-seq: BEER doesn't use "imputation".
+* The main difference between BEER and Seurat (combe scRNA-seq & scATAC-seq): BEER doesn't use "imputation".
 
 
 # News:
@@ -247,7 +247,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 # IV. Combine scATAC-seq & scRNA-seq
 
 Please go to the website of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
- 
+
+The main difference between BEER and Seurat (combe scRNA-seq & scATAC-seq): BEER doesn't use "imputation".
+
 ### Step1. Load Data
 
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
@@ -360,7 +362,6 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
-
 
 </br>
 </br>
