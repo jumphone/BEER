@@ -24,7 +24,13 @@ Author: Feng Zhang
 
     #R >=3.5
     install.packages('Seurat') # >=3.0     
-    install.packages('pcaPP') 
+
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+    BiocManager::install("sva")
+    BiocManager::install("limma")
+
+Install bbknn in python: https://github.com/Teichlab/bbknn
 
 # Usage:
 
