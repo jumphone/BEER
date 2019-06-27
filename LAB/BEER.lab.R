@@ -364,8 +364,8 @@ library(limma)
             while(i<=ncol(VP)){
                 p1=VP[1,i]
                 p2=VP[2,i]
-                CVREF[which(rownames(CVREF)==p1), which(rownames(CVREF)==p2)]=-99999
-                CVREF[which(rownames(CVREF)==p2), which(rownames(CVREF)==p1)]=-99999    
+                CVREF[which(rownames(CVREF)==p1), which(colnames(CVREF)==p2)]=-99999
+                CVREF[which(rownames(CVREF)==p2), which(colnames(CVREF)==p1)]=-99999    
                 #b1=.get_batch(p1)
                 #b2=.get_batch(p2)
                 #b1i=which(group_batch==b1)
