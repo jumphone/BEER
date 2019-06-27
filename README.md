@@ -321,7 +321,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 Please install ComBat & BBKNN.
 
-The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
+This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
 ### ComBat&BBKNN without BEER:
 
@@ -363,7 +363,7 @@ Please install "RITANdata" and "RITAN".
 
 RITAN: https://bioconductor.org/packages/devel/bioc/vignettes/RITAN/inst/doc/enrichment.html
 
-The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
+This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
     library(RITANdata)
     library(RITAN)
