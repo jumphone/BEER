@@ -71,11 +71,12 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=3, CPU=2, SEED=1 )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=3, CPU=2, GN=2000, SEED=1 )
    
     # GNUM: the number of groups in each batch
     # PCNUM: the number of computated PCA subspaces  
     # ROUND: the strength of batch-effect removal
+    # GN: the number of variable genes in each batch
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
     mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1)
