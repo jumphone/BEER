@@ -546,7 +546,8 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     
     
     ##########
-    VP=.getVPnet(pbmc, ROUND)
+    #VP=.getVPnet(pbmc, ROUND)
+    VP=.getVPall(pbmc, ROUND)
     ##########
     
     DR=pbmc@reductions$pca@cell.embeddings  
@@ -656,7 +657,8 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", pri
     
      
     ##########
-    VP=.getVPnet(pbmc, ROUND)
+    #VP=.getVPnet(pbmc, ROUND)
+    VP=.getVPall(pbmc, ROUND)
     ##########
     
     DR=pbmc@reductions$pca@cell.embeddings  
