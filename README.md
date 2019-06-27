@@ -8,7 +8,7 @@ Author: Feng Zhang
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-* We are developing new BEER at: https://github.com/jumphone/BEER/tree/master/LAB
+* We are developing new version at: https://github.com/jumphone/BEER/tree/master/LAB
 
 # News:
 
