@@ -12,7 +12,7 @@ Author: Feng Zhang
 
 # News:
 
-* June 2019 ( v0.1.0 ): Batch-effect removal enhancement with ComBat & BBKNN
+* June 2019 ( v0.1 ): Batch-effect removal enhancement with ComBat & BBKNN
 
 * ...
 
