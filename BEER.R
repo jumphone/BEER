@@ -7,15 +7,16 @@
 
 
 library(Seurat)
-library(pcaPP)
+#library(pcaPP)
 library(igraph)
 library(sva)
 library(limma)
 
 ############################################################################################
 ############################################################################################
+CORMETHOD='spearman'
 
-.get_cor  <- function(exp_sc_mat, exp_ref_mat, method='kendall',CPU=4, print_step=10, gene_check=FALSE){
+.get_cor  <- function(exp_sc_mat, exp_ref_mat, method=CORMETHOD,CPU=4, print_step=10, gene_check=FALSE){
     method=method
     CPU=CPU
     print_step=print_step
@@ -149,52 +150,6 @@ library(limma)
 
 
 
-.data2one <- function(DATA, GENE, CPU=4, PCNUM=50, SEED=123,  PP=30){
-    
-    if(PP>5 & ncol(DATA)<=300 & ncol(DATA)>100){PP=5;print('The cell number is too small! The perplexity is changed to 5 !')} 
-    if(PP>3 & ncol(DATA)<=100){PP=3;print('The cell number is too small! The perplexity is changed to 3 !')}
-    
-    
-    PCUSE=1:PCNUM
-    print('Start')
-    library(Seurat)
-    print('Step1.Create Seurat Object...')
-    DATA =CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL")   
-    print('Step2.Normalize Data...')
-    DATA <- NormalizeData(object = DATA, normalization.method = "LogNormalize", scale.factor = 10000)
-    print('Step3.Scale Data...')
-    DATA <- ScaleData(object = DATA, features = GENE, vars.to.regress = c("nCount_RNA"), num.cores=CPU, do.par=TRUE)
-    print('Step4.PCA...')
-    DATA <- RunPCA(object = DATA, seed.use=SEED, npcs=PCNUM, features = GENE, ndims.print=1,nfeatures.print=1)
-    print('Step5.One-dimention...')
-    DATA <- RunTSNE(object = DATA, seed.use=SEED, dims.use = PCUSE, do.fast=TRUE,dim.embed = 1,  perplexity= PP)
-    DR=DATA@reductions$tsne@cell.embeddings
-    print('Finished!!!')
-    return(DR)
-    }
-
-.getGroupOld <- function(X,TAG,CNUM=10){
-    DR=X
-    RANK=rank(DR,ties.method='random')
-    CUTOFF=CNUM 
-    GROUP=rep('NA',length(RANK))
-    i=1
-    j=1
-    while(i<=length(RANK)){
-        GROUP[which(RANK==i)]=paste0(TAG,'_',as.character(j))
-        #if(i%%CUTOFF==1){j=j+1;print(j)}
-        ########################
-        if(CUTOFF!=1 & i%%CUTOFF==1){j=j+1}
-        ########################
-        if(CUTOFF==1){j=j+1}  
-        ########################
-        i=i+1}
-    print('Group Number:')
-    print(j-1)
-    return(GROUP)
-}
-
-
 .getGroup <- function(X,TAG,GNUM){
     
     print('Get group for:')
@@ -213,110 +168,6 @@ library(limma)
 
 
 
-.getValidpair <- function(DATA1, GROUP1, DATA2, GROUP2, CPU=4, method='kendall', print_step=10){
-    #source('https://raw.githubusercontent.com/jumphone/scRef/master/scRef.R')
-    print_step=print_step
-    method=method
-    CPU=CPU
-    print('Start')
-    print('Step1.Generate Reference...')
-    REF1=.generate_ref(DATA1, cbind(GROUP1, GROUP1), min_cell=1) 
-    REF2=.generate_ref(DATA2, cbind(GROUP2, GROUP2), min_cell=1) 
-    print('Step2.Calculate Correlation Coefficient...')
-    out = .get_cor( REF1, REF2, method=method,CPU=CPU, print_step=print_step)
-    print('Step3.Analyze Result...')
-    tag1=.get_tag_max(out)
-    tag2=.get_tag_max(t(out))
-    V=c()
-    i=1
-    while(i<=nrow(tag1)){
-        t1=tag1[i,1]
-        t2=tag1[i,2]
-        if(tag2[which(tag2[,1]==t2),2]==t1){V=c(V,i)}           
-        i=i+1}
-    VP=tag1[V,]
-    ##############################
-    if(length(V)<=1){return(message("If BEER crashed, please try a different GNUM to get valid pair."))}
-    ##############################
-    C=c()
-    t=1
-    while(t<=nrow(VP)){
-        this_c=out[which(rownames(out)==VP[t,2]),which(colnames(out)==VP[t,1])]
-        C=c(C,this_c)
-        t=t+1}
-    #if(do.plot==TRUE){plot(C)}
-    #VP=VP[which(C>=CUTOFF),]  
-    print('Finished!!!')
-    OUT=list()
-    OUT$vp=VP
-    OUT$cor=C
-    return(OUT)
-    }
-
-
-
-
-.getVPnet<- function(pbmc, ROUND){
-    library(igraph)
-    pbmc=pbmc
-    ROUND=ROUND
-
-    ################
-    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
-    VREF=REF
-    CVREF=cor(VREF,method='spearman')
-    #ROUND=3
-    VP=c()
-    I=1    
-    while(I<=ROUND){
-        
-        p1=c()
-        p2=c()
-        score=c()
-        i=1
-        while(i<=nrow(CVREF)){
-            this_p1=rownames(CVREF)[i]
-            j=i+1
-            while(j<=ncol(CVREF)){
-                this_p2=colnames(CVREF)[j]  
-                p1=c(p1,this_p1)
-                p2=c(p2,this_p2)
-            
-                vp_index=which(VP[1,]==this_p1 & VP[2,]==this_p2) 
-                if(length(vp_index) >0){
-                    this_score=999999 }else{
-                    this_score=1-CVREF[i,j]}         
-                score=c(score,this_score)
-                j=j+1}        
-            i=i+1}
-
-
-        NET = cbind(p1,p2) 
-        g <- make_graph(t(NET),directed = FALSE)
-        MST=mst(g, weights = score, algorithm = NULL)
-        E_MST=as_edgelist(MST, names = TRUE)
-
-        i=1
-        while(i<=nrow(E_MST)){
-            t1=unlist(strsplit(E_MST[i,1],'_'))[1]
-            t2=unlist(strsplit(E_MST[i,2],'_'))[1]
-            if(t1!=t2){VP=cbind(VP,E_MST[i,])}
-                i=i+1}
-
-        print(I)
-        I=I+1
-        }       
-        
-        
-    VP=t(VP)
-    #######################
-    return(VP)
-    }
-
-
-
-
-
 .getVPall<- function(pbmc, ROUND){
     
     pbmc=pbmc
@@ -325,7 +176,7 @@ library(limma)
     ################
     REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
     VREF=REF
-    CVREF=cor(VREF,method='spearman')
+    CVREF=cor(VREF,method=CORMETHOD)
     orig.CVREF=CVREF
     #ROUND=3
 
@@ -436,7 +287,7 @@ library(limma)
                        
             i=i+1}
         
-        this_test=cor.test(lst1_quantile, lst2_quantile, method='kendall')        
+        this_test=cor.test(lst1_quantile, lst2_quantile, method=CORMETHOD)        
         this_cor=this_test$estimate
         this_pv=this_test$p.value
 
