@@ -473,7 +473,7 @@ library(limma)
    }
 
 
-BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=3){
+BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=1){
 
     set.seed( SEED)
     RESULT=list()
@@ -612,7 +612,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=3){
+ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=1){
 
     set.seed( SEED)
     RESULT=list()
