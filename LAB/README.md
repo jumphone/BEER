@@ -71,7 +71,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=3, CPU=2, GN=2000, SEED=1 )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1 )
    
     # GNUM: the number of groups in each batch
     # PCNUM: the number of computated PCA subspaces  
