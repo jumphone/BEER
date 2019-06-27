@@ -451,10 +451,9 @@ MBEER=BEER
     }
 
 
-.selectUSE <-function(RESULT, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5, CC=0.05){
+.selectUSE <-function(RESULT, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5){
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)*RR | RESULT$cor>CUTR )    & 
-                (rank(RESULT$lcor) >=length(RESULT$cor)*RR | RESULT$lcor>CUTL)   &
-                 p.adjust(RESULT$lc1,method='fdr') > CC
+                (rank(RESULT$lcor) >=length(RESULT$cor)*RR | RESULT$lcor>CUTL)  
                ) 
     return(PCUSE)
     }
