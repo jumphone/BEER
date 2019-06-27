@@ -10,7 +10,7 @@ Author: Feng Zhang
 
 * We are developing new version at: https://github.com/jumphone/BEER/tree/master/LAB
 
-* BEER doesn't use "imputation" when combing scRNA-seq & scATAC-seq.
+* What is the main difference between BEER and Seurat when combing scRNA-seq & scATAC-seq: BEER doesn't use "imputation".
 
 
 # News:
