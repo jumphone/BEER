@@ -496,8 +496,10 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     
     print('Group number (GNUM) is:')
     print(GNUM)
-    print('Varible gene number (GN) is:')
+    print('Varible gene number (GN) of each batch is:')
     print(GN)
+    print('ROUND is:')
+    print(ROUND)
     
     VARG=c()
     for(this_batch in UBATCH){
@@ -632,9 +634,11 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", pri
     
     print('Group number (GNUM) is:')
     print(GNUM)
-    print('Varible gene number (GN) is:')
+    print('Total varible gene number (GN) is:')
     print(length(VariableFeatures(object = pbmc)))
-      
+    print('ROUND is:')
+    print(ROUND)
+    
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     
