@@ -58,6 +58,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     library(Seurat)
   
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    #source('BEER.R')
     
     #Load Demo Data (subset of GSE70630: MGH53 & MGH54)
     #Download: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
@@ -79,19 +80,18 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-')
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-')   
 
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
     # ROUND: the strength of batch-effect removal (default: 1)
     # GN: the number of variable genes in each batch (default: 2000)
 
+    # If you are facing "huge" batch effect, please try "REGBATCH":
+    # mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-') 
+    
     # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
-    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1)
-    
-    # If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
-    # mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2, REGBATCH=TRUE)
-    
+    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1) 
     
     # Check selected PCs
     PCUSE=mybeer$select
@@ -138,6 +138,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 ### Step1. Load Data
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    #source('BEER.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
@@ -247,9 +248,10 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 ### Step1. Load Data
 
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    #source('BEER.R')
     
     library(Seurat)
-    library(ggplot2)
+    
     peaks <- Read10X_h5("../data/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
 
     activity.matrix <- CreateGeneActivityMatrix(peak.matrix = peaks, 
