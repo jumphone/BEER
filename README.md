@@ -40,9 +40,9 @@ For batch-effect removal enhancement, please install Combat & BBKNN:
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
 * [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
-* [V. Tune-up with BBKNN](#v-tune-up-with-bbknn)
-* [VI. Biological meanings of batch effect](#vi-biological-meanings-of-batch-effect)
-  
+* [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement)
+* [VI. Biological Interpretation](#vi-biological-interpretation)
+
 </br>
 
 # I. Combine Two Batches
@@ -314,7 +314,7 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 </br>
 </br>
 
-# V. Tune-up with BBKNN
+# V. Batch-effect Removal Enhancement
 
 If you need a "tune-up", please try BBKNN.
 
@@ -342,7 +342,7 @@ The DEMO of this section follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combin
 </br>
 </br>
 
-# VI. Biological meanings of batch effect
+# VI. Biological Interpretation
 
 Please install "RITANdata" and "RITAN".
 
