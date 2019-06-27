@@ -513,6 +513,8 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
         }
     VARG=unique(VARG)
 
+    print('Total varible gene number (GN) is:')
+    print(length(VARG))
 
     pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
     pbmc@meta.data$batch=BATCH
