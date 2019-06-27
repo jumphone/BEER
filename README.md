@@ -273,9 +273,6 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
     mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-') 
     
-    # Users can use "ReBEER" to adjust GNUM & PCNUM.
-    #mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=100, CPU=2)
-    
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
