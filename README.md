@@ -293,15 +293,14 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
-
     pbmc <- mybeer$seurat  
     PCUSE=mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
     
-    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
+   
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
     
@@ -309,7 +308,9 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
-### For further adjustment, please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement).
+### It's not good enough !
+
+### For further enhancement, please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement).
 
 </br>
 </br>
@@ -318,9 +319,16 @@ Please go to the website of Seurat to download DEMO data: https://satijalab.org/
 
 Please install ComBat & BBKNN.
 
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+    BiocManager::install("sva")
+    BiocManager::install("limma")
+
+    Install bbknn in python: https://github.com/Teichlab/bbknn
+    
 This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 
-### ComBat&BBKNN without BEER:
+### Use ComBat&BBKNN without BEER:
 
     pbmc <- mybeer$seurat
     PCUSE=c(1:ncol(pbmc@reductions$pca@cell.embeddings))
@@ -333,7 +341,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400"> 
 
 
-### ComBat&BBKNN with BEER:
+### Use ComBat&BBKNN with BEER:
   
     pbmc <- mybeer$seurat
     PCUSE=mybeer$select
