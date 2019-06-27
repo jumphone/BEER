@@ -135,7 +135,7 @@ BBKNN: https://github.com/Teichlab/bbknn.
     
     pbmc=BEER.combat(pbmc) 
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=T)
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
 
 <img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB2.png" width="400">
 
@@ -147,7 +147,7 @@ BBKNN: https://github.com/Teichlab/bbknn.
     umap=BEER.bbknn(pbmc, PCUSE, NB=10, NT=10)
     
     pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=T)
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
 
 <img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB3.png" width="400">
 
@@ -161,7 +161,7 @@ BBKNN: https://github.com/Teichlab/bbknn.
     umap=BEER.bbknn(pbmc, PCUSE, NB=10, NT=10)
     
     pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=T)
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
     
 <img src="https://github.com/jumphone/BEER/blob/master/LAB/img/LAB4.png" width="400">
 
