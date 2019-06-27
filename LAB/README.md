@@ -73,10 +73,10 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
     mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1 )
    
-    # GNUM: the number of groups in each batch
-    # PCNUM: the number of computated PCA subspaces  
-    # ROUND: the strength of batch-effect removal
-    # GN: the number of variable genes in each batch
+    # GNUM: the number of groups in each batch (default: 30)
+    # PCNUM: the number of computated PCA subspaces (default: 50)
+    # ROUND: the strength of batch-effect removal (default: 1)
+    # GN: the number of variable genes in each batch (default: 2000)
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
     mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1)
