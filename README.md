@@ -79,16 +79,19 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2)
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-')
+
+    # GNUM: the number of groups in each batch (default: 30)
+    # PCNUM: the number of computated PCA subspaces (default: 50)
+    # ROUND: the strength of batch-effect removal (default: 1)
+    # GN: the number of variable genes in each batch (default: 2000)
+
+    # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
+    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1)
     
-    #GNUM: the number of groups in each batch. 
-    #PCNUM: the number of computated PCA subspaces 
+    # If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
+    # mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2, REGBATCH=TRUE)
     
-    #If you are combining data from different sequencing platforms or having "huge" batch effect, please try:
-    #mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, CPU=2, REGBATCH=TRUE)
-    
-    #Users can use "ReBEER" to re-run BEER faster with different parameters (REGBATCH and MTTAG can not be changed):
-    #mybeer <- ReBEER(mybeer, GNUM=50, PCNUM=50, CPU=2)
     
     # Check selected PCs
     PCUSE=mybeer$select
@@ -97,7 +100,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
     # Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation". 
-    # PCUSE=.getUSE(mybeer, CUTR=0.7, CUTL=0.7)
+    # PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
     
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT1.png" width="400">
@@ -109,13 +112,9 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
     
     pbmc <- mybeer$seurat
-    ALLPC <- 1:length(mybeer$cor)   
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
-    
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
 
+    
 
 #### Remove batch effect:
 
@@ -126,7 +125,6 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
     
     
@@ -134,14 +132,6 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 </br>
     
 # II. Combine Multiple Batches
-
-When combining multiple batches, BEER implements the iteration of "Combine Two Batches".
-
-BEER compares each batch with the batch having the largest cell number.
-
-The assumption is that the batch having the largest cell number has almost all cell-types within all batches.
-
-If you want to define a batch having almost all cell-types, please set "MAXBATCH" to the label of that batch.
 
 Download demo data: https://sourceforge.net/projects/beergithub/files/
    
@@ -179,7 +169,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, MAXBATCH="", GNUM=30, PCNUM=50, CPU=2, SEED=1 )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-' )
 
     # Check selected PCs
     PCUSE=mybeer$select
@@ -197,12 +187,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
     
     pbmc <- mybeer$seurat
-    ALLPC <- 1:length(mybeer$cor)   
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = ALLPC, check_duplicates=FALSE)
-    
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
-    
+
 
 
 #### Remove batch effect:
@@ -214,7 +200,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    #DimPlot(pbmc, reduction.use='umap', group.by='map', pt.size=0.1)
     
     
 </br>   
@@ -223,18 +208,34 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 # III. UMAP-based Clustering
    
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
     VEC=pbmc@reductions$umap@cell.embeddings
-    
-    # Here, we use the "dbscan" function to do clustering.
-    library("fpc")
+
+    # Here, we use K-means to do the clustering
+    N=20
     set.seed(123)
-    df=VEC
-    db <- fpc::dbscan(df, eps = 0.5, MinPts = 5)
-    DC=db$cluster
-    pbmc@meta.data$DC=DC
-    DimPlot(pbmc, reduction.use='umap', group.by='DC', pt.size=0.5)
+    K=kmeans(VEC,centers=N)
+
+    CLUST=K$cluster
+    pbmc@meta.data$clust=CLUST
+    DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
+
+
+    # Or, manually select some cells
+
+    ppp=DimPlot(pbmc, reduction.use='umap', pt.size=0.5)
+    used.cells <- CellSelector(plot = ppp)
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
+
+    # Press "ESC"
+    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST3.png" width="400">    
+    
+    markers <- FindMarkers(pbmc, ident.1=used.cells,only.pos=T)    
+    head(markers, n=20)
     
 </br>   
 </br>
