@@ -10,6 +10,9 @@ Author: Feng Zhang
 
 * We are developing new version at: https://github.com/jumphone/BEER/tree/master/LAB
 
+* BEER doesn't use "imputation" when combing scRNA-seq & scATAC-seq.
+
+
 # News:
 
 * June 2019 ( v0.1 ): Batch-effect removal enhancement with ComBat & BBKNN
