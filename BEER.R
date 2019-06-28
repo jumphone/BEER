@@ -423,7 +423,7 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
     
     print('Group number (GNUM) is:')
     print(GNUM)
-    print('Total varible gene number (GN) is:')
+    print('Total varible gene number is:')
     print(length(VariableFeatures(object = pbmc)))
     print('ROUND is:')
     print(ROUND)
@@ -481,7 +481,6 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
     
     ################
     RESULT$ROUND=ROUND
-    RESULT$REGBATCH=REGBATCH
     RESULT$GNUM=GNUM
     RESULT$PCNUM=PCNUM
     RESULT$MTTAG=MTTAG
