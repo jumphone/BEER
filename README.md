@@ -85,7 +85,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
-    # ROUND: the strength of batch-effect removal (default: 1)
+    # ROUND: if "nrow(mybeer$vp)" is too small (smaller than 3), please try a bigger ROUND number (default: 1)
     # GN: the number of variable genes in each batch (default: 2000)
 
     # If you are facing "huge" batch effect, please try "REGBATCH":
