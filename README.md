@@ -340,6 +340,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     mybeer=readRDS('mybeer.final.RDS')
+    pbmc.rna <- readRDS("../data/pbmc_10k_v3.rds")
     
 ### Use ComBat&BBKNN without BEER:
 
