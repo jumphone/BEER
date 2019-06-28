@@ -121,7 +121,7 @@ CORMETHOD='spearman'
             while(j<=ncol(this_cor_mat)){
                 this_p2=colnames(this_cor_mat)[j]  
                 this_cor=this_cor_mat[i,j]
-                if(this_cor==max(this_cor_mat[i,]) & this_cor==max(this_cor_mat[,j])){                 
+                if( this_cor!= -99999  & this_cor==max(this_cor_mat[i,]) & this_cor==max(this_cor_mat[,j])){                 
                     VP=cbind(VP,c(this_p1,this_p2))
                     }                
                 j=j+1}        
