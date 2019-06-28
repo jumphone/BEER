@@ -315,6 +315,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
+    saveRDS(mybeer, file='mybeer.final.RDS')
 
 # It's not good enough !
 
@@ -335,7 +336,22 @@ Please install ComBat & BBKNN.
     Install bbknn in python: https://github.com/Teichlab/bbknn
     
 This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
-
+    
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    #source('BEER.R')
+    mybeer=readRDS('mybeer.final.RDS')
+    
+    # library(reticulate)
+    # py_config() 
+    
+    # config python 
+    # PYTHON_PATH=""
+    # use_python(PYTHON_PATH)
+    
+    # or, use conda 
+    # CONDAENV=""
+    # use_condaenv(condaenv = CONDAENV, conda = "auto", required = T)
+    
 ### Use ComBat&BBKNN without BEER:
 
     pbmc <- mybeer$seurat
@@ -350,7 +366,9 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
 
 ### Use ComBat&BBKNN with BEER:
-  
+    library(reticulate)
+    use_python("C:/Users/cchmc/Anaconda3/python.exe",required=T)
+    
     pbmc <- mybeer$seurat
     PCUSE=mybeer$select
     pbmc=BEER.combat(pbmc) 
