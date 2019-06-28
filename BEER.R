@@ -428,6 +428,19 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
     
+    ################
+    RESULT$ROUND=ROUND
+    RESULT$REGBATCH=REGBATCH
+    RESULT$GNUM=GNUM
+    RESULT$GN=GN
+    RESULT$PCNUM=PCNUM
+    RESULT$MTTAG=MTTAG
+    RESULT$SEED=SEED
+    RESULT$N=N
+    RESULT$APP='BEER'   
+    ###############
+    
+    
     PCUSE=which( (rank(RESULT$cor)>=length(RESULT$cor)/2 | RESULT$cor>0.7 )    & 
                 (rank(RESULT$lcor) >=length(RESULT$cor)/2 | RESULT$lcor>0.7)   #&
                 #p.adjust(RESULT$lc1,method='fdr') >0.05
@@ -462,7 +475,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=1){
+ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=1){
 
     set.seed( SEED)
     RESULT=list()
@@ -477,7 +490,7 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", pri
     MTTAG=MTTAG
     #MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
-    GN=GN
+    
     ROUND=ROUND
     N=N
     print_step=print_step
@@ -542,7 +555,16 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", pri
     RESULT$lc2=OUT$lc2
     RESULT$lfdr=OUT$lfdr
     
-    #########
+    ################
+    RESULT$ROUND=ROUND
+    RESULT$REGBATCH=REGBATCH
+    RESULT$GNUM=GNUM
+    RESULT$PCNUM=PCNUM
+    RESULT$MTTAG=MTTAG
+    RESULT$SEED=SEED
+    RESULT$N=N
+    RESULT$APP='ReBEER'   
+    ###############
 
     #########
        
