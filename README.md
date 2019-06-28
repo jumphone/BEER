@@ -352,8 +352,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
     
     
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400"> 
-
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400">     
 
 ### Use ComBat&BBKNN with BEER:
 
@@ -363,6 +362,8 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
+     
+    saveRDS(pbmc, file='seurat.enh.RDS')
   
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT13.png" width="400"> 
   
@@ -371,6 +372,57 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
+
+
+### Transfer labels
+
+    
+    pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
+    pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
+    #DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    
+    #######
+    VEC=pbmc@reductions$umap@cell.embeddings
+    set.seed(123)
+    N=150
+    K=kmeans(VEC,centers=N)
+    pbmc@meta.data$kclust=K$cluster   
+    #DimPlot(pbmc, reduction.use='umap', group.by='kclust', pt.size=0.1,label=T)
+
+    pbmc@meta.data$transfer=rep(NA, length(pbmc@meta.data$celltype))
+    TMP=cbind(pbmc@meta.data$celltype, pbmc@meta.data$kclust)
+    KC=unique(pbmc@meta.data$kclust)
+    i=1
+    while(i<=length(KC)){
+        this_kc=KC[i]
+        this_index=which(pbmc@meta.data$kclust==this_kc)
+        this_tb=table(pbmc@meta.data$celltype[this_index])
+        if(length(this_tb)!=0){
+            this_ct=names(this_tb)[which(this_tb==max(this_tb))[1]]
+            pbmc@meta.data$transfer[this_index]=this_ct}
+        i=i+1}
+        
+    pbmc@meta.data$tf.ct=pbmc@meta.data$celltype
+    NA.index=which(is.na(pbmc@meta.data$celltype))
+    pbmc@meta.data$tf.ct[NA.index]=pbmc@meta.data$transfer[NA.index]
+    
+    ######
+    RNA.cells=colnames(pbmc)[which(pbmc@meta.data$batch=='RNA')]
+    ATAC.cells=colnames(pbmc)[which(pbmc@meta.data$batch=='ATAC')]
+    
+    library(ggplot2)
+    
+    plot.all <- DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F) + labs(title = "Batches")
+    
+    plot.ct <- DimPlot(pbmc,reduction.use='umap', group.by='tf.ct', pt.size=0.1,label=T) + labs(title = "CellType")
+    
+    plot.rna <- DimPlot(pbmc, cells=RNA.cells,reduction.use='umap', group.by='tf.ct', pt.size=0.1,label=T,plot.title='RNA.transfer') + labs(title = "RNA")
+    
+    plot.atac <- DimPlot(pbmc, cells=ATAC.cells,reduction.use='umap', group.by='tf.ct', pt.size=0.1,label=T,plot.title='ATAC.transfer') + labs(title = "ATAC")
+    
+    CombinePlots(list(all=plot.all, ct=plot.ct, rna=plot.rna, atac=plot.atac))
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="400"> 
 
 </br>
 </br>
