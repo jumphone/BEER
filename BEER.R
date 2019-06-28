@@ -308,6 +308,10 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     print(Sys.time())
     DATA=DATA
     BATCH=BATCH
+    
+    require(stringi)
+    BATCH=stri_replace_all(BATCH, '.',fixed='_')
+      
     GNUM=GNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
@@ -373,7 +377,6 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
 
     pbmc@meta.data$group=GROUP
     
-    
     ##########
     #VP=.getVPnet(pbmc, ROUND)
     VP=.getVPall(pbmc, ROUND)
@@ -386,7 +389,6 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     MAP[which(GROUP %in% VP[,2])]='V2'
     pbmc@meta.data$map=MAP
     
-
     OUT=.evaluateProBEER(DR, GROUP, VP)
 
     RESULT=list()
