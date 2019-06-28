@@ -139,14 +139,12 @@ CORMETHOD='spearman'
             while(i<=ncol(VP)){
                 p1=VP[1,i]
                 p2=VP[2,i]
-                CVREF[which(rownames(CVREF)==p1), which(colnames(CVREF)==p2)]=-99999
-                CVREF[which(rownames(CVREF)==p2), which(colnames(CVREF)==p1)]=-99999    
-                #b1=.get_batch(p1)
-                #b2=.get_batch(p2)
-                #b1i=which(group_batch==b1)
-                #b2i=which(group_batch==b2)  
-                #CVREF[b1i,b2i][which(rownames(CVREF[b1i,b2i])==p1),]= -99999
-                #CVREF[b1i,b2i][,which(colnames(CVREF[b1i,b2i])==p2)]=   -99999                 
+                #CVREF[which(rownames(CVREF)==p1), which(colnames(CVREF)==p2)]=-99999
+                #CVREF[which(rownames(CVREF)==p2), which(colnames(CVREF)==p1)]=-99999    
+                CVREF[which(rownames(CVREF)==p1),]=-99999
+                CVREF[which(rownames(CVREF)==p2),]=-99999
+                CVREF[,which(rownames(CVREF)==p1)]=-99999
+                CVREF[,which(rownames(CVREF)==p2)]=-99999            
                 i=i+1}
             }
     
@@ -171,7 +169,7 @@ CORMETHOD='spearman'
         I=I+1
         }       
         
-        
+    if(length(VP)==0){print("No MN pair found by BEER !!!")} 
     VP=t(VP)
     #######################
     return(VP)
