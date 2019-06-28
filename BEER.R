@@ -152,6 +152,8 @@ CORMETHOD='spearman'
                 i=i+1}
             }
     
+        VP.base=c()
+        VP.base.score=c()
         i=1
         while(i<length(UBATCH)){
             j=i+1
@@ -163,18 +165,40 @@ CORMETHOD='spearman'
                 this_cor_mat=CVREF[b1i,b2i]
                 this_vp=.getMN(this_cor_mat)    
                 VP=cbind(VP,this_vp)
+                
+                if(I==1){
+                    base.max=max(this_cor_mat)
+                    base.i=which(this_cor_mat==this_max)[1]
+                    base.c=base.i%/%ncol(this_cor_mat)+1
+                    base.r=base.i%%ncol(this_cor_mat)
+                    base.score=this_cor_mat[base.r,base.c]
+                    base.vp=c(rownames(this_cor_mat)[base.r], colnames(this_cor_mat)[base.c])
+                    VP.base=cbind(VP.base,base.vp)
+                    VP.base.score=c(VP.base.score, base.score)
+                    }
+                
+                
             #print(dim(this_cor_mat))
             #print(b1)
             #print(b2)
                 j=j+1}
             i=i+1
             }
+        
+        if(I==1){
+            base.max=which(VP.base.score==max(VP.base.score))
+            base.value=VP.base[,base.max]    
+            VP=cbind(VP,base.value)
+            }
+        
+        
         print(I)
         I=I+1
         }       
         
     if(length(VP)==0){print("No MN pair found by BEER !!!")} 
     VP=t(VP)
+    VP=unique(VP)
     #######################
     return(VP)
     }
