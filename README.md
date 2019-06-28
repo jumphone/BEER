@@ -277,7 +277,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, MTTAG='^MT-')
     saveRDS(mybeer, file='mybeer')
     
-    # Users can use "ReBEER" to adjust those parameters
+    # Users can use "ReBEER" to adjust parameters
     mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=3, SEED=1)
     
     PCUSE=mybeer$select
