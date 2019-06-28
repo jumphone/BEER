@@ -341,17 +341,6 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     #source('BEER.R')
     mybeer=readRDS('mybeer.final.RDS')
     
-    # library(reticulate)
-    # py_config() 
-    
-    # config python 
-    # PYTHON_PATH=""
-    # use_python(PYTHON_PATH)
-    
-    # or, use conda 
-    # CONDAENV=""
-    # use_condaenv(condaenv = CONDAENV, conda = "auto", required = T)
-    
 ### Use ComBat&BBKNN without BEER:
 
     pbmc <- mybeer$seurat
