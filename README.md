@@ -455,8 +455,11 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
     GMAT=apply(LD,2,getPosAndNegTop)
     colnames(GMAT)=paste0(colnames(GMAT),'_R_',round(mybeer$cor,1),"_L_",round(mybeer$lcor,1))
-    GMAT=GMAT[,PCnotUSE]
+    GMAT=toupper(GMAT)
     
+    GMAT=GMAT[,PCnotUSE]
+    #GMAT=GMAT[,PCUSE]
+  
     study_set=list()
     TAG=colnames(GMAT)
     i=1
