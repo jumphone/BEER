@@ -92,7 +92,8 @@ CORMETHOD='spearman'
 
 
 
-.getVPall<- function(pbmc, ROUND){
+
+.getVPall_old<- function(pbmc, ROUND){
     
     pbmc=pbmc
     ROUND=ROUND
@@ -152,6 +153,113 @@ CORMETHOD='spearman'
                 i=i+1}
             }
     
+        i=1
+        while(i<length(UBATCH)){
+            j=i+1
+            while(j<=length(UBATCH)){
+                b1=UBATCH[i]
+                b2=UBATCH[j]
+                b1i=which(group_batch==b1)
+                b2i=which(group_batch==b2)
+                this_cor_mat=CVREF[b1i,b2i]
+                this_vp=.getMN(this_cor_mat)    
+                VP=cbind(VP,this_vp)
+            #print(dim(this_cor_mat))
+            #print(b1)
+            #print(b2)
+                j=j+1}
+            i=i+1
+            }
+        print(I)
+        I=I+1
+        }       
+        
+    if(length(VP)==0){print("No MN pair found by BEER !!!")} 
+    VP=t(VP)
+    #######################
+    return(VP)
+    }
+
+
+
+
+####################
+
+.getVPall<- function(pbmc, ROUND){
+    
+    pbmc=pbmc
+    ROUND=ROUND
+
+    ################
+    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
+    VREF=REF
+    CVREF=cor(VREF,method=CORMETHOD)
+    orig.CVREF=CVREF
+    #ROUND=3
+
+    UBATCH=unique(pbmc@meta.data$batch)
+
+    .get_batch<-function(x){
+        y=unlist(strsplit(x,'_'))[1]
+        return(y)
+        } 
+    group_batch=apply(as.matrix(colnames(CVREF)),1,.get_batch)
+
+    .getMN <- function(this_cor_mat){
+        VP=c()
+        i=1
+        while(i<=nrow(this_cor_mat)){
+            this_p1=rownames(this_cor_mat)[i]
+            j=1
+            while(j<=ncol(this_cor_mat)){
+                this_p2=colnames(this_cor_mat)[j]  
+                this_cor=this_cor_mat[i,j]
+                if( this_cor!= -99999  & this_cor==max(this_cor_mat[i,]) & this_cor==max(this_cor_mat[,j])){                 
+                    VP=cbind(VP,c(this_p1,this_p2))
+                    }                
+                j=j+1}        
+            i=i+1}
+        return(VP)
+    
+        }
+    
+    .getBase <-function(this_cor_mat, base.i){
+         
+        base.c=base.i%/%ncol(this_cor_mat)+1
+        base.r=base.i%%ncol(this_cor_mat)
+        base.score=this_cor_mat[base.r,base.c]
+        base.vp=c(rownames(this_cor_mat)[base.r], colnames(this_cor_mat)[base.c])
+    
+        base.out=list()
+        base.out$score=base.score
+        base.out$vp=base.vp
+        return(base.out)
+    }
+    
+    
+    VP=c()
+    I=1    
+    while(I<=ROUND){
+            
+        if(length(VP)!=0){   
+            i=1
+            while(i<=ncol(VP)){
+                p1=VP[1,i]
+                p2=VP[2,i]
+                b1=.get_batch(p1)
+                b2=.get_batch(p2)
+                b1i=which(group_batch==b1)
+                b2i=which(group_batch==b2)
+                #CVREF[which(rownames(CVREF)==p1), which(colnames(CVREF)==p2)]=-99999
+                #CVREF[which(rownames(CVREF)==p2), which(colnames(CVREF)==p1)]=-99999    
+                CVREF[which(rownames(CVREF)==p1),b2i]=-99999
+                CVREF[which(rownames(CVREF)==p2),b1i]=-99999
+                CVREF[b2i,which(rownames(CVREF)==p1)]=-99999
+                CVREF[b1i,which(rownames(CVREF)==p2)]=-99999            
+                i=i+1}
+            }
+    
+        
         VP.base=c()
         VP.base.score=c()
         i=1
@@ -166,37 +274,39 @@ CORMETHOD='spearman'
                 this_vp=.getMN(this_cor_mat)    
                 VP=cbind(VP,this_vp)
                 
-                if(I==1){
-                    base.max=max(this_cor_mat)
-                    base.i=which(this_cor_mat==this_max)[1]
-                    base.c=base.i%/%ncol(this_cor_mat)+1
-                    base.r=base.i%%ncol(this_cor_mat)
-                    base.score=this_cor_mat[base.r,base.c]
-                    base.vp=c(rownames(this_cor_mat)[base.r], colnames(this_cor_mat)[base.c])
-                    VP.base=cbind(VP.base,base.vp)
-                    VP.base.score=c(VP.base.score, base.score)
+                ########################
+                
+                if(I==1){        
+                    base.round=1
+                    while(base.round<=3){
+                        base.max=sort(this_cor_mat,decreasing=T)[base.round]
+                        base.i=which(this_cor_mat==base.max)[1]
+                        base.out=.getBase(this_cor_mat, base.i)  
+                        VP.base=cbind(VP.base,base.out$vp)
+                        VP.base.score=c(VP.base.score, base.out$score)
+                        base.round=base.round+1}     
                     }
                 
+                ########################    
+
                 
-            #print(dim(this_cor_mat))
-            #print(b1)
-            #print(b2)
                 j=j+1}
             i=i+1
             }
         
-        if(I==1){
-            base.max=which(VP.base.score==max(VP.base.score))
+        ########################
+        if(I==1 & length(VP)==0){
+            base.max=which(VP.base.score %in% sort(VP.base.score, decreasing=T)[1:3])
             base.value=VP.base[,base.max]    
             VP=cbind(VP,base.value)
-            }
-        
+            } 
+        ######################## 
         
         print(I)
         I=I+1
         }       
         
-    if(length(VP)==0){print("No MN pair found by BEER !!!")} 
+    
     VP=t(VP)
     VP=unique(VP)
     #######################
