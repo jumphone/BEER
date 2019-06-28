@@ -189,7 +189,7 @@ CORMETHOD='spearman'
     
     pbmc=pbmc
     ROUND=ROUND
-
+    print('Finding MN pairs...')
     ################
     REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
     VREF=REF
@@ -296,6 +296,7 @@ CORMETHOD='spearman'
         
         ########################
         if(I==1 & length(VP)==0){
+            print('No MN pairs found by BEER, using alternative plan ...')
             base.max=which(VP.base.score %in% sort(VP.base.score, decreasing=T)[1:3])
             base.value=VP.base[,base.max]    
             VP=cbind(VP,base.value)
@@ -310,6 +311,9 @@ CORMETHOD='spearman'
     VP=t(VP)
     VP=unique(VP)
     #######################
+    
+    print('Number of MN pairs:')
+    print(nrow(VP))
     return(VP)
     }
 
