@@ -274,9 +274,11 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
  
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-')
+    mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, MTTAG='^MT-')
+    saveRDS(mybeer, file='mybeer')
     
-    #mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1)
+    # Users can use "ReBEER" to adjust those parameters
+    mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=3, SEED=1)
     
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
@@ -312,6 +314,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
+
 
 # It's not good enough !
 
