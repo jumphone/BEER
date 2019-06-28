@@ -16,83 +16,6 @@ library(Seurat)
 ############################################################################################
 CORMETHOD='spearman'
 
-.get_cor  <- function(exp_sc_mat, exp_ref_mat, method=CORMETHOD,CPU=4, print_step=10, gene_check=FALSE){
-    method=method
-    CPU=CPU
-    print_step=print_step
-    #method = "pearson", "kendall", "spearman"
-    ##################
-    print('Gene number of exp_sc_mat1:')
-    print(nrow(exp_sc_mat))
-    print('Gene number of exp_sc_mat2:')
-    print(nrow(exp_ref_mat))
-    #################
-    library(parallel)
-    #Step 1. get overlapped genes
-    exp_sc_mat=exp_sc_mat[order(rownames(exp_sc_mat)),]
-    exp_ref_mat=exp_ref_mat[order(rownames(exp_ref_mat)),]
-    gene_sc=rownames(exp_sc_mat)
-    gene_ref=rownames(exp_ref_mat)
-    gene_over= gene_sc[which(gene_sc %in% gene_ref)]
-    exp_sc_mat=exp_sc_mat[which(gene_sc %in% gene_over),]
-    exp_ref_mat=exp_ref_mat[which(gene_ref %in% gene_over),]
-    colname_sc=colnames(exp_sc_mat)
-    colname_ref=colnames(exp_ref_mat)
-    ###############
-    print('Number of overlapped genes:')
-    print(nrow(exp_sc_mat))
-    if(gene_check==TRUE){
-    print('Press RETURN to continue:')
-    scan();}
-    ###################
-    #Step 2. calculate prob
-    SINGLE <- function(i){
-        library('pcaPP')
-        exp_sc = as.array(exp_sc_mat[,i])
-        
-        cor_list=rep(0,length(colname_ref))
-        j=1
-        while(j<=length(colname_ref)){
-            exp_ref = as.array(exp_ref_mat[,j])
-            
-            if(method=='kendall'){this_cor=cor.fk(exp_sc,exp_ref)}
-            else{
-            this_cor=cor(exp_sc,exp_ref, method=method)}
-            
-            cor_list[j]=this_cor
-            j=j+1}
-        ################################
-        if(i%%print_step==1){print(i)}
-        return(cor_list)
-        }
-    #######################################
-    cl= makeCluster(CPU,outfile='')
-    RUN = parLapply(cl=cl,1:length(exp_sc_mat[1,]), SINGLE)
-    stopCluster(cl)
-    #RUN = mclapply(1:length(colname_sc), SINGLE, mc.cores=CPU)
-    COR = c()
-    for(cor_list in RUN){
-        COR=cbind(COR, cor_list)}
-    #######################################
-    rownames(COR)=colname_ref
-    colnames(COR)=colname_sc
-    return(COR)
-    }
-
-
-.get_tag_max <- function(COR){
-    RN=rownames(COR)
-    CN=colnames(COR)
-    TAG=cbind(CN,rep('NA',length(CN)))
-    i=1
-    while(i<=length(CN)){
-        this_rn_index=which(COR[,i] == max(COR[,i]))[1]
-        TAG[i,2]=RN[this_rn_index]
-        i=i+1
-        }
-    colnames(TAG)=c('cell_id','tag')
-    return(TAG)
-    }
 
 .simple_combine <- function(exp_sc_mat1, exp_sc_mat2){    
     exp_sc_mat=exp_sc_mat1
@@ -127,7 +50,8 @@ CORMETHOD='spearman'
         if(length(this_col)>= min_cell){
             outnames=c(outnames,one)
             if(length(this_col) >1){
-                this_new_ref=apply(exp_sc_mat[,this_col],1,sum)
+                #this_new_ref=apply(exp_sc_mat[,this_col],1,sum)
+                this_new_ref=apply(exp_sc_mat[,this_col],1,mean)
                 }
                 else{this_new_ref = exp_sc_mat[,this_col]}
             NewRef=cbind(NewRef,this_new_ref)
