@@ -422,7 +422,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
     CombinePlots(list(all=plot.all, ct=plot.ct, rna=plot.rna, atac=plot.atac))
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="400"> 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
 
 </br>
 </br>
