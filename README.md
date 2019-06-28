@@ -356,9 +356,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
 
 ### Use ComBat&BBKNN with BEER:
-    library(reticulate)
-    use_python("C:/Users/cchmc/Anaconda3/python.exe",required=T)
-    
+
     pbmc <- mybeer$seurat
     PCUSE=mybeer$select
     pbmc=BEER.combat(pbmc) 
