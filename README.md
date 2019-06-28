@@ -376,6 +376,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
 ### Transfer labels
 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
     
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
@@ -391,6 +392,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
     pbmc@meta.data$transfer=rep(NA, length(pbmc@meta.data$celltype))
     TMP=cbind(pbmc@meta.data$celltype, pbmc@meta.data$kclust)
+    
     KC=unique(pbmc@meta.data$kclust)
     i=1
     while(i<=length(KC)){
@@ -422,7 +424,6 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
     CombinePlots(list(all=plot.all, ct=plot.ct, rna=plot.rna, atac=plot.atac))
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
 
 </br>
 </br>
