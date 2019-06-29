@@ -79,6 +79,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     DATA=.simple_combine(D1,D2)$combine
     BATCH=rep('D2',ncol(DATA))
     BATCH[c(1:ncol(D1))]='D1'
+    
 
 ### Step2. Detect Batch Effect
 
@@ -105,6 +106,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     # PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
     
     
+    
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT1.png" width="400">
     
 ### Step3. Visualization 
@@ -114,7 +116,8 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
     
     pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
+    
 
     
 
@@ -126,7 +129,8 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     PCUSE <- mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1) 
+    
     
     
     
@@ -170,6 +174,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     rm(D1);rm(D2);rm(D3);rm(D4);rm(D5);rm(D6)
     rm(D12);rm(D34);rm(D56);rm(D1234);rm(D123456)
     
+    
 ### Step2. Detect Batch Effect
 
     mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-' )
@@ -179,6 +184,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
+    
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT4.png" width="400">
 
@@ -191,6 +197,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     pbmc <- mybeer$seurat
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    
 
 
 
@@ -202,7 +209,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     PCUSE <- mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)   
+    
     
     
 </br>   
@@ -222,6 +230,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     CLUST=K$cluster
     pbmc@meta.data$clust=CLUST
     DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
+    
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
@@ -230,6 +239,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
     ppp=DimPlot(pbmc, reduction.use='umap', pt.size=0.5)
     used.cells <- CellSelector(plot = ppp)
+    
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
 
@@ -239,6 +249,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     markers <- FindMarkers(pbmc, ident.1=used.cells,only.pos=T)    
     head(markers, n=20)
+    
     
 </br>   
 </br>
@@ -271,6 +282,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     DATA=.simple_combine(D1,D2)$combine
     BATCH=rep('RNA',ncol(DATA))
     BATCH[c(1:ncol(D1))]='ATAC'
+    
  
  
 ### Step2. Detect Batch Effect
@@ -285,6 +297,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
+    
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT7.png" width="400">   
 
@@ -317,6 +330,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
     saveRDS(mybeer, file='mybeer.final.RDS')
+    
 
 # It's not good enough !
 
@@ -336,12 +350,14 @@ Please install ComBat & BBKNN.
 
     Install bbknn in python: https://github.com/Teichlab/bbknn
     
+    
 This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     mybeer=readRDS('mybeer.final.RDS')
     pbmc.rna <- readRDS("../data/pbmc_10k_v3.rds")
+    
     
 ### Use ComBat&BBKNN without BEER:
 
@@ -371,6 +387,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
@@ -415,15 +432,20 @@ This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-
     
     library(ggplot2)
     
-    plot.all <- DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F) + labs(title = "Batches")
+    plot.all <- DimPlot(pbmc, reduction.use='umap', group.by='batch', 
+        pt.size=0.1,label=F) + labs(title = "Batches")
     
-    plot.ct <- DimPlot(pbmc,reduction.use='umap', group.by='tf.ct', pt.size=0.1,label=T) + labs(title = "CellType")
+    plot.ct <- DimPlot(pbmc,reduction.use='umap', group.by='tf.ct', 
+        pt.size=0.1,label=T) + labs(title = "CellType")
     
-    plot.rna <- DimPlot(pbmc, cells=RNA.cells,reduction.use='umap', group.by='tf.ct', pt.size=0.1,label=T,plot.title='RNA.transfer') + labs(title = "RNA")
+    plot.rna <- DimPlot(pbmc, cells=RNA.cells,reduction.use='umap', 
+        group.by='tf.ct', pt.size=0.1,label=T,plot.title='RNA.transfer') + labs(title = "RNA")
     
-    plot.atac <- DimPlot(pbmc, cells=ATAC.cells,reduction.use='umap', group.by='tf.ct', pt.size=0.1,label=T,plot.title='ATAC.transfer') + labs(title = "ATAC")
+    plot.atac <- DimPlot(pbmc, cells=ATAC.cells,reduction.use='umap', 
+        group.by='tf.ct', pt.size=0.1,label=T,plot.title='ATAC.transfer') + labs(title = "ATAC")
     
     CombinePlots(list(all=plot.all, ct=plot.ct, rna=plot.rna, atac=plot.atac))
+    
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
 
