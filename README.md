@@ -375,10 +375,10 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
 
-#  Transfer labels
+# VI. Transfer labels
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
-    
+This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement)
+   
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
     #DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
@@ -425,6 +425,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
     CombinePlots(list(all=plot.all, ct=plot.ct, rna=plot.rna, atac=plot.atac))
 
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
 
 </br>
 </br>
