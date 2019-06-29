@@ -100,7 +100,8 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
-    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
+    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
+        xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
     # Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation". 
     # PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
@@ -183,7 +184,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
-    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
+    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
+        xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT4.png" width="400">
@@ -296,7 +298,8 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
-    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
+    plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
+        xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT7.png" width="400">   
