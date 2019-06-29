@@ -42,7 +42,8 @@ For batch-effect removal enhancement, please install Combat & BBKNN:
 * [III. UMAP-based Clustering](#III-UMAP-based-Clustering)
 * [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
 * [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement)
-* [VI. Biological Interpretation](#vi-biological-interpretation)
+* [VI. Transfer Labels](#vi-transfer-labels)
+* [VII. Biological Interpretation](#vii-biological-interpretation)
 
 </br>
 
@@ -374,7 +375,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
 
-### Transfer labels
+#  Transfer labels
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
     
@@ -428,7 +429,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 </br>
 </br>
 
-# VI. Biological Interpretation
+# VII. Biological Interpretation
 
 Please install "RITANdata" and "RITAN".
 
