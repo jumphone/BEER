@@ -408,7 +408,7 @@ Please download [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
     .writeTable(DATA=pbmc@meta.data$batch, PATH='batch.txt',SEP=',')
     
-Then, use "beer_bbknn" in your command line (please modify parameters in [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py)):
+Then, use "beer_bbknn.py" in your command line (please modify parameters in [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py)):
 
     python beer_bbknn.py
 
