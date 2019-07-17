@@ -22,9 +22,9 @@ print('NT=',NT)
 import sys
 import numpy as np
 import pandas as pd
-import scanpy as sc
+import scanpy as sc #1.4.3
 import anndata
-import bbknn
+import bbknn #1.3.4
 #####################
 print('Start')
 fi=open(BATCH)
