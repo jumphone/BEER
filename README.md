@@ -10,9 +10,6 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-* Test version: https://github.com/jumphone/BEER/tree/master/LAB
-
-
 # News:
 
 * June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN
