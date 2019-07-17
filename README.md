@@ -422,6 +422,8 @@ Finally, load the output of beer_bbknn.py and draw UMAP:
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
      
 
+</br>
+
 # VI. Transfer labels
 
 This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement)
