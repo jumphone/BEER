@@ -12,6 +12,8 @@ Environment: R
 
 # News:
 
+* June 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
+
 * June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN
 
 * ...
