@@ -38,10 +38,10 @@ used_pca=sc.read_csv(PCA)
 adata=anndata.AnnData(X=used_pca.X, obs=batch)
 PCNUM=used_pca.X.shape[1] 
 sc.tl.pca(adata, n_comps=PCNUM)
-adata.obsm.X_pca = used_pca.X
+adata.obsm['X_pca'] = used_pca.X
 bbknn.bbknn(adata,batch_key=0,neighbors_within_batch=NB,n_pcs=PCNUM, n_trees =NT)
 sc.tl.umap(adata)
-umap = adata.obsm.X_umap
+umap = adata.obsm['X_umap']
 
 fo=open(OUTPUT,'w')
 for one in umap:
