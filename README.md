@@ -396,11 +396,12 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
-###  Use ComBat&BBKNN with BEER in Python:
+### Use BBKNN in Python:
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     pbmc <- mybeer$seurat
+    pbmc=BEER.combat(pbmc)
     PCUSE = mybeer$select
     used.pca = pbmc@reductions$pca@cell.embeddings[,PCUSE]
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
