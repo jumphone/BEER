@@ -406,11 +406,19 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
     .writeTable(DATA=pbmc@meta.data$batch, PATH='batch.txt',SEP=',')
     
-Then use "beer_bbknn" in your command line (modify parameters in (https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py)[beer_bbknn.py]):
+Then use "beer_bbknn" in your command line (please modify parameters in [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py)):
 
     python beer_bbknn.py
 
+Finally, load the output of beer_bbknn.py and draw UMAP:
 
+    umap=read.table('bbknn_umap.txt',sep='\t',header=FALSE)
+    umap=as.matrix(umap)
+    rownames(umap)=rownames(pbmc@reductions$umap@cell.embeddings)
+    colnames(umap)=colnames(pbmc@reductions$umap@cell.embeddings)
+    pbmc@reductions$umap@cell.embeddings=umap
+    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
+     
 
 # VI. Transfer labels
 
