@@ -32,7 +32,7 @@ batch=[]
 for line in fi:
     seq=line.rstrip().split(',')
     batch=batch+seq
-fi.close
+fi.close()
 batch=batch[1:]
 used_pca=sc.read_csv(PCA) 
 adata=anndata.AnnData(X=used_pca.X, obs=batch)
