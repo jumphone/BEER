@@ -1,19 +1,17 @@
+#####################
+# Author: Feng Zhang
+#####################
+# Please adjust following parameters
 
-#####################
-#In R:
-#####################
-#used.pca=pbmc@reductions$pca@cell.embeddings[,PCUSE]
-#.writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
-#.writeTable(DATA=pbmc@meta.data$batch, PATH='batch.txt',SEP=',')
-#####################
-
-#####################
-#####################
 PCA='used.pca.txt'
 BATCH='batch.txt'
 OUTPUT='bbknn_umap.txt'
 NB=3
 NT=10
+
+
+#####################
+#####################
 #####################
 print('PCA=',PCA)
 print('BATCH=',BATCH)
