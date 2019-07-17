@@ -630,5 +630,37 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
     }
 
 
+#######2019.07.17
 
 
+
+.readTable <- function(PATH, SEP='\t', UP=FALSE){
+    SEP=SEP
+    PATH=PATH
+    UP=UP
+    DATA=read.table(file=PATH,sep=SEP,header=TRUE,row.names=NULL)
+    DATA=apply(DATA,2,as.character)
+    ###########
+    if(UP==TRUE){DATA[,1]=toupper(DATA[,1])}
+    ###########
+    TAB=table(as.character(DATA[,1]))
+    UNIQ=names(TAB)[which(TAB==1)]
+    DATA=DATA[which(DATA[,1] %in% UNIQ),]
+    RN=DATA[,1]
+    DATA=DATA[,c(2:ncol(DATA))]
+    DATA=apply(DATA,2,as.numeric)
+    rownames(DATA)=RN
+    return(DATA)
+    }
+
+.writeTable <- function(DATA, PATH, SEP='\t',TL='OUTPUT'){
+    DATA=DATA
+    PATH=PATH
+    SEP=SEP
+    TL=TL
+    OUT=cbind(rownames(DATA),DATA)
+    colnames(OUT)[1]=TL
+    write.table(OUT, file=PATH,sep=SEP,row.names=FALSE,col.names=TRUE,quote=FALSE)
+    }
+
+###########
