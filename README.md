@@ -397,7 +397,9 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
 ### Use BBKNN in Python:
-    
+
+Please download [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py).
+
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     pbmc <- mybeer$seurat
@@ -407,7 +409,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
     .writeTable(DATA=pbmc@meta.data$batch, PATH='batch.txt',SEP=',')
     
-Then use "beer_bbknn" in your command line (please modify parameters in [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py)):
+Then, use "beer_bbknn" in your command line (please modify parameters in [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/master/beer_bbknn.py)):
 
     python beer_bbknn.py
 
