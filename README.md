@@ -10,6 +10,20 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
+# Differences between the latest version and the manuscript version (0.0.2)
+
+* "MBEER" is integrated into "BEER".
+
+* "Two-dimention UMAP" is used to replace "one-dimension tSNE".
+
+* "K-means grouping" is used to replace "sliding-window grouping".
+
+* "Spearman coefficient" is used to replace "Kendall coefficient" (Spearman is much faster than Kendall).
+
+* When combing multiple batches, instead of comparing each batch to the largest batch, the latest BEER will compare each two of them.
+
+* Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
+
 # News:
 
 * June 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
