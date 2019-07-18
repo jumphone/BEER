@@ -10,6 +10,19 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
+
+# News:
+
+* June 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
+
+* June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN
+
+* ...
+
+* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
+
+* June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
+
 # Differences between the latest version and the manuscript version
 
 * Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
@@ -26,17 +39,6 @@ Environment: R
 
 * Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
 
-# News:
-
-* June 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
-
-* June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN
-
-* ...
-
-* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
-
-* June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
 # Requirement:
 
