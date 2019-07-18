@@ -12,6 +12,8 @@ Environment: R
 
 # Differences between the latest version and the manuscript version (0.0.2)
 
+* Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
+
 * "MBEER" is integrated into "BEER".
 
 * "Two-dimention UMAP" is used to replace "one-dimension tSNE".
