@@ -23,7 +23,7 @@ Environment: R
 
 * June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
-# Differences between the latest version and the manuscript version
+### Differences between the latest version and the manuscript version
 
 * Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
 
