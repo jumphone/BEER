@@ -10,7 +10,7 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-# Differences between the latest version and the manuscript version (0.0.2)
+# Differences between the latest version and the manuscript version
 
 * Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
 
