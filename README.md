@@ -20,7 +20,7 @@ Environment: R
 
 * "Spearman coefficient" is used to replace "Kendall coefficient" (Spearman is much faster than Kendall).
 
-* When combing multiple batches, instead of comparing each batch to the largest batch, the latest BEER will compare each two of them.
+* When combing multiple batches, instead of comparing each batch with the largest batch, the latest BEER will compare each two of them.
 
 * Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
 
