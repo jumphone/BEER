@@ -81,6 +81,8 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     
+    #Read 10X data: pbmc.data <- Read10X(data.dir = "../data/pbmc3k/filtered_gene_bc_matrices/hg19/")
+    
     #Load Demo Data (subset of GSE70630: MGH53 & MGH54)
     #Download: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip
     
