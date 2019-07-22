@@ -12,7 +12,7 @@ Environment: R
 
 # News:
 
-* July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to draw peaks of scATAC-seq.
+* July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
 
 * July 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
 
