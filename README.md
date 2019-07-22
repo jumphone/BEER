@@ -12,13 +12,15 @@ Environment: R
 
 # News:
 
+* July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to draw peaks of scATAC-seq.
+
 * July 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
 
-* June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN
+* June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN.
 
 * ...
 
-* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches
+* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches.
 
 * June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
