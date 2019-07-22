@@ -10,14 +10,6 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-## Citation:
-
-Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
-
-# Cookbook:
-
-see [Usage](#Usage)
-
 # News:
 
 * July 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
@@ -30,7 +22,16 @@ see [Usage](#Usage)
 
 * June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
-### Differences between the latest version and the manuscript version
+# Usage:
+
+see [Vignettes](#Vignettes)
+
+# Citation:
+
+Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
+
+
+# Differences between the latest version and the manuscript version
 
 * Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
 
@@ -61,7 +62,7 @@ For batch-effect removal enhancement, please install Combat & BBKNN:
 
     Install bbknn in python: https://github.com/Teichlab/bbknn
 
-# Usage:
+# Vignettes:
 
 * [I. Combine Two Batches](#I-Combine-Two-Batches)
 * [II. Combine Multiple Batches](#II-Combine-Multiple-Batches)
@@ -594,3 +595,4 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     SOFTWARE.
 
   
+
