@@ -270,7 +270,7 @@ CORMETHOD='spearman'
    }
 
 
-BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=1){
+BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=1, RMG=NULL){
 
     set.seed( SEED)
     RESULT=list()
@@ -280,6 +280,7 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     print(Sys.time())
     DATA=DATA
     BATCH=BATCH
+    RMG=RMG
     
     require(stringi)
     BATCH=stri_replace_all(BATCH, '.',fixed='_')
@@ -321,6 +322,15 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     pbmc@meta.data$batch=BATCH
     VariableFeatures(object = pbmc)=VARG
 
+    ########
+    if(!is.null(RMG)){
+        print('Total removed gene number is:')
+        print(length(RMG))
+        VariableFeatures(object = pbmc)=VariableFeatures(object = pbmc)[which(! VariableFeatures(object = pbmc) %in% RMG)]
+        print('Total used gene number is:')
+        print(length(VariableFeatures(object = pbmc)))
+        }
+    ##########   
 
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
