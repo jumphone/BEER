@@ -31,7 +31,7 @@ See [Vignettes](#Vignettes)
 Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
 
 
-# Differences between the latest version and the manuscript version
+### Differences between the latest version and the manuscript version
 
 * Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
 
