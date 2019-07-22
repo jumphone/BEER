@@ -24,7 +24,7 @@ Environment: R
 
 # Usage:
 
-see [Vignettes](#Vignettes)
+See [Vignettes](#Vignettes)
 
 # Citation:
 
