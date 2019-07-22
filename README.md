@@ -14,6 +14,10 @@ Environment: R
 
 Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
 
+# Cookbook:
+
+see [Usage](#Usage)
+
 # News:
 
 * July 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
