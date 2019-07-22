@@ -12,6 +12,8 @@ Environment: R
 
 # News:
 
+* July 2019 ( v0.1.4 ): Users can provide genes which need to be removed.
+
 * July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
 
 * July 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
@@ -114,18 +116,19 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-')   
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-', RMG=NULL)   
 
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
     # ROUND: batch-effect removal strength, positive integer (default: 1)
     # GN: the number of variable genes in each batch (default: 2000)
-
-    # If you are facing "huge" batch effect, please try "REGBATCH":
-    # mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-') 
+    # RMG: genes need to be removed (default: NULL)
     
-    # Users can use "ReBEER" to adjust GNUM, PCNUM, and ROUND (it's faster than directly using BEER).
-    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1) 
+    # If you are facing "huge" batch effect, please try "REGBATCH":
+    # mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-', RMG=NULL) 
+    
+    # Users can use "ReBEER" to adjust GNUM, PCNUM, ROUND, and RMG (it's faster than directly using BEER).
+    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1, RMG=NULL) 
     
     # Check selected PCs
     PCUSE=mybeer$select
