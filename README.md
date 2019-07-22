@@ -509,6 +509,8 @@ This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT15.png" width="900"> 
 
+If you want to visualize peak signals of any given cluster, please go to https://github.com/jumphone/VISA.
+
 </br>
 </br>
 
