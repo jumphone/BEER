@@ -423,7 +423,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=1){
+ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=1, RMG=NULL){
 
     set.seed( SEED)
     RESULT=list()
@@ -435,6 +435,7 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
     BATCH=mybeer$seurat@meta.data$batch
     GNUM=GNUM
     PCNUM=PCNUM
+    RMG=RMG
     MTTAG=MTTAG
     #MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
@@ -451,7 +452,10 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
     print(length(VariableFeatures(object = pbmc)))
     print('ROUND is:')
     print(ROUND)
-    
+    #########
+    if(!is.null(RMG)){
+        VariableFeatures(object = pbmc)=VariableFeatures(object = pbmc)[which(! VariableFeatures(object = pbmc) %in% RMG)]}
+    #########
     VARG=VariableFeatures(object = pbmc)
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     
