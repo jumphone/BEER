@@ -803,7 +803,7 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
         
          }
     
-    DATA.AGG=.generate_agg(DATA, TAG)
+    DATA.AGG=.generate_agg(DATA=DATA, TAG=TAG,print_step=print_step)
     
     .getAggBatch <- function(x){
         y=unlist(strsplit(x, "\\.\\.\\."))[1]
