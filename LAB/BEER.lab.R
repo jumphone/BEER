@@ -317,7 +317,9 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
     BATCH=BATCH
     RMG=RMG
     COMBAT=COMBAT
-
+    COMBAT.EXP=NULL
+    
+    
     require(stringi)
     BATCH=stri_replace_all(BATCH, '.',fixed='_')
     CPU=CPU
@@ -325,6 +327,7 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
     PCNUM=PCNUM
     UBATCH=unique(BATCH)
     ROUND=ROUND
+    
     GN=GN
     N=N
     print_step=print_step
@@ -391,6 +394,7 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
         pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
         ######
         pbmc@assays$RNA@data=orig.data    
+        COMBAT.EXP=combat_edata
         #################
         rm(edata)
         rm(combat_edata)
@@ -445,6 +449,7 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
     ################
     RESULT$ROUND=ROUND
     RESULT$COMBAT=COMBAT
+    RESULT$COMBAT.EXP=COMBAT.EXP
     RESULT$RMG=RMG
     RESULT$GNUM=GNUM
     RESULT$GN=GN
