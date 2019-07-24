@@ -52,21 +52,8 @@ Latest version: https://github.com/jumphone/BEER/releases
 
 Manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-* "MBEER" is integrated into "BEER".
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/DIFF.png" width="400">
 
-* "Two-dimention UMAP" is used to replace "one-dimension tSNE".
-
-* "K-means grouping" is used to replace "sliding-window grouping".
-
-* "Spearman coefficient" is used to replace "Kendall coefficient" (Spearman is much faster than Kendall).
-
-* When combing multiple batches, instead of comparing each batch with the largest batch, the latest BEER will compare each two of them.
-
-* Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
-
-* ComBat is used to adjust expression values.
-
-* BEER can be used to integrate scATAC-seq & scRNA-seq with the help of ComBat & BBKNN.
 
 # Vignettes:
 
