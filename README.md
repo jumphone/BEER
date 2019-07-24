@@ -12,8 +12,6 @@ Environment: R
 
 # News:
 
-* July 2019 ( v0.1.5 ): Users can use "BEER.AGG" to aggregate low quality data.
-
 * July 2019 ( v0.1.4 ): Users can provide genes which need to be removed.
 
 * July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
