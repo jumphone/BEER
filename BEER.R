@@ -68,7 +68,42 @@ CORMETHOD='spearman'
     return(NewRef)
     }
 
-
+##########
+.generate_agg <- function(exp_sc_mat, TAG, print_step=100){
+    print_step=print_step
+    exp_sc_mat=exp_sc_mat
+    TAG=TAG
+    
+    NewRef=matrix(0,ncol=length(unique(TAG)),nrow=nrow(exp_sc_mat))
+    
+    TAG=as.character(TAG)
+    refnames=unique(TAG)
+    total_num=length(refnames)
+    outnames=c()
+    i=1
+    while(i<=length(refnames)){
+        one=refnames[i]
+        this_col=which(TAG==one)
+        outnames=c(outnames,one)
+        if(length(this_col) >1){   
+            #this_new_ref=apply(exp_sc_mat[,this_col],1,mean)
+            this_new_ref=apply(exp_sc_mat[,this_col],1,sum)
+            }else{
+            this_new_ref = exp_sc_mat[,this_col]
+            }
+        NewRef[,i]=this_new_ref
+        if(i%%print_step==1){print(paste0(i,' / ' ,total_num ))}
+        i=i+1       
+        }
+    rownames(NewRef)=rownames(exp_sc_mat)
+    colnames(NewRef)=outnames
+    if(length(NewRef[1,])==1){
+        NewRef=cbind(NewRef[,1], NewRef[,1])
+        rownames(NewRef)=rownames(exp_sc_mat)
+        colnames(NewRef)=c(outnames,outnames)
+        }
+    return(NewRef)
+    }
 
 ############################################################################################
 ############################################################################################
@@ -102,7 +137,8 @@ CORMETHOD='spearman'
     ROUND=ROUND
     print('Finding MN pairs...')
     ################
-    REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
+    #REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
+    REF=.generate_agg(pbmc@assays$RNA@data, pbmc@meta.data$group)
     VREF=REF
     CVREF=cor(VREF,method=CORMETHOD)
     orig.CVREF=CVREF
@@ -342,6 +378,7 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA", "batch", "percent.mt"), num.cores=CPU, do.par=TRUE)
     }
     
+    print('Calculating PCs ...')
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
 
@@ -472,10 +509,9 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
         }
     ##########
     VARG=VariableFeatures(object = pbmc)
+    
+    print('Calculating PCs ...')
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
-    
-    
-    
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
     ########
     
@@ -655,3 +691,136 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
     }
 
 ###########
+##########
+# 2019.07.23
+##########
+.getPos <- function(x){
+    x=x
+    y=length(which(x>0))
+    return(y)
+    }
+
+.getBatchPos <- function(DATA,BATCH, N=50,SEED=123){
+    #######
+    DATA=DATA
+    BATCH=BATCH
+    SEED=SEED
+    N=N
+    ######
+    UB=unique(BATCH)
+    set.seed(SEED)
+    BAT=c()
+    POS=c()
+    MED=c()
+    for(this_batch in UB){
+        batch_index=which(BATCH==this_batch)
+        this_index=sample(batch_index, N,replace=TRUE)
+        this_pos=apply(DATA[,this_index],2,.getPos)
+        this_pos_m=median(this_pos)
+        MED=c(MED,this_pos_m)
+        POS=c(POS,this_pos)
+        BAT=c(BAT,rep(this_batch,N))
+        }  
+    OUT=list()
+    OUT$pos=POS
+    OUT$bat=BAT
+    OUT$ub=UB
+    names(MED)=UB
+    OUT$med=MED
+    return(OUT)
+   }
+
+
+BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123, N=2){
+    DATA=DATA
+    BATCH=BATCH
+    FOLD=FOLD
+    CPU=CPU
+    SEED=SEED
+    require(stringi)
+    BATCH=stri_replace_all(BATCH, '.',fixed='_')
+    GNUM=GNUM
+    PCNUM=PCNUM
+    MTTAG=MTTAG
+    UBATCH=unique(BATCH)
+    GN=GN
+    N=N
+    print_step=print_step
+    print('Group number (GNUM) is:')
+    print(GNUM)
+    print('Varible gene number (GN) of each batch is:')
+    print(GN)
+    print('ROUND is:')
+    print(ROUND)
+     
+    VARG=c()
+    for(this_batch in UBATCH){
+        this_pbmc=CreateSeuratObject(counts = DATA[,which(BATCH==this_batch)], min.cells = 0, 
+                                 min.features = 0, project = this_batch)
+        this_pbmc <- NormalizeData(object = this_pbmc, normalization.method = "LogNormalize", 
+                           scale.factor = 10000)
+        this_pbmc <- FindVariableFeatures(object = this_pbmc, selection.method = "vst", nfeatures = GN)  
+        this_varg=VariableFeatures(object = this_pbmc)
+        VARG=c(VARG, this_varg)
+        }
+    VARG=unique(VARG)
+    
+    print('Total varible gene number (GN) is:')
+    print(length(VARG))
+
+    pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc@meta.data$batch=BATCH
+    VariableFeatures(object = pbmc)=VARG
+    
+    pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
+    DimPlot(pbmc)
+    VEC=pbmc@reductions$umap@cell.embeddings
+    
+    UB=unique(BATCH)
+    TAG=c()
+    
+    ###########
+    for(this_batch in UB){
+         #this_batch=UB[31]
+        
+         this_index=which(BATCH == this_batch)
+         this_fold=FOLD[which(names(FOLD)==this_batch)]
+        
+         if(this_fold==1){
+             this_tag=paste0(this_batch,'...',c(1:length(this_index)))
+             }else{      
+             this_vec=VEC[this_index,]
+             set.seed(SEED)
+             this_n=round(length(this_index)/this_fold)
+             this_km=kmeans(this_vec,centers=this_n)
+             this_cl=this_km$cluster
+             this_tag=paste0(this_batch,'...',this_cl)          
+             }
+         TAG=c(TAG,this_tag)
+        
+         }
+    
+    DATA.AGG=.generate_agg(DATA, TAG)
+    
+    .getAggBatch <- function(x){
+        y=unlist(strsplit(x, "\\.\\.\\."))[1]
+        return(y)
+     }
+    
+    CN=colnames(DATA.AGG)
+    DATA.AGG.BATCH=apply(matrix(CN,ncol=1),1,.getAggBatch)
+    
+    RESULT=list()
+    RESULT$data.agg=DATA.AGG
+    RESULT$data.agg.batch=DATA.AGG.BATCH
+    RESULT$vec=VEC
+    RESULT$tag=TAG
+    RESULT$cell=colnames(pbmc)
+    return(RESULT)
+    
+    }
+
+
