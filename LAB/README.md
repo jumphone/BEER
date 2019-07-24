@@ -98,7 +98,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
     library(Seurat)
   
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/LAB/BEER.lab.R')
     #source('BEER.R')
     
     #Read 10X data: pbmc.data <- Read10X(data.dir = "../data/pbmc3k/filtered_gene_bc_matrices/hg19/")
@@ -124,16 +124,14 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-', RMG=NULL)   
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, COMBAT=TRUE, RMG=NULL)   
 
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
     # ROUND: batch-effect removal strength, positive integer (default: 1)
     # GN: the number of variable genes in each batch (default: 2000)
     # RMG: genes need to be removed (default: NULL)
-    
-    # If you are facing "huge" batch effect, please try "REGBATCH":
-    # mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-', RMG=NULL) 
+    # COMBAT: use ComBat to adjust expression value(default: TRUE)    
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, ROUND, and RMG (it's faster than directly using BEER).
     # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1, RMG=NULL) 
@@ -145,28 +143,31 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
         xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
-    # Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation". 
+Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation".
+
     # PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
     
-    
-    
+        
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT1.png" width="400">
     
 ### Step3. Visualization 
     
 #### Keep batch effect:
-  
+   
+    pbmc_batch=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc_batch@meta.data$batch=BATCH
+    pbmc_batch=FindVariableFeatures(object = pbmc_batch, selection.method = "vst", nfeatures = 2000)   
+    VariableFeatures(object = pbmc_batch)
+    pbmc_batch <- NormalizeData(object = pbmc_batch, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
+    pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
+    pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
+    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1) 
+    
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
-    
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
-    
-
-    
+     
 
 #### Remove batch effect:
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
@@ -174,7 +175,9 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1) 
     
-    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
+
+      
     
     
 </br>
