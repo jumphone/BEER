@@ -2,8 +2,6 @@
 
 # BEER: Batch EffEct Remover for single-cell data
 
-Author: Feng Zhang
-
 Environment: R
 
 * BEER's latest version: https://github.com/jumphone/BEER/releases
