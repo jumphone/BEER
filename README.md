@@ -18,8 +18,6 @@ Environment: R
 
 * July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
 
-* ...
-
 
 # Usage:
 
