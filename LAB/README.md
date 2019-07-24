@@ -339,11 +339,11 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
  
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, MTTAG='^MT-')
+    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, COMBAT=TRUE)
     saveRDS(mybeer, file='mybeer')
     
     # Users can use "ReBEER" to adjust parameters
-    mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=3, SEED=1)
+    mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=1, SEED=1)
     
     PCUSE=mybeer$select
     COL=rep('black',length(mybeer$cor))
@@ -359,11 +359,18 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
+    pbmc_batch=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc_batch@meta.data$batch=BATCH
+    pbmc_batch=FindVariableFeatures(object = pbmc_batch, selection.method = "vst", nfeatures = 2000)   
+    VariableFeatures(object = pbmc_batch)
+    pbmc_batch <- NormalizeData(object = pbmc_batch, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
+    pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
+    pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
+    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1)   
     
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-   
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
+       
 
 #### Remove batch effect:
 
@@ -394,15 +401,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
 
 # V. Batch-effect Removal Enhancement
 
-Please install ComBat & BBKNN.
-
-    if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-    BiocManager::install("sva")
-    BiocManager::install("limma")
-
-    Install bbknn in python: https://github.com/Teichlab/bbknn
-    
+Please install BBKNN: https://github.com/Teichlab/bbknn
     
 This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
     
@@ -416,7 +415,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
     pbmc <- mybeer$seurat
     PCUSE=c(1:ncol(pbmc@reductions$pca@cell.embeddings))
-    pbmc=BEER.combat(pbmc) 
+    pbmc=BEER.combat.pca(pbmc) 
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
@@ -428,7 +427,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
     pbmc <- mybeer$seurat
     PCUSE=mybeer$select
-    pbmc=BEER.combat(pbmc) 
+    pbmc=BEER.combat.pca(pbmc) 
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
@@ -440,8 +439,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
-    
-    
+     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
 ### Use BBKNN in Python:
@@ -451,7 +449,7 @@ Please download [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     pbmc <- mybeer$seurat
-    pbmc=BEER.combat(pbmc)
+    pbmc=BEER.combat.pca(pbmc)
     PCUSE = mybeer$select
     used.pca = pbmc@reductions$pca@cell.embeddings[,PCUSE]
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
