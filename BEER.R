@@ -754,6 +754,7 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
    }
 
 
+
 BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123, N=2, RMG=NULL){
     DATA=DATA
     BATCH=BATCH
@@ -764,17 +765,12 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     require(stringi)
     BATCH=stri_replace_all(BATCH, '.',fixed='_')
     PCNUM=PCNUM
-    MTTAG=MTTAG
     UBATCH=unique(BATCH)
     GN=GN
     N=N
     print_step=print_step
-    print('Group number (GNUM) is:')
-    print(GNUM)
     print('Varible gene number (GN) of each batch is:')
     print(GN)
-    print('ROUND is:')
-    print(ROUND)
      
     VARG=c()
     for(this_batch in UBATCH){
@@ -855,6 +851,7 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     return(RESULT)
     
     }
+
 
 
 
