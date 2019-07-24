@@ -209,7 +209,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     rm(D12);rm(D34);rm(D56);rm(D1234);rm(D123456)
     
     
-### Step2. Detect Batch Effect
+### Step2. Use BEER to Detect Batch Effect
 
     mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, GN=2000, SEED=1, COMBAT=TRUE )
 
@@ -327,7 +327,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     
  
  
-### Step2. Detect Batch Effect
+### Step2. Use BEER to Detect Batch Effect
 
     mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, GN=5000, SEED=1, COMBAT=TRUE)
     saveRDS(mybeer, file='mybeer')
