@@ -189,8 +189,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 ### Step1. Load Data
     
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    #source('BEER.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
@@ -223,7 +221,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-' )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, COMBAT=TRUE )
 
     # Check selected PCs
     PCUSE=mybeer$select
@@ -240,17 +238,23 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
         
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
-    
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    
 
+    pbmc_batch=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc_batch@meta.data$batch=BATCH
+    pbmc_batch=FindVariableFeatures(object = pbmc_batch, selection.method = "vst", nfeatures = 2000)   
+    VariableFeatures(object = pbmc_batch)
+    pbmc_batch <- NormalizeData(object = pbmc_batch, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
+    pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
+    pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
+    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1) 
+ 
+    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
 
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
@@ -258,7 +262,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)   
     
-    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
+   
     
 </br>   
 </br>
@@ -275,7 +280,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     K=kmeans(VEC,centers=N)
 
     CLUST=K$cluster
-    pbmc@meta.data$clust=CLUST
+    pbmc@meta.data$clust=as.character(CLUST)
     DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
     
 
@@ -288,7 +293,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     used.cells <- CellSelector(plot = ppp)
     
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
     # Press "ESC"
     
