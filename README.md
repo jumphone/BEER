@@ -49,6 +49,7 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 
 * Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
 
+* ComBat is used to adjust expression values.
 
 # Requirement:
 
