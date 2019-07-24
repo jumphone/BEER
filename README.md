@@ -8,7 +8,7 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-# Blueprint:
+### Blueprint:
 
 v0.1.5:
 
