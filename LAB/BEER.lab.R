@@ -607,7 +607,7 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, print_step=10, SEED=123, 
 
 
 #########################
-BEER.combat.pca <- function(pbmc){
+BEER.combat <- function(pbmc){
     
     #mybeer=mybeer
 
