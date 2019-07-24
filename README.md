@@ -6,7 +6,7 @@ Environment: R
 
 BEER's latest version: https://github.com/jumphone/BEER/releases
 
-## Blueprint:
+## Workflow:
 
 ### v0.1.5
 
