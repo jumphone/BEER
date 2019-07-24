@@ -36,8 +36,6 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 
 ### Differences between the latest version and the manuscript version
 
-* Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
-
 * "MBEER" is integrated into "BEER".
 
 * "Two-dimention UMAP" is used to replace "one-dimension tSNE".
@@ -51,6 +49,8 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 * Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
 
 * ComBat is used to adjust expression values.
+
+* BEER can be used to integrate scATAC-seq & scRNA-seq with the help of ComBat & BBKNN.
 
 # Requirement:
 
