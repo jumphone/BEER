@@ -754,12 +754,13 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
    }
 
 
-BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123, N=2){
+BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10, SEED=123, N=2, RMG=NULL){
     DATA=DATA
     BATCH=BATCH
     FOLD=FOLD
     CPU=CPU
     SEED=SEED
+    RMG=RMG
     require(stringi)
     BATCH=stri_replace_all(BATCH, '.',fixed='_')
     GNUM=GNUM
@@ -794,6 +795,16 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
     pbmc@meta.data$batch=BATCH
     VariableFeatures(object = pbmc)=VARG
+    
+    if(!is.null(RMG)){
+        print('Total removed gene number is:')
+        print(length(RMG))
+        VariableFeatures(object = pbmc)=VariableFeatures(object = pbmc)[which(! VariableFeatures(object = pbmc) %in% RMG)]
+        print('Total used gene number is:')
+        print(length(VariableFeatures(object = pbmc)))
+        }
+    
+    
     
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
     pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
