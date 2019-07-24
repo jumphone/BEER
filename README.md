@@ -113,7 +113,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, COMBAT=TRUE, RMG=NULL)   
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, GN=2000, SEED=1, COMBAT=TRUE, RMG=NULL)   
 
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
@@ -123,7 +123,7 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     # COMBAT: use ComBat to adjust expression value(default: TRUE)    
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, ROUND, and RMG (it's faster than directly using BEER).
-    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1, RMG=NULL) 
+    # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, SEED=1, RMG=NULL) 
     
     # Check selected PCs
     PCUSE=mybeer$select
@@ -211,7 +211,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, COMBAT=TRUE )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, GN=2000, SEED=1, COMBAT=TRUE )
 
     # Check selected PCs
     PCUSE=mybeer$select
@@ -329,7 +329,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
  
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, COMBAT=TRUE)
+    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, GN=5000, SEED=1, COMBAT=TRUE)
     saveRDS(mybeer, file='mybeer')
     
     # Users can use "ReBEER" to adjust parameters
