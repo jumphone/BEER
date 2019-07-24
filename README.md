@@ -36,6 +36,9 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement) for details of "Enhancement".
 
+</br>
+</br>
+
 # Requirement:
 
     #R >=3.5
@@ -51,9 +54,15 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
     
 For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
+</br>
+</br>
+
 # Usage:
 
 See [Vignettes](#Vignettes)
+
+</br>
+</br>
 
 # Reference:
 
