@@ -345,7 +345,9 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     # Users can use "ReBEER" to adjust parameters
     mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=1, SEED=1)
     
-    PCUSE=mybeer$select
+    #PCUSE=mybeer$select
+    PCUSE=.selectUSE(mybeer, CUTR=0.6, CUTL=0.6, RR=0.5, RL=0.5)
+    
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
@@ -375,7 +377,6 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
 #### Remove batch effect:
 
     pbmc <- mybeer$seurat  
-    PCUSE=mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
