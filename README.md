@@ -19,7 +19,7 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 * [Workflow](#Workflow)
 * [Requirement](#Requirement)
-* [Usage](#Usage)
+* [Vignettes](#Vignettes)
 * [Reference](#Reference)
 
 </br>
@@ -57,28 +57,6 @@ For batch-effect removal enhancement, please install BBKNN: https://github.com/T
 </br>
 </br>
 
-# Usage:
-
-See [Vignettes](#Vignettes)
-
-</br>
-</br>
-
-# Reference:
-
-Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
-
-
-### Differences between the latest version and the manuscript version
-
-Latest version: https://github.com/jumphone/BEER/releases
-
-Manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/DIFF.png" width="600">
-
-</br>
-</br>
 
 # Vignettes:
 
@@ -598,7 +576,24 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 
 </br>   
 </br> 
-    
+
+
+# Reference:
+
+Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
+
+
+### Differences between the latest version and the manuscript version
+
+Latest version: https://github.com/jumphone/BEER/releases
+
+Manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/DIFF.png" width="600">
+
+</br>
+</br>
+
     
 # License
     
