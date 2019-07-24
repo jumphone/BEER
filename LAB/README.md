@@ -7,60 +7,9 @@
 
 Author: Feng Zhang
 
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/BEER_LOGO.png" width="200">
-
-# BEER: Batch EffEct Remover for single-cell data
-
-Author: Feng Zhang
-
-Environment: R
-
-* BEER's latest version: https://github.com/jumphone/BEER/releases
-
-* BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
-
-# News:
-
-* July 2019 ( v0.1.4 ): Users can provide genes which need to be removed.
-
-* July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
-
-* July 2019 ( v0.1.2 ): We provide scripts for using BBKNN in python.
-
-* June 2019 ( v0.1.1 ): Batch-effect removal enhancement with ComBat & BBKNN.
-
-* ...
-
-* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches.
-
-* June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
-
 # Usage:
 
 See [Vignettes](#Vignettes)
-
-# Citation:
-
-Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
-
-
-### Differences between the latest version and the manuscript version
-
-* Now, BEER can be used to integrate scATAC-seq & scRNA-seq.
-
-* "MBEER" is integrated into "BEER".
-
-* "Two-dimention UMAP" is used to replace "one-dimension tSNE".
-
-* "K-means grouping" is used to replace "sliding-window grouping".
-
-* "Spearman coefficient" is used to replace "Kendall coefficient" (Spearman is much faster than Kendall).
-
-* When combing multiple batches, instead of comparing each batch with the largest batch, the latest BEER will compare each two of them.
-
-* Both of "linear coeffiecient (Pearson)" and "non-linear coeffiecient (Spearman)" are used to evaluate batch effect.
-
 
 # Requirement:
 
