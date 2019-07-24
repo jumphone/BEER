@@ -18,8 +18,8 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 # Content:
 
 * [Workflow](#Workflow)
-* [Requirement](#Requirement)
-* [Vignettes](#Vignettes)
+* [Requirement & Installation)](#Requirement)
+* [Vignettes & Usage](#Vignettes)
 * [Reference](#Reference)
 
 </br>
@@ -50,7 +50,11 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
     BiocManager::install("sva")
     BiocManager::install("limma")
 
+    # Users can use "BEER" by directly importing "BEER.R" on the github webpage:
+    
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    
+    # Or, download it.
     
 For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
