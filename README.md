@@ -10,6 +10,10 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
+# Blueprint (lastest version):
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
+
 # News:
 
 * July 2019 ( v0.1.5 ): "ComBat" is used to replace "regression" of "ScaleData" (ComBat is much faster)
