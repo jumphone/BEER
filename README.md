@@ -6,14 +6,6 @@ Environment: R
 
 BEER's latest version: https://github.com/jumphone/BEER/releases
 
-## Workflow:
-
-### v0.1.5
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
-
-Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement) for details of "Enhancement".
-
 # News:
 
 * July 2019 ( v0.1.5 ): "ComBat" is used to replace "regression" of "ScaleData" (ComBat is much faster)
@@ -21,6 +13,28 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
 * July 2019 ( v0.1.4 ): Users can provide genes which need to be removed.
 
 * July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
+
+
+# Content:
+
+* [Workflow](#Workflow)
+* [Requirement](#Requirement)
+* [Usage](#Usage)
+* [Reference](#Reference)
+
+</br>
+</br>
+</br>
+
+
+
+# Workflow:
+
+### v0.1.5
+
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
+
+Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement) for details of "Enhancement".
 
 # Requirement:
 
@@ -41,7 +55,7 @@ For batch-effect removal enhancement, please install BBKNN: https://github.com/T
 
 See [Vignettes](#Vignettes)
 
-# Citation:
+# Reference:
 
 Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of single-cell data, Cell Discovery, 2019 (in press)
 
