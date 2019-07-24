@@ -41,7 +41,7 @@ For batch-effect removal enhancement, please install BBKNN: https://github.com/T
 
 # Usage:
 
-See [Vignettes](#Vignettes)
+### [Vignettes](#Vignettes)
 
 # Citation:
 
