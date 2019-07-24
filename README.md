@@ -24,6 +24,20 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
 
 * July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
 
+# Requirement:
+
+    #R >=3.5
+    install.packages('Seurat') # >=3.0  
+    
+    # Install ComBat:
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+    BiocManager::install("sva")
+    BiocManager::install("limma")
+
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    
+For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
 # Usage:
 
@@ -51,18 +65,6 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 * ComBat is used to adjust expression values.
 
 * BEER can be used to integrate scATAC-seq & scRNA-seq with the help of ComBat & BBKNN.
-
-# Requirement:
-
-    #R >=3.5
-    install.packages('Seurat') # >=3.0  
-    # Install ComBat:
-    if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-    BiocManager::install("sva")
-    BiocManager::install("limma")
-
-For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
 # Vignettes:
 
