@@ -6,6 +6,7 @@
 #
 #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
+print('Welcome to BEER (v0.1.5)!')
 
 library(Seurat)
 library(sva)
