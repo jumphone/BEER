@@ -65,16 +65,14 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 # Requirement:
 
     #R >=3.5
-    install.packages('Seurat') # >=3.0     
-
-For batch-effect removal enhancement, please install Combat & BBKNN:
-
+    install.packages('Seurat') # >=3.0  
+    # Install ComBat:
     if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
     BiocManager::install("sva")
     BiocManager::install("limma")
 
-    Install bbknn in python: https://github.com/Teichlab/bbknn
+For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
 # Vignettes:
 
