@@ -51,16 +51,14 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 # Requirement:
 
     #R >=3.5
-    install.packages('Seurat') # >=3.0     
-
-For batch-effect removal enhancement, please install Combat & BBKNN:
-
+    install.packages('Seurat') # >=3.0  
+    # Install ComBat:
     if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
     BiocManager::install("sva")
     BiocManager::install("limma")
 
-    Install bbknn in python: https://github.com/Teichlab/bbknn
+For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
 # Vignettes:
 
@@ -112,16 +110,14 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-', RMG=NULL)   
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, COMBAT=TRUE, RMG=NULL)   
 
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
     # ROUND: batch-effect removal strength, positive integer (default: 1)
     # GN: the number of variable genes in each batch (default: 2000)
     # RMG: genes need to be removed (default: NULL)
-    
-    # If you are facing "huge" batch effect, please try "REGBATCH":
-    # mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-', RMG=NULL) 
+    # COMBAT: use ComBat to adjust expression value(default: TRUE)    
     
     # Users can use "ReBEER" to adjust GNUM, PCNUM, ROUND, and RMG (it's faster than directly using BEER).
     # mybeer <- ReBEER(mybeer, GNUM=30, PCNUM=50, ROUND=1, CPU=2, SEED=1, RMG=NULL) 
@@ -133,28 +129,31 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
         xlab='Rank Correlation',ylab='Linear Correlation',xlim=c(0,1),ylim=c(0,1))
     
-    # Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation". 
+Users can select PCA subspaces based on the distribution of "Rank Correlation" and "Linear Correlation".
+
     # PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
     
-    
-    
+        
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT1.png" width="400">
     
 ### Step3. Visualization 
     
 #### Keep batch effect:
-  
+   
+    pbmc_batch=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc_batch@meta.data$batch=BATCH
+    pbmc_batch=FindVariableFeatures(object = pbmc_batch, selection.method = "vst", nfeatures = 2000)   
+    VariableFeatures(object = pbmc_batch)
+    pbmc_batch <- NormalizeData(object = pbmc_batch, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
+    pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
+    pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
+    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1) 
+    
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
-    
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)  
-    
-
-    
+     
 
 #### Remove batch effect:
-
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
@@ -162,7 +161,9 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1) 
     
-    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
+
+      
     
     
 </br>
@@ -175,7 +176,6 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 ### Step1. Load Data
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
-    #source('BEER.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
@@ -208,7 +208,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
 ### Step2. Detect Batch Effect
 
-    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, MTTAG='^MT-' )
+    mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=2000, SEED=1, COMBAT=TRUE )
 
     # Check selected PCs
     PCUSE=mybeer$select
@@ -225,17 +225,23 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
         
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
-    
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-    
 
+    pbmc_batch=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc_batch@meta.data$batch=BATCH
+    pbmc_batch=FindVariableFeatures(object = pbmc_batch, selection.method = "vst", nfeatures = 2000)   
+    VariableFeatures(object = pbmc_batch)
+    pbmc_batch <- NormalizeData(object = pbmc_batch, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
+    pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
+    pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
+    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1) 
+ 
+    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
 
 
 #### Remove batch effect:
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
@@ -243,7 +249,8 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)   
     
-    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
+   
     
 </br>   
 </br>
@@ -260,7 +267,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     K=kmeans(VEC,centers=N)
 
     CLUST=K$cluster
-    pbmc@meta.data$clust=CLUST
+    pbmc@meta.data$clust=as.character(CLUST)
     DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
     
 
@@ -273,7 +280,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     used.cells <- CellSelector(plot = ppp)
     
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST2.png" width="400">    
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
 
     # Press "ESC"
     
@@ -319,13 +326,15 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
  
 ### Step2. Detect Batch Effect
 
-    mybeer <- BEER(DATA, BATCH, REGBATCH=TRUE, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, MTTAG='^MT-')
+    mybeer <- BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, CPU=2, GN=5000, SEED=1, COMBAT=TRUE)
     saveRDS(mybeer, file='mybeer')
     
     # Users can use "ReBEER" to adjust parameters
     mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=3, SEED=1)
     
     PCUSE=mybeer$select
+    #PCUSE=.selectUSE(mybeer, CUTR=0.8, CUTL=0.8, RR=0.5, RL=0.5)
+    
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
     plot(mybeer$cor,mybeer$lcor,pch=16,col=COL,
@@ -339,11 +348,18 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     
 #### Keep batch effect:
   
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
+    pbmc_batch=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc_batch@meta.data$batch=BATCH
+    pbmc_batch=FindVariableFeatures(object = pbmc_batch, selection.method = "vst", nfeatures = 2000)   
+    VariableFeatures(object = pbmc_batch)
+    pbmc_batch <- NormalizeData(object = pbmc_batch, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
+    pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
+    pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
+    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1)   
     
-    pbmc <- mybeer$seurat
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
-   
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
+       
 
 #### Remove batch effect:
 
@@ -374,15 +390,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
 
 # V. Batch-effect Removal Enhancement
 
-Please install ComBat & BBKNN.
-
-    if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-    BiocManager::install("sva")
-    BiocManager::install("limma")
-
-    Install bbknn in python: https://github.com/Teichlab/bbknn
-    
+Please install BBKNN: https://github.com/Teichlab/bbknn
     
 This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--scrna-seq)
     
@@ -392,11 +400,11 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc.rna <- readRDS("../data/pbmc_10k_v3.rds")
     
     
-### Use ComBat&BBKNN without BEER:
+### Use ComBat & BBKNN without BEER:
 
     pbmc <- mybeer$seurat
     PCUSE=c(1:ncol(pbmc@reductions$pca@cell.embeddings))
-    pbmc=BEER.combat(pbmc) 
+    pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
@@ -404,11 +412,11 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400">     
 
-### Use ComBat&BBKNN with BEER:
+### Use ComBat & BBKNN with BEER:
 
     pbmc <- mybeer$seurat
-    PCUSE=mybeer$select
-    pbmc=BEER.combat(pbmc) 
+    PCUSE=mybeer$select   
+    pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
@@ -420,8 +428,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
     DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
-    
-    
+     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
 ### Use BBKNN in Python:
@@ -431,7 +438,7 @@ Please download [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     pbmc <- mybeer$seurat
-    pbmc=BEER.combat(pbmc)
+    pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     PCUSE = mybeer$select
     used.pca = pbmc@reductions$pca@cell.embeddings[,PCUSE]
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
@@ -597,5 +604,4 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 
-  
 
