@@ -8,10 +8,8 @@
 
 
 library(Seurat)
-#library(pcaPP)
-#library(igraph)
-#library(sva)
-#library(limma)
+library(sva)
+library(limma)
 
 ############################################################################################
 ############################################################################################
@@ -68,7 +66,8 @@ CORMETHOD='spearman'
     return(NewRef)
     }
 
-##########
+
+
 .generate_agg <- function(exp_sc_mat, TAG, print_step=100){
     print_step=print_step
     exp_sc_mat=exp_sc_mat
@@ -104,7 +103,6 @@ CORMETHOD='spearman'
         }
     return(NewRef)
     }
-
 ############################################################################################
 ############################################################################################
 
@@ -137,7 +135,6 @@ CORMETHOD='spearman'
     ROUND=ROUND
     print('Finding MN pairs...')
     ################
-    #REF=.generate_ref(pbmc@assays$RNA@data, cbind(pbmc@meta.data$group,pbmc@meta.data$group),min_cell=1)
     REF=.generate_agg(pbmc@assays$RNA@data, pbmc@meta.data$group)
     VREF=REF
     CVREF=cor(VREF,method=CORMETHOD)
@@ -251,7 +248,7 @@ CORMETHOD='spearman'
     ALL_LPV=c()
     ALL_LC1=c()
     ALL_LC2=c()
-
+    print('Evaluating PCs ...')
     print('Start')
     THIS_DR=1
     while(THIS_DR<=ncol(DR)){
@@ -306,7 +303,7 @@ CORMETHOD='spearman'
    }
 
 
-BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", REGBATCH=FALSE, print_step=10, SEED=123, N=2, ROUND=1, RMG=NULL){
+BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, print_step=10, SEED=123, N=2, ROUND=1, RMG=NULL){
 
     set.seed( SEED)
     RESULT=list()
@@ -317,17 +314,18 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     DATA=DATA
     BATCH=BATCH
     RMG=RMG
+    COMBAT=COMBAT
+    COMBAT.EXP=NULL
+    
     
     require(stringi)
     BATCH=stri_replace_all(BATCH, '.',fixed='_')
-      
+    CPU=CPU
     GNUM=GNUM
     PCNUM=PCNUM
-    MTTAG=MTTAG
-    #MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
-    REGBATCH=REGBATCH
     ROUND=ROUND
+    
     GN=GN
     N=N
     print_step=print_step
@@ -369,15 +367,38 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     ##########   
 
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = MTTAG)
 
-    CPU=4
-    if(REGBATCH==FALSE){
-    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA","percent.mt"), num.cores=CPU, do.par=TRUE)
+
+    if(COMBAT==FALSE){
+        pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
     }else{
-    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc), vars.to.regress = c("nCount_RNA", "batch", "percent.mt"), num.cores=CPU, do.par=TRUE)
+        ##############
+        library(sva)
+        library(limma)
+        pheno = data.frame(batch=as.matrix(BATCH))
+        orig.data=pbmc@assays$RNA@data
+        used.gene.index=which(rownames(orig.data) %in% VARG)
+        edata = as.matrix(orig.data)[used.gene.index,]
+        batch = pheno$batch
+        modcombat = model.matrix(~1, data=pheno)
+        combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
+        rownames(combat_edata)=rownames(edata)
+        colnames(combat_edata)=colnames(edata)
+        combat_edata=as.matrix(combat_edata)
+        combat_edata[which(combat_edata<0)]=0
+        combat_edata[which(is.na(combat_edata))]=0
+        pbmc@assays$RNA@data=combat_edata
+        ######
+        pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
+        ######
+        pbmc@assays$RNA@data=orig.data    
+        COMBAT.EXP=combat_edata
+        #################
+        rm(edata)
+        rm(combat_edata)
+        rm(orig.data)
+        gc()
     }
-    
     print('Calculating PCs ...')
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
@@ -425,11 +446,12 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, MTTAG="^MT-", 
     
     ################
     RESULT$ROUND=ROUND
-    RESULT$REGBATCH=REGBATCH
+    RESULT$COMBAT=COMBAT
+    RESULT$COMBAT.EXP=COMBAT.EXP
+    RESULT$RMG=RMG
     RESULT$GNUM=GNUM
     RESULT$GN=GN
     RESULT$PCNUM=PCNUM
-    RESULT$MTTAG=MTTAG
     RESULT$SEED=SEED
     RESULT$N=N
     RESULT$APP='BEER'   
@@ -470,7 +492,7 @@ MBEER=BEER
 
 
 
-ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=10, SEED=123, N=2, ROUND=1, RMG=NULL){
+ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, print_step=10, SEED=123, N=2, ROUND=1, RMG=NULL){
 
     set.seed( SEED)
     RESULT=list()
@@ -483,7 +505,6 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
     GNUM=GNUM
     PCNUM=PCNUM
     RMG=RMG
-    MTTAG=MTTAG
     #MAXBATCH=MAXBATCH
     UBATCH=unique(BATCH)
     
@@ -508,8 +529,7 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
         print(length(VariableFeatures(object = pbmc)))
         }
     ##########
-    VARG=VariableFeatures(object = pbmc)
-    
+    VARG = VariableFeatures(object = pbmc)
     print('Calculating PCs ...')
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
@@ -562,7 +582,6 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, MTTAG="^MT-", print_step=
     RESULT$ROUND=ROUND
     RESULT$GNUM=GNUM
     RESULT$PCNUM=PCNUM
-    RESULT$MTTAG=MTTAG
     RESULT$SEED=SEED
     RESULT$N=N
     RESULT$APP='ReBEER'   
@@ -691,9 +710,11 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
     }
 
 ###########
-##########
-# 2019.07.23
-##########
+
+
+
+
+
 .getPos <- function(x){
     x=x
     y=length(which(x>0))
@@ -822,5 +843,6 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     return(RESULT)
     
     }
+
 
 
