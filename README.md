@@ -4,8 +4,6 @@
 
 Environment: R
 
-BEER's latest version: https://github.com/jumphone/BEER/releases
-
 ## Blueprint:
 
 ### v0.1.5
