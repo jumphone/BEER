@@ -138,6 +138,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
    
 ### Step1. Load Data
     
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/LAB/BEER.lab.R')
     
     #Load Demo Data (Oligodendroglioma, GSE70630)
     #Download: https://sourceforge.net/projects/beergithub/files/
@@ -263,7 +264,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
 
 ### Step1. Load Data
 
-    source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
+    source('https://raw.githubusercontent.com/jumphone/BEER/master/LAB/BEER.lab.R')
     #source('BEER.R')
     
     library(Seurat)
@@ -292,10 +293,10 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     saveRDS(mybeer, file='mybeer')
     
     # Users can use "ReBEER" to adjust parameters
-    mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=1, SEED=1)
+    mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=3, SEED=1)
     
-    #PCUSE=mybeer$select
-    PCUSE=.selectUSE(mybeer, CUTR=0.6, CUTL=0.6, RR=0.5, RL=0.5)
+    PCUSE=mybeer$select
+    #PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
     
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
@@ -326,6 +327,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
 #### Remove batch effect:
 
     pbmc <- mybeer$seurat  
+    PCUSE=mybeer$select
     pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
     
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
@@ -361,11 +363,11 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc.rna <- readRDS("../data/pbmc_10k_v3.rds")
     
     
-### Use ComBat&BBKNN without BEER:
+### Use ComBat & BBKNN without BEER:
 
     pbmc <- mybeer$seurat
     PCUSE=c(1:ncol(pbmc@reductions$pca@cell.embeddings))
-    pbmc=BEER.combat.pca(pbmc) 
+    pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
@@ -373,11 +375,11 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400">     
 
-### Use ComBat&BBKNN with BEER:
+### Use ComBat & BBKNN with BEER:
 
     pbmc <- mybeer$seurat
     PCUSE=mybeer$select
-    pbmc=BEER.combat.pca(pbmc) 
+    pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
     DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
@@ -399,7 +401,7 @@ Please download [beer_bbknn.py](https://raw.githubusercontent.com/jumphone/BEER/
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     #source('BEER.R')
     pbmc <- mybeer$seurat
-    pbmc=BEER.combat.pca(pbmc)
+    pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     PCUSE = mybeer$select
     used.pca = pbmc@reductions$pca@cell.embeddings[,PCUSE]
     .writeTable(DATA=used.pca, PATH='used.pca.txt',SEP=',')
