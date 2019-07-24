@@ -20,9 +20,6 @@ Environment: R
 
 * ...
 
-* June 2019 ( v0.0.4 ): "MBEER" is integrated into "BEER". Please directly use BEER to integrate multiple batches.
-
-* June 2019: stop updating the BEER source code for Seurat2. New feature is only for Seurat3.
 
 # Usage:
 
