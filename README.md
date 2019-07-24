@@ -14,6 +14,8 @@ Environment: R
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
 
+Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement) for details of "Enhancement".
+
 # News:
 
 * July 2019 ( v0.1.5 ): "ComBat" is used to replace "regression" of "ScaleData" (ComBat is much faster)
