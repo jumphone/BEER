@@ -10,7 +10,7 @@ Environment: R
 
 ## Blueprint:
 
-### v0.1.5:
+### v0.1.5
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
 
