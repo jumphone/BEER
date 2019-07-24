@@ -21,6 +21,7 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 * [Requirement (Installation)](#Requirement)
 * [Vignettes (Usage)](#Vignettes)
 * [Reference](#Reference)
+* [License](#License)
 
 </br>
 </br>
