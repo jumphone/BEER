@@ -55,7 +55,10 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
     
     source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
     
-    # Or, download it.
+    # Or, download and import it:
+    
+    source('BEER.R')
+    
     
 For batch-effect removal enhancement, please install BBKNN: https://github.com/Teichlab/bbknn
 
