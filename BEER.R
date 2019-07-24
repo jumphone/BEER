@@ -763,7 +763,6 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     RMG=RMG
     require(stringi)
     BATCH=stri_replace_all(BATCH, '.',fixed='_')
-    GNUM=GNUM
     PCNUM=PCNUM
     MTTAG=MTTAG
     UBATCH=unique(BATCH)
