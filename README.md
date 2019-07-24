@@ -12,7 +12,7 @@ Environment: R
 
 # News:
 
-* July 2019 ( v0.1.5 ): "ComBat" is used to replace "Regression" in "ScaleData" (ComBat is much faster)
+* July 2019 ( v0.1.5 ): "ComBat" is used to replace "regression" of "ScaleData" (ComBat is much faster)
 
 * July 2019 ( v0.1.4 ): Users can provide genes which need to be removed.
 
