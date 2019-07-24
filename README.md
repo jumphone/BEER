@@ -52,7 +52,7 @@ Latest version: https://github.com/jumphone/BEER/releases
 
 Manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-<img src="https://github.com/jumphone/BEER/raw/master/DATA/DIFF.png" width="400">
+<img src="https://github.com/jumphone/BEER/raw/master/DATA/DIFF.png" width="600">
 
 
 # Vignettes:
