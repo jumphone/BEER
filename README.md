@@ -4,9 +4,7 @@
 
 Environment: R
 
-* BEER's latest version: https://github.com/jumphone/BEER/releases
-
-* BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
+BEER's latest version: https://github.com/jumphone/BEER/releases
 
 ## Blueprint:
 
@@ -49,6 +47,10 @@ Feng Zhang, Yu Wu, Weidong Tian*; A novel approach to remove the batch effect of
 
 
 ### Differences between the latest version and the manuscript version
+
+BEER's latest version: https://github.com/jumphone/BEER/releases
+
+BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
 * "MBEER" is integrated into "BEER".
 
