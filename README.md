@@ -18,8 +18,8 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 # Content:
 
 * [Workflow](#Workflow)
-* [Requirement ( Installation )](#Requirement)
-* [Vignettes ( Usage )](#Vignettes)
+* [Requirement (Installation)](#Requirement)
+* [Vignettes (Usage)](#Vignettes)
 * [Reference](#Reference)
 * [License](#License)
 
