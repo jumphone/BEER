@@ -296,7 +296,7 @@ The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BE
     mybeer <- ReBEER(mybeer, GNUM=100, PCNUM=100, ROUND=3, SEED=1)
     
     PCUSE=mybeer$select
-    #PCUSE=.selectUSE(mybeer, CUTR=0.7, CUTL=0.7, RR=0.5, RL=0.5)
+    #PCUSE=.selectUSE(mybeer, CUTR=0.8, CUTL=0.8, RR=0.5, RL=0.5)
     
     COL=rep('black',length(mybeer$cor))
     COL[PCUSE]='red'
@@ -378,7 +378,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
 ### Use ComBat & BBKNN with BEER:
 
     pbmc <- mybeer$seurat
-    PCUSE=mybeer$select
+    PCUSE=mybeer$select   
     pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
