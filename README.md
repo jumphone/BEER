@@ -10,7 +10,9 @@ Environment: R
 
 * BEER's manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 
-# Blueprint (lastest version):
+# Blueprint:
+
+Lastest version:
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
 
