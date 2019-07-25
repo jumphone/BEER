@@ -855,37 +855,32 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
 
 #####
 #2019.07.25
-BEER.SMOOTH<-function(EXP,VEC,DF=1000,print_step=10,SEED=123){
+BEER.SMOOTH<-function(EXP,VEC,N=50,print_step=10,SEED=123){
     EXP=as.matrix(EXP)
     VEC=as.matrix(VEC)
-    DF=DF
     SEED=SEED
+    N=N
     print_step=print_step
     ########
-    library(Rtsne)
     set.seed(SEED)
     ########
-    T1=Rtsne(VEC,dims=1)
-    ONE=T1$Y
-    EXPO=EXP[,order(ONE)]
-    TEXPO=t(EXPO)
-    #########
-     
-    TEXPO.SM=TEXPO
+    EXP.SM=matrix(0,ncol=ncol(EXP),nrow=nrow(EXP))
+    D=dist(VEC)
+    D=as.matrix(D)
+    N=50
     i=1
-    while(i<=ncol(TEXPO)){
-        TEXPO.SM[,i]=smooth.spline(TEXPO[,i], df=DF)$y
+    while(i<=ncol(EXP)){
+        this_index=which(rank(D[,i],ties.method='random')<=N)
+        EXP.SM[,i]=apply(EXP.SM[,this_index],1,mean)
         if(i %% print_step==1){print(i)}
-        i=i+1
-        }
-    EXP.SM=EXP
-    EXP.SM[,order(ONE)]=t(TEXPO.SM)
+        i=i+1}
     ###########
     RESULT=list()
     RESULT$exp.smooth=EXP.SM
-    RESULT$one=ONE
+    RESULT$distance=D
     ###########
     return(RESULT)
     }
+
 
 
