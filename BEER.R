@@ -872,7 +872,7 @@ BEER.SMOOTH<-function(EXP,VEC,N=50,print_step=10,SEED=123){
     while(i<=ncol(EXP)){
         this_index=which(rank(D[,i],ties.method='random')<=N)
         EXP.SM[,i]=apply(EXP.SM[,this_index],1,mean)
-        if(i %% print_step==1){print(i)}
+        if(i %% print_step==1){print(paste0(i,' / ',ncol(EXP)))}
         i=i+1}
     ###########
     RESULT=list()
