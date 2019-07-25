@@ -105,6 +105,43 @@ CORMETHOD='spearman'
         }
     return(NewRef)
     }
+
+############
+.generate_mean <- function(exp_sc_mat, TAG, print_step=100){
+    print_step=print_step
+    exp_sc_mat=exp_sc_mat
+    TAG=TAG
+    
+    NewRef=matrix(0,ncol=length(unique(TAG)),nrow=nrow(exp_sc_mat))
+    
+    TAG=as.character(TAG)
+    refnames=unique(TAG)
+    total_num=length(refnames)
+    outnames=c()
+    i=1
+    while(i<=length(refnames)){
+        one=refnames[i]
+        this_col=which(TAG==one)
+        outnames=c(outnames,one)
+        if(length(this_col) >1){   
+            #this_new_ref=apply(exp_sc_mat[,this_col],1,mean)
+            this_new_ref=apply(exp_sc_mat[,this_col],1,mean)
+            }else{
+            this_new_ref = exp_sc_mat[,this_col]
+            }
+        NewRef[,i]=this_new_ref
+        if(i%%print_step==1){print(paste0(i,' / ' ,total_num ))}
+        i=i+1       
+        }
+    rownames(NewRef)=rownames(exp_sc_mat)
+    colnames(NewRef)=outnames
+    if(length(NewRef[1,])==1){
+        NewRef=cbind(NewRef[,1], NewRef[,1])
+        rownames(NewRef)=rownames(exp_sc_mat)
+        colnames(NewRef)=c(outnames,outnames)
+        }
+    return(NewRef)
+    }
 ############################################################################################
 ############################################################################################
 
