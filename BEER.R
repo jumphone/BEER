@@ -867,7 +867,6 @@ BEER.SMOOTH<-function(EXP,VEC,N=50,print_step=10,SEED=123){
     EXP.SM=matrix(0,ncol=ncol(EXP),nrow=nrow(EXP))
     D=dist(VEC)
     D=as.matrix(D)
-    N=50
     i=1
     while(i<=ncol(EXP)){
         this_index=which(rank(D[,i],ties.method='random')<=N)
