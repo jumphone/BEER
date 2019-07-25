@@ -892,6 +892,7 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
 #######################
 #2019.07.25
 
+
 BEER.SMOOTH<-function(EXP,VEC,N=50,print_step=10,SEED=123){
     EXP=as.matrix(EXP)
     VEC=as.matrix(VEC)
