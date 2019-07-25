@@ -906,16 +906,22 @@ BEER.SMOOTH<-function(EXP,VEC,N=50,print_step=10,SEED=123){
     N=50
     i=1
     while(i<=ncol(EXP)){
-        this_index=which(rank(D[,i],ties.method='random')<=N)
-        EXP.SM[,i]=apply(EXP[,this_index],1,mean)
+        this_index= order(D[,i])[1:N]
+        EXP.SM[,i]=apply(EXP[,this_index],1,weighted.mean,c(N:1))
         if(i %% print_step==1){print(paste0(i,' / ',ncol(EXP)))}
         i=i+1}
     ###########
+    rownames(EXP.SM)=rownames(EXP)
+    colnames(EXP.SM)=colnames(EXP)
     RESULT=list()
     RESULT$exp.smooth=EXP.SM
     RESULT$distance=D
     ###########
     return(RESULT)
     }
+
+
+
+
 
 
