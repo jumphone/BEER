@@ -922,7 +922,28 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     }
 
 
+######
+#2019.0726
 
+.combat <- function(EXP, BATCH){
+    library(sva)
+    library(limma)
+    pheno = data.frame(batch=as.matrix(BATCH))
+    edata = as.matrix(EXP)
+    batch = pheno$batch
+    modcombat = model.matrix(~1, data=pheno)
+    combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
+    return(combat_edata)
+    }
+
+.norm_exp<-function(x){
+    y=x
+    y[which(x<0)]=0
+    y=x/sum(x)
+    y=y*1000000
+    return(y)
+    }
+    
 
 
 
