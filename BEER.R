@@ -891,8 +891,6 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
 
 #######################
 #2019.07.25
-
-
 BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     EXP=as.matrix(EXP)
     VEC=as.matrix(VEC)
@@ -908,7 +906,7 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     i=1
     while(i<=ncol(EXP)){
         this_index= order(D[,i])[1:N]
-        EXP.SM[,i]=apply(EXP[,this_index], 1, weighted.mean, c(N:1))
+        EXP.SM[,i]=apply(EXP[,this_index], 1, weighted.mean, 2**c(N:1))
         if(i %% print_step==1){print(paste0(i,' / ',ncol(EXP)))}
         i=i+1}
     ###########
@@ -920,6 +918,7 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     ###########
     return(RESULT)
     }
+
 
 
 ######
