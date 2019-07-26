@@ -906,7 +906,8 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     i=1
     while(i<=ncol(EXP)){
         this_index= order(D[,i])[1:N]
-        EXP.SM[,i]=apply(EXP[,this_index], 1, weighted.mean, 2**c(N:1))
+        #EXP.SM[,i]=apply(EXP[,this_index], 1, weighted.mean, 2**c(N:1))
+        EXP.SM[,i]=apply(EXP[,this_index], 1, mean)
         if(i %% print_step==1){print(paste0(i,' / ',ncol(EXP)))}
         i=i+1}
     ###########
