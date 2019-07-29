@@ -16,6 +16,7 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 * July 2019 ( v0.1.3 ): Users can use [VISA](https://github.com/jumphone/VISA) to extract peaks of scATAC-seq.
 
+* ...
 
 # Content:
 
