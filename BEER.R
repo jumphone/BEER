@@ -850,7 +850,7 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     print('Calculating PCs ...')
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
     pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
-    DimPlot(pbmc)
+    #DimPlot(pbmc)
     VEC=pbmc@reductions$umap@cell.embeddings
     
     UB=unique(BATCH)
