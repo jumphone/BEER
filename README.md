@@ -8,6 +8,8 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 # News:
 
+* July 2019 ( v0.1.6 ): BEER can automatically adjust "GNUM" when cell number is small in some batch 
+
 * July 2019 ( v0.1.5 ): "ComBat" is used to replace "regression" of "ScaleData" (ComBat is much faster)
 
 * July 2019 ( v0.1.4 ): Users can provide genes which need to be removed.
@@ -31,8 +33,6 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 
 # Workflow:
-
-### v0.1.5
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
 
