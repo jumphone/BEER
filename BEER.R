@@ -377,7 +377,11 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
     print(ROUND)
     
     VARG=c()
+    i=1
     for(this_batch in UBATCH){
+        print(i)
+        i=i+1
+        print(this_batch)
         this_pbmc=CreateSeuratObject(counts = DATA[,which(BATCH==this_batch)], min.cells = 0, 
                                  min.features = 0, project = this_batch)
         this_pbmc <- NormalizeData(object = this_pbmc, normalization.method = "LogNormalize", 
@@ -810,7 +814,11 @@ BEER.AGG <- function(DATA, BATCH, FOLD, PCNUM=50, GN=2000, CPU=4, print_step=10,
     print(GN)
      
     VARG=c()
+    i=1
     for(this_batch in UBATCH){
+        print(i)
+        i=i+1
+        print(this_batch)
         this_pbmc=CreateSeuratObject(counts = DATA[,which(BATCH==this_batch)], min.cells = 0, 
                                  min.features = 0, project = this_batch)
         this_pbmc <- NormalizeData(object = this_pbmc, normalization.method = "LogNormalize", 
