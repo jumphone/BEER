@@ -35,6 +35,8 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 # Workflow:
 
+#### Latest version
+
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/BP.png" width="400">
 
 Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhancement) for details of "Enhancement".
