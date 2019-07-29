@@ -453,7 +453,7 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
         this_index=which(BATCH==this_batch)
         this_one=DR[this_index,]
         #CNUM=max(c(5, round(length(this_index)/GNUM) ))
-        this_gnum=min(GNUM, length(this_index))
+        this_gnum=min(GNUM, (length(this_index)-1))
         this_group=.getGroup(this_one,this_batch,this_gnum)
         GROUP[this_index]=this_group
     }
@@ -585,7 +585,7 @@ ReBEER <- function(mybeer,  GNUM=30, PCNUM=50,  CPU=4, print_step=10, SEED=123, 
         this_index=which(BATCH==this_batch)
         this_one=DR[this_index,]
         #CNUM=max(c(5, round(length(this_index)/GNUM) ))
-        this_gnum=min(GNUM, length(this_index))
+        this_gnum=min(GNUM, (length(this_index)-1))
         this_group=.getGroup(this_one,this_batch,this_gnum)
         GROUP[this_index]=this_group
     }
