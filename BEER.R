@@ -955,5 +955,11 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     }
     
 
-
+#####
+#2019.0806
+.set_python <- function(PATH){
+    library(reticulate)
+    #use_python("C:/Users/cchmc/Anaconda3/python")
+    use_python(PATH)
+    }
 
