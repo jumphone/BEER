@@ -713,6 +713,7 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
     #bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
     
     sc$tl$umap(adata)
+    #umap = py_to_r(adata$obsm$X_umap)
     umap = py_to_r(adata$obsm['X_umap'])
     rownames(umap)=rownames(pbmc@reductions$umap@cell.embeddings)
     colnames(umap)=colnames(pbmc@reductions$umap@cell.embeddings)
