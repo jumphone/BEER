@@ -966,7 +966,7 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
 
 ####
 #2019.10.24
-BEER.IMP <- function(DATA, VEC, print_step=100,CUTOFF=1){
+BEER.IMP <- function(DATA, VEC, print_step=100, CUTOFF=0.2){
     DATA=DATA
     VEC=VEC
     print_step=print_step
