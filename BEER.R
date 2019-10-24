@@ -964,3 +964,47 @@ BEER.SMOOTH<-function(EXP,VEC,N=3,print_step=10,SEED=123){
     use_python(PATH,required=TRUE)   
     }
 
+####
+#2019.10.24
+BEER.IMP <- function(DATA, VEC, print_step=100,CUTOFF=1){
+    DATA=DATA
+    VEC=VEC
+    print_step=print_step
+    CUTOFF=CUTOFF
+    #############################
+    DATA=as.matrix(DATA)
+    NC=ncol(DATA)
+
+    DIST=dist(VEC)
+    DIST=as.matrix(DIST)
+
+    DIST.NUM=as.numeric(DIST)
+    E.DIST.NUM=ecdf(DIST.NUM)
+    PV=apply(DIST, 2, E.DIST.NUM)
+    LOG.PV=-log(PV,2)
+    LOG.PV[which(PV>CUTOFF)]=0
+    ###############
+
+
+    NEW.DATA=matrix(0,ncol=ncol(DATA),nrow=nrow(DATA))
+    rownames(NEW.DATA)=rownames(DATA)
+    colnames(NEW.DATA)=colnames(DATA)
+    
+    i=1
+    while(i<=NC){
+        NEW.DATA[,i]= DATA %*% as.matrix(LOG.PV[,i] ,ncol=1)
+        NEW.DATA[,i] = NEW.DATA[,i] / sum(LOG.PV[,i])
+        if(i %% print_step==1){print(i)}
+        i=i+1}
+
+    #########################
+    
+    return(NEW.DATA)
+    }
+
+##########################
+
+
+
+
+
