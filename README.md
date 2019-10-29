@@ -628,19 +628,22 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     rm(D1);rm(D2);rm(D3);rm(D4);rm(D5);rm(D6)
     rm(D12);rm(D34);rm(D56);rm(D1234);rm(D123456)
     
-</br>
+
 
 ### Step2. QC
     
     pbmc <- CreateSeuratObject(counts = DATA, project = "pbmc3k", min.cells = 3, min.features = 200)
-    # ...
+    
+    pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
     
 Please fllow https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html to do Quality Control.
+
     
     BATCH=BATCH[,which(colnames(DATA) %in% colnames(pbmc))]
-    DATA=pbmc@assays$RNA@counts
     
-</br>    
+    DATA=pbmc@assays$RNA@counts[which(rownames(pbmc@assays$RNA@counts) %in% rownames(pbmc@assays$RNA@data)),]
+    
+ 
 
 ### Step3. BEER
 
