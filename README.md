@@ -632,14 +632,16 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 ### Step2. QC
     
-    pbmc <- CreateSeuratObject(counts = DATA, project = "pbmc3k", min.cells = 3, min.features = 200)
+    pbmc <- CreateSeuratObject(counts = DATA, project = "pbmc3k", min.cells = 0, min.features = 0)
+    Idents(pbmc)=BATCH
+    pbmc@meta.data$batch=BATCH
     
     pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
     
 Please fllow https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html to do Quality Control.
 
     
-    BATCH=BATCH[which(colnames(DATA) %in% colnames(pbmc))]
+    BATCH=pbmc@meta.data$batch
     
     DATA=pbmc@assays$RNA@counts[which(rownames(pbmc@assays$RNA@counts) %in% rownames(pbmc@assays$RNA@data)),]
     
