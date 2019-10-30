@@ -643,7 +643,7 @@ Please fllow https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html to do Qualit
     
     BATCH=pbmc@meta.data$batch
     
-    DATA=pbmc@assays$RNA@counts[which(rownames(pbmc@assays$RNA@counts) %in% rownames(pbmc@assays$RNA@data)),]
+    DATA=as.matrix(pbmc@assays$RNA@counts[which(rownames(pbmc@assays$RNA@counts) %in% rownames(pbmc@assays$RNA@data)),])
     
  
 
