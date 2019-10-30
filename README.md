@@ -639,7 +639,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 Please fllow https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html to do Quality Control.
 
     
-    BATCH=BATCH[,which(colnames(DATA) %in% colnames(pbmc))]
+    BATCH=BATCH[which(colnames(DATA) %in% colnames(pbmc))]
     
     DATA=pbmc@assays$RNA@counts[which(rownames(pbmc@assays$RNA@counts) %in% rownames(pbmc@assays$RNA@data)),]
     
