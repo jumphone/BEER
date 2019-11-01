@@ -116,6 +116,9 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     colnames(D2)=paste0('D2_', colnames(D2))
 
     DATA=.simple_combine(D1,D2)$combine
+    
+    # Users can use "DATA=.simple_combine(D1,D2, FILL=TRUE)$combine" to keep genes that are expressed in only one condition.
+    
     BATCH=rep('D2',ncol(DATA))
     BATCH[c(1:ncol(D1))]='D1'
     
