@@ -8,6 +8,8 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 # News:
 
+* Nov. 2019 ( v0.1.7 ): In ".simple_combine(D1, D2, FILL=TRUE)", "FILL" can help users to keep genes that are expressed in only one condition (fill the matrix with 0s). Default "FILL" is FALSE
+
 * July 2019 ( v0.1.6 ): BEER can automatically adjust "GNUM" when cell number is small in some batch 
 
 * July 2019 ( v0.1.5 ): "ComBat" is used to replace "regression" of "ScaleData" (ComBat is much faster)
