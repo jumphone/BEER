@@ -720,10 +720,11 @@ BEER.combat <- function(pbmc){
     }
 
 
-BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
+BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
   
     NB=NB
     NT=NT
+    DM=DM
     #mybeer=mybeer
 
     pbmc=pbmc#mybeer$seurat
@@ -755,11 +756,13 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10){
     bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
     #bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
     
-    sc$tl$umap(adata)
+    #sc$tl$umap(adata)
+    sc$tl$umap(adata, n_components=as.integer(DM))
+    
     #umap = py_to_r(adata$obsm$X_umap)
     umap = py_to_r(adata$obsm['X_umap'])
     rownames(umap)=rownames(pbmc@reductions$umap@cell.embeddings)
-    colnames(umap)=colnames(pbmc@reductions$umap@cell.embeddings)
+    colnames(umap)=paste0('UMAP_',c(1:ncol(umap)))#colnames(pbmc@reductions$umap@cell.embeddings)
   
     return(umap)
     }
