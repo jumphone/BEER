@@ -312,9 +312,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 # IV. Combine scATAC-seq & scRNA-seq
 
-Please go to the website of Seurat to download DEMO data: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
+Download DEMO data: https://sourceforge.net/projects/beer-file/files/ATAC/
 
-The main difference between BEER and Seurat (combine scRNA-seq & scATAC-seq): BEER doesn't use "imputation".
+DEMO data is derived from: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
 
 ### Step1. Load Data
 
