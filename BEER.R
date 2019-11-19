@@ -1054,7 +1054,7 @@ BEER.IMP <- function(DATA, VEC, print_step=100, CUTOFF=0.2){
 #2019.11.19
 
 .getGSEAinput <- function( DATA, TAG, PATH ){
-    DATA=DATA
+    DATA=as.matrix(DATA)
     TAG=TAG
     ########################
     EXP.FILE=paste0(PATH,'.EXP.txt')
