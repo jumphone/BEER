@@ -1065,8 +1065,8 @@ BEER.IMP <- function(DATA, VEC, print_step=100, CUTOFF=0.2){
     #########################
     PT.FILE=paste0(PATH,'.PT.cls')
     PT=t(as.character(TAG))
-    cat(paste0(length(PT),' 2 1'),file=PT.FILE,sep="\n") 
-    cat(paste(c('#',unique(PT)),collapse=' '),file=PT.FILE,sep='\n',append=TRUE)
+    cat(paste0(length(TAG),' 2 1'),file=PT.FILE,sep="\n") 
+    cat(paste(c('#',unique(TAG)),collapse=' '),file=PT.FILE,sep='\n',append=TRUE)
     cat(PT,file=PT.FILE,sep=' ',append=TRUE)
     ##########################  
     }
