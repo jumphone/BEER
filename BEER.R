@@ -1056,8 +1056,11 @@ BEER.IMP <- function(DATA, VEC, print_step=100, CUTOFF=0.2){
 .getGSEAinput <- function( DATA, TAG, PATH ){
     DATA=as.matrix(DATA)
     TAG=TAG
+    VAR=apply(DATA,1,var)
+    DATA=DATA[which(VAR>0),]
     ########################
     EXP.FILE=paste0(PATH,'.EXP.txt')
+    colnames(DATA)=paste0(TAG,'_',colnames(DATA))
     OUT=cbind(toupper(rownames(DATA)),rep('NO',nrow(DATA)),DATA)
     colnames(OUT)[c(1,2)]=c('GENE','DESCRIPTION')
     write.table(OUT, EXP.FILE, sep='\t',quote=F,row.names=F,col.names=T)
