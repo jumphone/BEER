@@ -1050,7 +1050,26 @@ BEER.IMP <- function(DATA, VEC, print_step=100, CUTOFF=0.2){
 
 ##########################
 
+########################
+#2019.11.19
 
+.getGSEAinput <- function( DATA, TAG, PATH ){
+    DATA=DATA
+    TAG=TAG
+    ########################
+    EXP.FILE=paste0(PATH,'.EXP.txt')
+    OUT=cbind(toupper(rownames(DATA)),rep('NO',nrow(DATA)),DATA)
+    colnames(OUT)[c(1,2)]=c('GENE','DESCRIPTION')
+    write.table(OUT, EXP.FILE, sep='\t',quote=F,row.names=F,col.names=T)
+    
+    #########################
+    PT.FILE=paste0(PATH,'.PT.cls')
+    PT=t(as.character(TAG))
+    cat(paste0(length(PT),' 2 1'),file=PT.FILE,sep="\n") 
+    cat(paste(c('#',unique(PT)),collapse=' '),file=PT.FILE,sep='\n',append=TRUE)
+    cat(PT,file=PT.FILE,sep=' ',append=TRUE)
+    ##########################  
+    }
 
-
+#######################################################
 
