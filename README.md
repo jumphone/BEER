@@ -129,6 +129,8 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
     mybeer=BEER(DATA, BATCH, GNUM=30, PCNUM=50, ROUND=1, GN=2000, SEED=1, COMBAT=TRUE, RMG=NULL)   
 
+    # DATA: Expression matrix. Rownames are genes. Colnames are cell names.
+    # BATCH: A character vector. Length is equal to the "ncol(DATA)".
     # GNUM: the number of groups in each batch (default: 30)
     # PCNUM: the number of computated PCA subspaces (default: 50)
     # ROUND: batch-effect removal strength, positive integer (default: 1)
