@@ -124,6 +124,11 @@ For QC, please see: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
     BATCH=rep('D2',ncol(DATA))
     BATCH[c(1:ncol(D1))]='D1'
     
+    # Simple Quality Control (QC): check the number of sequenced genes
+    # PosN=apply(DATA,2,.getPos)
+    # USED=which(PosN>500 & PosN<2000) 
+    # DATA=DATA[,USED]; BATCH=BATCH[USED] 
+    
 
 ### Step2. Detect Batch Effect
 
@@ -224,6 +229,10 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     rm(D1);rm(D2);rm(D3);rm(D4);rm(D5);rm(D6)
     rm(D12);rm(D34);rm(D56);rm(D1234);rm(D123456)
     
+    # Simple Quality Control (QC): check the number of sequenced genes
+    # PosN=apply(DATA,2,.getPos)
+    # USED=which(PosN>500 & PosN<2000) 
+    # DATA=DATA[,USED]; BATCH=BATCH[USED] 
     
 ### Step2. Use BEER to Detect Batch Effect
 
