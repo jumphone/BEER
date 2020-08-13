@@ -22,11 +22,11 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 # Content:
 
-* [Workflow](#Workflow)
-* [Requirement (Installation)](#Requirement)
-* [Vignettes (Usage)](#Vignettes)
-* [Reference](#Reference)
-* [License](#License)
+* [Workflow](#workflow)
+* [Requirement (Installation)](#requirement)
+* [Vignettes (Usage)](#vignettes)
+* [Reference](#reference)
+* [License](#license)
 
 </br>
 </br>
