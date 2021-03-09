@@ -377,6 +377,10 @@ Download DEMO data: https://sourceforge.net/projects/beer-file/files/ATAC/ & htt
     D2=as.matrix(pbmc.rna@assays$RNA@counts)
     colnames(D1)=paste0('ATAC_', colnames(D1))
     colnames(D2)=paste0('RNA_', colnames(D2))
+    
+    D1=.check_rep(D1)
+    D2=.check_rep(D2)
+    
     DATA=.simple_combine(D1,D2)$combine
     BATCH=rep('RNA',ncol(DATA))
     BATCH[c(1:ncol(D1))]='ATAC'
