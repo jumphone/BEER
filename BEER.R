@@ -752,8 +752,8 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
     
     anndata = import("anndata",convert=FALSE) 
     bbknn = import("bbknn", convert=FALSE)
-    #sc = import("scanpy.api",convert=FALSE) #scanpy
-    sc = import("scanpy",convert=FALSE) #scanpy
+    sc = import("scanpy.api",convert=FALSE) #scanpy==1.3.5
+    #sc = import("scanpy",convert=FALSE) #scanpy
     
     adata = anndata$AnnData(X=pca.all, obs=batch)
     PCNUM=ncol(pca.use)
