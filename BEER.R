@@ -1,13 +1,13 @@
 
 # Batch EffEct Remover for single-cell data (BEER)
-# Version: 0.1.7
+# Version: 0.1.9
 # Author: Feng Zhang
-# Date: Nov. 4, 2019
+# Date: Mar. 9, 2021
 # For Seurat 3
 #
 #source('https://raw.githubusercontent.com/jumphone/BEER/master/BEER.R')
 
-print('Welcome to BEER (v0.1.7)!')
+print('Welcome to BEER (v0.1.9)!')
 
 library(Seurat)
 library(sva)
