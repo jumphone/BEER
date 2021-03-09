@@ -95,9 +95,9 @@ CORMETHOD='spearman'
     SEED=SEED
     N=N
     ###############
-    pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
-    VariableFeatures(object = pbmc)=VARG
+    pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL")  
     pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc=FindVariableFeatures(object = pbmc, selection.method = "vst", nfeatures = GN)
     pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
     print('Calculating PCs ...')
     pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
