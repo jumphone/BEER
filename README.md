@@ -8,6 +8,10 @@ BEER's latest version: https://github.com/jumphone/BEER/releases
 
 # News:
 
+* Mar. 2021 ( V0.1.9 ): First version for Seurat 4.0.0
+
+* Feb. 2021 ( V0.1.8 ): Last version for Seurat 3.0.0
+
 * Nov. 2019 ( v0.1.7 ): In ".simple_combine(D1, D2, FILL=TRUE)", "FILL" can help users to keep genes that are expressed in only one condition (fill the matrix with “0”). Default "FILL" is FALSE
 
 * July 2019 ( v0.1.6 ): BEER can automatically adjust "GNUM" when cell number is small in some batch 
