@@ -49,7 +49,7 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
 # Requirement:
 
     #R >=3.5
-    install.packages('Seurat') # ==3.0  
+    install.packages('Seurat') # ==4.0.0 or 3.X
     
     # Install ComBat:
     if (!requireNamespace("BiocManager", quietly = TRUE))
