@@ -88,7 +88,28 @@ CORMETHOD='spearman'
 ######################
 
 
-
+.run_seurat <-function(DATA,PCNUM=50, GN=2000,  SEED=123, N=2){
+    DATA=DATA
+    PCNUM=PCNUM
+    GN=GN
+    SEED=SEED
+    N=N
+    ###############
+    pbmc=CreateSeuratObject(counts = DATA, min.cells = 0, min.features = 0, project = "ALL") 
+    pbmc@meta.data$batch=BATCH
+    VariableFeatures(object = pbmc)=VARG
+    pbmc <- NormalizeData(object = pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+    pbmc <- ScaleData(object = pbmc, features = VariableFeatures(object = pbmc))
+    print('Calculating PCs ...')
+    pbmc <- RunPCA(object = pbmc, seed.use=SEED, npcs=PCNUM, features = VariableFeatures(object = pbmc), ndims.print=1,nfeatures.print=1)
+    pbmc <- RunUMAP(pbmc, dims = 1:PCNUM,seed.use = SEED,n.components=N)
+    ################
+    return(pbmc)
+    }
+    
+################################    
+    
+    
 
 
 .generate_ref <- function(exp_sc_mat, TAG, min_cell=1, refnames=FALSE){
