@@ -327,9 +327,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
 # IV. Combine scATAC-seq & scRNA-seq
 
-Download DEMO data: https://sourceforge.net/projects/beer-file/files/ATAC/
+Please install "Signac": https://satijalab.org/signac/
 
-DEMO data is derived from: https://satijalab.org/seurat/v3.0/atacseq_integration_vignette.html
+Download DEMO data: https://sourceforge.net/projects/beer-file/files/ATAC/ & https://satijalab.org/signac/articles/pbmc_vignette.html
 
 ### Step1. Load Data
 
@@ -337,16 +337,43 @@ DEMO data is derived from: https://satijalab.org/seurat/v3.0/atacseq_integration
     #source('BEER.R')
     
     library(Seurat)
+    library(Signac)
+    library(EnsDb.Hsapiens.v75)
     
-    peaks <- Read10X_h5("../data/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
+    counts <- Read10X_h5(filename = "./data/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
+    
+    metadata <- read.csv(
+      file = "./data/atac_v1_pbmc_10k_singlecell.csv",
+      header = TRUE,
+      row.names = 1
+        )
 
-    activity.matrix <- CreateGeneActivityMatrix(peak.matrix = peaks, 
-        annotation.file = "../data/Homo_sapiens.GRCh37.82.gtf", 
-        seq.levels = c(1:22, "X", "Y"), upstream = 2000, verbose = TRUE)
-         
-    pbmc.rna <- readRDS("../data/pbmc_10k_v3.rds")
+    chrom_assay <- CreateChromatinAssay(
+        counts = counts,
+        sep = c(":", "-"),
+        genome = 'hg19',
+        fragments = './data/atac_v1_pbmc_10k_fragments.tsv.gz',
+        min.cells = 10,
+        min.features = 200
+       )
+
+    pbmc.atac <- CreateSeuratObject(
+        counts = chrom_assay,
+        assay = "peaks",
+        meta.data = metadata
+        )
     
-    D1=as.matrix(activity.matrix)
+    annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v75)
+    seqlevelsStyle(annotations) <- "UCSC"
+    genome(annotations) <- "hg19"
+    Annotation(pbmc.atac) <- annotations
+
+
+    gene.activities <- GeneActivity(pbmc.atac)
+         
+    pbmc.rna <- readRDS("./data/pbmc_10k_v3.rds")
+    
+    D1=as.matrix(gene.activities)
     D2=as.matrix(pbmc.rna@assays$RNA@counts)
     colnames(D1)=paste0('ATAC_', colnames(D1))
     colnames(D2)=paste0('RNA_', colnames(D2))
