@@ -90,6 +90,14 @@ For batch-effect removal enhancement, please install BBKNN: https://github.com/T
 
 </br>
 
+# Set Python
+
+    library(reticulate)
+    use_python("/home/toolkit/local/bin/python3",required=T)
+    py_config()
+
+</br>
+
 # I. Combine Two Batches
 
 Download demo data: https://github.com/jumphone/BEER/raw/master/DATA/demodata.zip 
