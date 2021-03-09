@@ -49,7 +49,7 @@ Please see [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-enhance
 # Requirement:
 
     #R >=3.5
-    install.packages('Seurat') # ==4.0.0 or 3.X
+    install.packages('Seurat') # ==4.0.0 
     
     # Install ComBat:
     if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -172,7 +172,7 @@ Users can select PCA subspaces based on the distribution of "Rank Correlation" a
     pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
     pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
     pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
-    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1) 
+    DimPlot(pbmc_batch, reduction='umap', group.by='batch', pt.size=0.1) 
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT2.png" width="400">
      
@@ -181,9 +181,9 @@ Users can select PCA subspaces based on the distribution of "Rank Correlation" a
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    pbmc <- RunUMAP(object = pbmc, reduction='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1) 
+    DimPlot(pbmc, reduction='umap', group.by='batch', pt.size=0.1) 
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT3.png" width="400">
 
@@ -262,7 +262,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
     pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
     pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
     pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
-    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1) 
+    DimPlot(pbmc_batch, reduction='umap', group.by='batch', pt.size=0.1) 
  
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT5.png" width="400">
@@ -273,9 +273,9 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
     pbmc <- mybeer$seurat
     PCUSE <- mybeer$select
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    pbmc <- RunUMAP(object = pbmc, reduction='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)   
+    DimPlot(pbmc, reduction='umap', group.by='batch', pt.size=0.1)   
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT6.png" width="400">
    
@@ -296,7 +296,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
     CLUST=K$cluster
     pbmc@meta.data$clust=as.character(CLUST)
-    DimPlot(pbmc, reduction.use='umap', group.by='clust', pt.size=0.5,label=TRUE)
+    DimPlot(pbmc, reduction='umap', group.by='clust', pt.size=0.5,label=TRUE)
     
 
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/CLUST1.png" width="400">    
@@ -304,7 +304,7 @@ Download demo data: https://sourceforge.net/projects/beergithub/files/
 
     # Or, manually select some cells
 
-    ppp=DimPlot(pbmc, reduction.use='umap', pt.size=0.5)
+    ppp=DimPlot(pbmc, reduction='umap', pt.size=0.5)
     used.cells <- CellSelector(plot = ppp)
     
 
@@ -384,7 +384,7 @@ DEMO data is derived from: https://satijalab.org/seurat/v3.0/atacseq_integration
     pbmc_batch <- ScaleData(object = pbmc_batch, features = VariableFeatures(object = pbmc_batch))
     pbmc_batch <- RunPCA(object = pbmc_batch, seed.use=123, npcs=50, features = VariableFeatures(object = pbmc_batch), ndims.print=1,nfeatures.print=1)
     pbmc_batch <- RunUMAP(pbmc_batch, dims = 1:50, seed.use = 123,n.components=2)
-    DimPlot(pbmc_batch, reduction.use='umap', group.by='batch', pt.size=0.1)   
+    DimPlot(pbmc_batch, reduction='umap', group.by='batch', pt.size=0.1)   
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT8.png" width="400">
        
@@ -393,16 +393,16 @@ DEMO data is derived from: https://satijalab.org/seurat/v3.0/atacseq_integration
 
     pbmc <- mybeer$seurat  
     PCUSE=mybeer$select
-    pbmc <- RunUMAP(object = pbmc, reduction.use='pca',dims = PCUSE, check_duplicates=FALSE)
+    pbmc <- RunUMAP(object = pbmc, reduction='pca',dims = PCUSE, check_duplicates=FALSE)
     
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1)    
+    DimPlot(pbmc, reduction='umap', group.by='batch', pt.size=0.1)    
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT9.png" width="400">
    
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
     
-    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    DimPlot(pbmc, reduction='umap', group.by='celltype', pt.size=0.1,label=T)
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT10.png" width="400">
 
@@ -435,7 +435,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
+    DimPlot(pbmc, reduction='umap', group.by='batch', pt.size=0.1,label=F)
     
     
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT12.png" width="400">     
@@ -447,7 +447,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
     pbmc=BEER.combat(pbmc) #Adjust PCs using ComBat
     umap=BEER.bbknn(pbmc, PCUSE, NB=3, NT=10)
     pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
+    DimPlot(pbmc, reduction='umap', group.by='batch', pt.size=0.1,label=F)
      
     saveRDS(pbmc, file='seurat.enh.RDS')
   
@@ -455,7 +455,7 @@ This DEMO follows [IV. Combine scATAC-seq & scRNA-seq](#iv-combine-scatac-seq--s
   
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
-    DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    DimPlot(pbmc, reduction='umap', group.by='celltype', pt.size=0.1,label=T)
      
 <img src="https://github.com/jumphone/BEER/raw/master/DATA/PLOT14.png" width="400"> 
 
@@ -483,7 +483,7 @@ Finally, load the output of beer_bbknn.py and draw UMAP:
     rownames(umap)=rownames(pbmc@reductions$umap@cell.embeddings)
     colnames(umap)=colnames(pbmc@reductions$umap@cell.embeddings)
     pbmc@reductions$umap@cell.embeddings=umap
-    DimPlot(pbmc, reduction.use='umap', group.by='batch', pt.size=0.1,label=F)
+    DimPlot(pbmc, reduction='umap', group.by='batch', pt.size=0.1,label=F)
      
 
 </br>
@@ -494,7 +494,7 @@ This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-
    
     pbmc@meta.data$celltype=rep(NA,length(pbmc@meta.data$batch))
     pbmc@meta.data$celltype[which(pbmc@meta.data$batch=='RNA')]=pbmc.rna@meta.data$celltype
-    #DimPlot(pbmc, reduction.use='umap', group.by='celltype', pt.size=0.1,label=T)
+    #DimPlot(pbmc, reduction='umap', group.by='celltype', pt.size=0.1,label=T)
     
     #######
     VEC=pbmc@reductions$umap@cell.embeddings
@@ -502,7 +502,7 @@ This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-
     N=150
     K=kmeans(VEC,centers=N)
     pbmc@meta.data$kclust=K$cluster   
-    #DimPlot(pbmc, reduction.use='umap', group.by='kclust', pt.size=0.1,label=T)
+    #DimPlot(pbmc, reduction='umap', group.by='kclust', pt.size=0.1,label=T)
 
     pbmc@meta.data$transfer=rep(NA, length(pbmc@meta.data$celltype))
     TMP=cbind(pbmc@meta.data$celltype, pbmc@meta.data$kclust)
@@ -528,16 +528,16 @@ This DEMO follows [V. Batch-effect Removal Enhancement](#v-batch-effect-removal-
     
     library(ggplot2)
     
-    plot.all <- DimPlot(pbmc, reduction.use='umap', group.by='batch', 
+    plot.all <- DimPlot(pbmc, reduction='umap', group.by='batch', 
         pt.size=0.1,label=F) + labs(title = "Batches")
     
-    plot.ct <- DimPlot(pbmc,reduction.use='umap', group.by='tf.ct', 
+    plot.ct <- DimPlot(pbmc,reduction='umap', group.by='tf.ct', 
         pt.size=0.1,label=T) + labs(title = "CellType")
     
-    plot.rna <- DimPlot(pbmc, cells=RNA.cells,reduction.use='umap', 
+    plot.rna <- DimPlot(pbmc, cells=RNA.cells,reduction='umap', 
         group.by='tf.ct', pt.size=0.1,label=T,plot.title='RNA.transfer') + labs(title = "RNA")
     
-    plot.atac <- DimPlot(pbmc, cells=ATAC.cells,reduction.use='umap', 
+    plot.atac <- DimPlot(pbmc, cells=ATAC.cells,reduction='umap', 
         group.by='tf.ct', pt.size=0.1,label=T,plot.title='ATAC.transfer') + labs(title = "ATAC")
     
     CombinePlots(list(all=plot.all, ct=plot.ct, rna=plot.rna, atac=plot.atac))
