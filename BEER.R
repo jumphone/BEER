@@ -750,9 +750,9 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
     #use_python("C:\Users\cchmc\Anaconda3\python")
     
     
-    anndata = import("anndata",convert=FALSE) 
+    anndata = import("anndata",convert=FALSE) #anndata==0.7
     bbknn = import("bbknn", convert=FALSE)
-    sc = import("scanpy.api",convert=FALSE) #scanpy==1.4
+    sc = import("scanpy.api",convert=FALSE) #scanpy==1.5.1
     #sc = import("scanpy",convert=FALSE) #scanpy
     
     adata = anndata$AnnData(X=pca.all, obs=batch)
@@ -776,7 +776,6 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
   
     return(umap)
     }
-
 
 #######2019.07.17
 
