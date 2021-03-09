@@ -40,6 +40,15 @@ CORMETHOD='spearman'
 ######################
 # 2019.11.01
 
+.check_rep <- function(MAT){
+    MAT=as.matrix(MAT)
+    RNAME=rownames(MAT)
+    USED_NAME=names(which(table(RNAME)>1))
+    MAT=MAT[which(rownames(MAT) %in% USED_NAME),]
+    return(MAT)
+    }
+
+
 .simple_combine <- function(exp_sc_mat1, exp_sc_mat2, FILL=FALSE){    
     FILL=FILL
     exp_sc_mat=exp_sc_mat1
