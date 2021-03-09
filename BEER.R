@@ -43,7 +43,7 @@ CORMETHOD='spearman'
 .check_rep <- function(MAT){
     MAT=as.matrix(MAT)
     RNAME=rownames(MAT)
-    USED_NAME=names(which(table(RNAME)>1))
+    USED_NAME=names(which(table(RNAME)==1))
     MAT=MAT[which(rownames(MAT) %in% USED_NAME),]
     return(MAT)
     }
