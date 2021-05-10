@@ -770,10 +770,10 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
     #use_python("C:\Users\cchmc\Anaconda3\python")
     
     
-    anndata = import("anndata",convert=FALSE) #anndata==0.7
-    bbknn = import("bbknn", convert=FALSE)
-    sc = import("scanpy.api",convert=FALSE) #scanpy==1.5.1
-    #sc = import("scanpy",convert=FALSE) #scanpy
+    anndata = reticulate::import("anndata",convert=FALSE) #anndata==0.7
+    bbknn = reticulate::import("bbknn", convert=FALSE)
+    sc = reticulate::import("scanpy.api",convert=FALSE) #scanpy==1.5.1
+    #sc = reticulate::import("scanpy",convert=FALSE) #scanpy
     
     adata = anndata$AnnData(X=pca.all, obs=batch)
     PCNUM=ncol(pca.use)
