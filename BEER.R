@@ -38,6 +38,30 @@ CORMETHOD='spearman'
 #    return(OUT)
 #    }
 ######################
+
+####################################
+# Problem too large
+# 2021.9.17
+as_matrix <- function(mat){
+ 
+  tmp <- matrix(data=0L, nrow = mat@Dim[1], ncol = mat@Dim[2])
+  
+  row_pos <- mat@i+1
+  col_pos <- findInterval(seq(mat@x)-1,mat@p[-1])+1
+  val <- mat@x
+    
+  for (i in seq_along(val)){
+      tmp[row_pos[i],col_pos[i]] <- val[i]
+  }
+    
+  row.names(tmp) <- mat@Dimnames[[1]]
+  colnames(tmp) <- mat@Dimnames[[2]]
+  return(tmp)
+}
+###############
+
+#######################
+
 # 2019.11.01
 
 .check_rep <- function(MAT){
@@ -493,7 +517,8 @@ BEER <- function(DATA, BATCH,  GNUM=30, PCNUM=50, GN=2000, CPU=4, COMBAT=TRUE, p
         pheno = data.frame(batch=as.matrix(BATCH))
         orig.data=pbmc@assays$RNA@data
         used.gene.index=which(rownames(orig.data) %in% VARG)
-        edata = as.matrix(orig.data)[used.gene.index,]
+        #edata = as.matrix(orig.data)[used.gene.index,]
+        edata = as_matrix(orig.data)[used.gene.index,]
         batch = pheno$batch
         modcombat = model.matrix(~1, data=pheno)
         combat_edata = ComBat(dat=edata, batch=batch, mod=modcombat, par.prior=TRUE, prior.plots=FALSE)
