@@ -797,8 +797,8 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
     
     anndata = reticulate::import("anndata",convert=FALSE) #anndata==0.7
     bbknn = reticulate::import("bbknn", convert=FALSE)
-    sc = reticulate::import("scanpy.api",convert=FALSE) #scanpy==1.5.1
-    #sc = reticulate::import("scanpy",convert=FALSE) #scanpy
+    #sc = reticulate::import("scanpy.api",convert=FALSE) #scanpy==1.5.1
+    sc = reticulate::import("scanpy",convert=FALSE) #scanpy
     
     adata = anndata$AnnData(X=pca.all, obs=batch)
     PCNUM=ncol(pca.use)
@@ -808,7 +808,8 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
     #NB=50
     #NT=10
     #print(NB)
-    bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
+    bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), annoy_n_trees =as.integer(NT))
+    #bbknn$bbknn(adata,batch_key=0,neighbors_within_batch=as.integer(NB),n_pcs=as.integer(PCNUM), n_trees =as.integer(NT))
     #bbknn$bbknn(adata,batch_key=0, n_pcs=as.integer(PCNUM))
     
     #sc$tl$umap(adata)
