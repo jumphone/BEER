@@ -731,6 +731,17 @@ Manuscript version: https://github.com/jumphone/BEER/archive/0.0.2.zip
 </br>
 </br>
 
+
+
+
+<img src="https://fzhang.bioinfo-lab.com/img/white.png" height="50">
+
+-------------------------------------------------------------------------------------------------------------------
+
+<img src="https://fzhang.bioinfo-lab.com/img/panda_happy_logo.png" height='150'>
+
+#### More tools & studies: https://fzhang.bioinfo-lab.com/
+
     
 # License
     
