@@ -796,7 +796,7 @@ BEER.bbknn <- function(pbmc, PCUSE, NB=3, NT=10, DM=2){
     
     
     anndata = reticulate::import("anndata",convert=FALSE) #anndata==0.7
-    bbknn = reticulate::import("bbknn", convert=FALSE)
+    bbknn = reticulate::import("bbknn", convert=FALSE) #bbknn==1.5.1
     #sc = reticulate::import("scanpy.api",convert=FALSE) #scanpy==1.5.1
     sc = reticulate::import("scanpy",convert=FALSE) #scanpy
     
